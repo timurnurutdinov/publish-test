@@ -1,3 +1,5 @@
+
+
 import Foundation
 import Publish
 import Plot
@@ -22,4 +24,7 @@ struct PublishTest: Website {
 }
 
 // This will generate your website using the built-in Foundation theme:
-try PublishTest().publish(withTheme: .foundation)
+try PublishTest().publish(
+    withTheme: .foundation,
+    .deploy(using: .gitHub("    timurnurutdinov/timurnurutdinov.github.io", useSSH: false))
+)
