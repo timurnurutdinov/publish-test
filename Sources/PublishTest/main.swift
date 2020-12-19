@@ -17,14 +17,15 @@ struct PublishTest: Website {
 
     // Update these properties to configure your website:
     var url = URL(string: "https://your-website-url.com")!
-    var name = "PublishTest"
+    var name = "Is it for me?"
     var description = "A description of PublishTest"
     var language: Language { .english }
     var imagePath: Path? { nil }
 }
 
 // This will generate your website using the built-in Foundation theme:
-try PublishTest().publish(
-    withTheme: .foundation,
+try PublishTest().publish(using: [
+    .generateHTML(withTheme: .foundation),
     .deploy(using: .gitHub("    timurnurutdinov/timurnurutdinov.github.io", useSSH: false))
+    ]
 )
