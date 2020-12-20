@@ -7,7 +7,6 @@ import Plot
 // This type acts as the configuration for your website.
 struct PublishTest: Website {
     enum SectionID: String, WebsiteSectionID {
-        // Add the sections that you want your website to contain here:
         case posts
     }
 
@@ -25,7 +24,14 @@ struct PublishTest: Website {
 
 // This will generate your website using the built-in Foundation theme:
 try PublishTest().publish(using: [
+    .addMarkdownFiles(),
+    .copyResources(at: "Content"),
+//    .addFavoriteItems(),
+//    .addDefaultSectionTitles(),
     .generateHTML(withTheme: .foundation),
-    .deploy(using: .gitHub("    timurnurutdinov/timurnurutdinov.github.io", useSSH: false))
+    
+    
+//    .generateHTML(withTheme: .foundation),
+//    .deploy(using: .gitHub("    timurnurutdinov/timurnurutdinov.github.io", useSSH: false))
     ]
 )
