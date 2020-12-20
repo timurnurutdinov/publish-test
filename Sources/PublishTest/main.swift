@@ -26,7 +26,7 @@ struct PublishTest: Website {
 // This will generate your website using the built-in Foundation theme:
 try PublishTest().publish(using: [
     .addMarkdownFiles(),
-    .readFiles(),
+    .readPrototypes(),
 //    .copyResources(at: "Content"),
 //    .addFavoriteItems(),
     .addDefaultSectionTitles(),
@@ -60,22 +60,31 @@ extension PublishingStep where Site == PublishTest {
     }
     
     
+    
+    static func readPrototypes() -> Self {
+        .step(named: "Read Prototype Folder") { context in
+            let mainFolderPath = "~/Desktop/test/"
+            try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
+                Prototype(withFolder: folder)
+            }
+        }
+    }
+    
+    
     static func readFiles() -> Self {
         .step(named: "Read Prototype Folder") { context in
             
-//            var prototypeNames = [String]()
-//
-//            for file in try Folder(path: "~/Desktop/test/").subfolders {
-//                prototypeNames.append(file.name)
-//                let parsePrototypeInstance = ParsePrototype(name: file.name)
-//                parsePrototypeInstance.printName()
-//            }
-//
-            var prototypes = [ParsePrototype]()
+//            var prototypes = [ParsePrototype]()
             let mainFolderPath = "~/Desktop/test/"
             
             try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
-                prototypes.append(ParsePrototype.init(name: folder.nameExcludingExtension))
+//                prototypes.append(ParsePrototype.init(name: folder.nameExcludingExtension))
+                
+                // read each prototype
+                // count stats:
+                // 1. creation date
+                // 2. line count
+                // 3. tags
             }
             
             

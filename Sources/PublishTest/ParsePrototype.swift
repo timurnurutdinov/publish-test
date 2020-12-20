@@ -7,6 +7,7 @@ import Foundation
 
 // 00093 yandex [desktop] Force Update – Pulse 2
 struct ParsePrototype {
+    
     private var name = ""
     private var lineCount = 0
     
