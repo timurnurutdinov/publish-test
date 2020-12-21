@@ -63,31 +63,28 @@ extension PublishingStep where Site == PublishTest {
     
     static func readPrototypes() -> Self {
         .step(named: "Read Prototype Folder") { context in
-            let mainFolderPath = "~/Desktop/test/"
-            try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
-                Prototype(withFolder: folder)
-            }
-        }
-    }
-    
-    
-    static func readFiles() -> Self {
-        .step(named: "Read Prototype Folder") { context in
-            
-//            var prototypes = [ParsePrototype]()
-            let mainFolderPath = "~/Desktop/test/"
+//            let mainFolderPath = "~/Desktop/test/"
+            let mainFolderPath = "~/Documents/Git/Prototyping-Queue/"
+            var prototypes = [Prototype]()
             
             try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
-//                prototypes.append(ParsePrototype.init(name: folder.nameExcludingExtension))
-                
-                // read each prototype
-                // count stats:
-                // 1. creation date
-                // 2. line count
-                // 3. tags
+                prototypes.append(Prototype(withFolder: folder))
             }
             
+            let sumOfAllLines = prototypes.reduce(0) { sum, item in sum + item.lines }
+            let maxLineCount = prototypes.map { $0.lines }.max()!
+            let avgLineCount = sumOfAllLines/prototypes.count
             
+            let avgProrotypeNormals: [Double] = prototypes.map { Double($0.lines) / Double(maxLineCount) }
+            let formattedPrototypeNormals = avgProrotypeNormals.map { String(format: "%.2f", $0) }
+            
+            print(formattedPrototypeNormals)
+            print("Max: \(maxLineCount), Avg: \(avgLineCount)")
+            
+            Prototype.writeCSV(ofPrototypes: formattedPrototypeNormals)
+            
+            var temp = prototypes.map { String($0.lines) }
+            Prototype.writeCSV(ofPrototypes: temp, withName: "test2.txt")
         }
     }
     
