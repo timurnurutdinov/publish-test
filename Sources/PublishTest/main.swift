@@ -81,11 +81,19 @@ extension PublishingStep where Site == PublishTest {
             print(formattedPrototypeNormals)
             print("Max: \(maxLineCount), Avg: \(avgLineCount)")
             
-            Prototype.writeCSV(ofPrototypes: formattedPrototypeNormals)
+            Prototype.writeCSV(ofPrototypes: formattedPrototypeNormals, withName: "normalsUnsorted.txt")
             
-            var temp = prototypes.map { String($0.lines) }
-            Prototype.writeCSV(ofPrototypes: temp, withName: "test2.txt")
+            let temp = prototypes.map { String($0.lines) }
+            Prototype.writeCSV(ofPrototypes: temp, withName: "valueUnsorted.txt")
+            
+            prototypes.sort { $0.lines < $1.lines }
+            let  temp2 = prototypes.map { String($0.lines) }
+            Prototype.writeCSV(ofPrototypes: temp2, withName: "valueSorted.txt")
         }
     }
+    
+    
+    
+//    private func
     
 }

@@ -41,9 +41,9 @@ struct Prototype {
     
     static func writeCSV(ofPrototypes prototypes:[String], withName name:String = "test.txt") {
         do {
-            let folder = try Folder(path: "~/Desktop/")
+            let folder = try Folder(path: "~/Desktop/output/")
             let file = try folder.createFile(named: name)
-            try file.write(prototypes.joined(separator: ","))
+            try file.write(prototypes.joined(separator: ":"))
             
         }
         catch { }
