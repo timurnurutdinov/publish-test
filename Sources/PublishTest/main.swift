@@ -27,10 +27,8 @@ struct PublishTest: Website {
 try PublishTest().publish(using: [
     .addMarkdownFiles(),
     .readPrototypes(),
-//    .copyResources(at: "Content"),
-//    .addFavoriteItems(),
     .addDefaultSectionTitles(),
-    .generateHTML(withTheme: .foundation),
+    .generateHTML(withTheme: .testTheme),
     
     
 //    .generateHTML(withTheme: .foundation),
@@ -59,8 +57,6 @@ extension PublishingStep where Site == PublishTest {
         }
     }
     
-    
-    
     static func readPrototypes() -> Self {
         .step(named: "Read Prototype Folder") { context in
 //            let mainFolderPath = "~/Desktop/test/"
@@ -71,27 +67,65 @@ extension PublishingStep where Site == PublishTest {
                 prototypes.append(Prototype(withFolder: folder))
             }
             
-            let sumOfAllLines = prototypes.reduce(0) { sum, item in sum + item.lines }
-            let maxLineCount = prototypes.map { $0.lines }.max()!
-            let avgLineCount = sumOfAllLines/prototypes.count
             
-            let avgProrotypeNormals: [Double] = prototypes.map { Double($0.lines) / Double(maxLineCount) }
-            let formattedPrototypeNormals = avgProrotypeNormals.map { String(format: "%.2f", $0) }
             
-            print(formattedPrototypeNormals)
-            print("Max: \(maxLineCount), Avg: \(avgLineCount)")
             
-            Prototype.writeCSV(ofPrototypes: formattedPrototypeNormals, withName: "normalsUnsorted.txt")
+            let stats = SurgeTest(withPrototypes: prototypes)
+//            var zeroes = [Int](repeating: 0, count: stats.maxLines*2)
+//            for prototype in prototypes { zeroes[prototype.lines] += 1 }
+//            for (index, numb) in zeroes.enumerated() {
+//                if numb > 1 { print("Index: \(index) –> \(numb)") }
+//            }
             
-            let temp = prototypes.map { String($0.lines) }
-            Prototype.writeCSV(ofPrototypes: temp, withName: "valueUnsorted.txt")
+            let dates = prototypes.map { $0.getLowestDateString() }
+            Prototype.writeCSV(ofPrototypes: dates, withName: "creation.txt", separatedBy: "\n")
             
-            prototypes.sort { $0.lines < $1.lines }
-            let  temp2 = prototypes.map { String($0.lines) }
-            Prototype.writeCSV(ofPrototypes: temp2, withName: "valueSorted.txt")
+            
+            
+            let isoDate = "2016-04-14"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let date = dateFormatter.date(from:isoDate)! + 60 * 180
+            print(date)
+            
+            
+            
+//            let sumOfAllLines = prototypes.reduce(0) { sum, item in sum + item.lines }
+//            let maxLineCount = prototypes.map { $0.lines }.max()!
+//            let avgLineCount = sumOfAllLines/prototypes.count
+//            
+//            let avgProrotypeNormals: [Double] = prototypes.map { Double($0.lines) / Double(maxLineCount) }
+//            let formattedPrototypeNormals = avgProrotypeNormals.map { String(format: "%.2f", $0) }
+//            
+//            print(formattedPrototypeNormals)
+//            print("Max: \(maxLineCount), Avg: \(avgLineCount)")
+//            
+//            Prototype.writeCSV(ofPrototypes: formattedPrototypeNormals, withName: "normalsUnsorted.txt")
+//            
+//            let temp = prototypes.map { String($0.lines) }
+//            Prototype.writeCSV(ofPrototypes: temp, withName: "valueUnsorted.txt")
+//            
+//            prototypes.sort { $0.lines < $1.lines }
+//            let  temp2 = prototypes.map { String($0.lines) }
+//            Prototype.writeCSV(ofPrototypes: temp2, withName: "valueSorted.txt")
+            
+            
+            let temp3 = prototypes.map { String(format: "%.2f", $0.difficulty) }
+            Prototype.writeCSV(ofPrototypes: temp3, withName: "difficulty.txt")
+            
+//            prototypes.map { prototype in
+//                print("\(prototype.getID()): \(prototype.difficulty)")
+//            }
         }
     }
     
+    
+    
+    static func testSurge() -> Self {
+        .step(named: "testSurge") { context in
+            SurgeTest()
+        }
+    }
     
     
 //    private func
