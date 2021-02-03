@@ -26,9 +26,15 @@ struct PublishTest: Website {
 // This will generate your website using the built-in Foundation theme:
 try PublishTest().publish(using: [
     .addMarkdownFiles(),
+    
+//    .showTitleStats(),
+//    .showPlatformStats(),
+//    .showTimelineStats(),
+    
     .readPrototypes(),
-    .addDefaultSectionTitles(),
-    .generateHTML(withTheme: .testTheme),
+    
+//    .addDefaultSectionTitles(),
+//    .generateHTML(withTheme: .testTheme),
     
     
 //    .generateHTML(withTheme: .foundation),
@@ -57,6 +63,12 @@ extension PublishingStep where Site == PublishTest {
         }
     }
     
+    
+    
+    
+    
+    
+    
     static func readPrototypes() -> Self {
         .step(named: "Read Prototype Folder") { context in
 //            let mainFolderPath = "~/Desktop/test/"
@@ -70,52 +82,26 @@ extension PublishingStep where Site == PublishTest {
             
             
             
-            let stats = SurgeTest(withPrototypes: prototypes)
-//            var zeroes = [Int](repeating: 0, count: stats.maxLines*2)
-//            for prototype in prototypes { zeroes[prototype.lines] += 1 }
-//            for (index, numb) in zeroes.enumerated() {
-//                if numb > 1 { print("Index: \(index) –> \(numb)") }
-//            }
             
-            let dates = prototypes.map { $0.getLowestDateString() }
-            Prototype.writeCSV(ofPrototypes: dates, withName: "creation.txt", separatedBy: "\n")
-            
-            
-            
-            let isoDate = "2016-04-14"
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let date = dateFormatter.date(from:isoDate)! + 60 * 180
-            print(date)
-            
-            
-            
-//            let sumOfAllLines = prototypes.reduce(0) { sum, item in sum + item.lines }
-//            let maxLineCount = prototypes.map { $0.lines }.max()!
-//            let avgLineCount = sumOfAllLines/prototypes.count
+//            let stats = SurgeTest(withPrototypes: prototypes)
 //            
-//            let avgProrotypeNormals: [Double] = prototypes.map { Double($0.lines) / Double(maxLineCount) }
-//            let formattedPrototypeNormals = avgProrotypeNormals.map { String(format: "%.2f", $0) }
+//            let dates = prototypes.map { $0.getLowestDateString() }
+//            Prototype.writeCSV(ofPrototypes: dates, withName: "creation.txt", separatedBy: "\n")
 //            
-//            print(formattedPrototypeNormals)
-//            print("Max: \(maxLineCount), Avg: \(avgLineCount)")
 //            
-//            Prototype.writeCSV(ofPrototypes: formattedPrototypeNormals, withName: "normalsUnsorted.txt")
 //            
-//            let temp = prototypes.map { String($0.lines) }
-//            Prototype.writeCSV(ofPrototypes: temp, withName: "valueUnsorted.txt")
+//            let isoDate = "2016-04-14"
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "yyyy-MM-dd"
+//            let date = dateFormatter.date(from:isoDate)! + 60 * 180
+//            print(date)
 //            
-//            prototypes.sort { $0.lines < $1.lines }
-//            let  temp2 = prototypes.map { String($0.lines) }
-//            Prototype.writeCSV(ofPrototypes: temp2, withName: "valueSorted.txt")
+//
+//            
+//            
+//            let temp3 = prototypes.map { String(format: "%.2f", $0.difficulty) }
+//            Prototype.writeCSV(ofPrototypes: temp3, withName: "difficulty.txt")
             
-            
-            let temp3 = prototypes.map { String(format: "%.2f", $0.difficulty) }
-            Prototype.writeCSV(ofPrototypes: temp3, withName: "difficulty.txt")
-            
-//            prototypes.map { prototype in
-//                print("\(prototype.getID()): \(prototype.difficulty)")
-//            }
         }
     }
     
@@ -124,6 +110,49 @@ extension PublishingStep where Site == PublishTest {
     static func testSurge() -> Self {
         .step(named: "testSurge") { context in
             SurgeTest()
+        }
+    }
+    
+    
+    
+    
+    
+    static func showPlatformStats() -> Self {
+        .step(named: "Show Platform Stats") { context in
+            let mainFolderPath = "~/Documents/Git/Prototyping-Queue/"
+            var names = [Name]()
+            
+            try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
+                names.append(Name(folder.name))
+            }
+            
+            Name.printPlatform(names)
+        }
+    }
+    
+    static func showTimelineStats() -> Self {
+        .step(named: "Read Prototype Name") { context in
+            let mainFolderPath = "~/Documents/Git/Prototyping-Queue/"
+            var names = [Name]()
+            
+            try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
+                names.append(Name(folder.name))
+            }
+            
+            Name.printTimeline(names)
+        }
+    }
+    
+    static func showTitleStats() -> Self {
+        .step(named: "Read Prototype Name") { context in
+            let mainFolderPath = "~/Documents/Git/Prototyping-Queue/"
+            var names = [Name]()
+            
+            try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
+                names.append(Name(folder.name))
+            }
+            
+            Name.printTitles(names)
         }
     }
     
