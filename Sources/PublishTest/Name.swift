@@ -108,7 +108,7 @@ class Name {
             self.scene = flattened[4]
         }
         else {
-            print("🛑 \(line)")
+            print("🛑 Failed to parse name: \(line)")
         }
     }
     

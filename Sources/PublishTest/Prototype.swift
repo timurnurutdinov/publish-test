@@ -22,44 +22,55 @@ class Prototype {
     static var modules = "modules/"
     var appCreation: Date = Date()
     
+    static var prototypes: [Prototype] = []
+    static var moduleNames: [String: Int] = [:]
+    
     
     
     init(withFolder folder: Folder) {
         self.folder = folder
         self.name = Name(folder.name)
         
-        if !self.name.isValid() { print("🛑: Invalid name"); return }
-        
-//        let appFile = try? File(path: self.folder.path + Prototype.app)
-//        if let tempDate = appFile?.creationDate { self.appCreation = tempDate }
-//        else { print("🛑 Folder without app.coffee file: \(self.folder)"); return }
+        if !self.name.isValid() { print("🛑: Invalid name: \(folder.name)"); return }
         
         if folder.containsFile(named: Prototype.app) {
+            
+            // Look at app.coffee
             do {
                 let appURL = URL(string: Prototype.app, relativeTo: self.folder.url)
                 let str = try Data(contentsOf: appURL!).withUnsafeBytes { String(decoding: $0, as: UTF8.self) }
                 self.lines = str.utf8.split(separator: UInt8(ascii: "\n"), omittingEmptySubsequences: false).count
                 
-//                print(self.lines)
-                if self.lines < 10 { print("\(self.getID())") }
-                
-                
-                let modulesURL = folder.path + Prototype.modules
-                try Folder(path: modulesURL).files.enumerated().forEach { (index, folder) in
-                    if (folder.name == "myModule.coffee") { print("-") }
-                    else { print(folder.name) }
-                }
-                
-//                if let modulesURL = URL(string: Prototype.modules, relativeTo: self.folder.url) {
-//                    try Folder(path: modulesURL.absoluteString).files.enumerated().forEach { (index, folder) in
-//                        print(folder.name)
-//                    }
-//                }
-                
+                // Skip small prototypes
+                if self.lines < 10 { print("📭 Empty Prototype: \(folder.name)") }
             }
             catch { print("🛑 Failed to count lines in app.coffee") }
+            
+            
+            // Look at modules folder
+            do {
+                let modulesURL = folder.path + Prototype.modules
+                try Folder(path: modulesURL).files.enumerated().forEach { (index, folder) in
+//                    print(folder.name.fileExtension())
+//                    folder.name.fileExtension() == ".coffee"
+                    if (folder.name.fileExtension() == "coffee" && folder.name.fileName() != "myModule") {
+                        Prototype.moduleNames[folder.name] = (Prototype.moduleNames[folder.name] ?? 0) + 1
+                        Prototype.modulesPathMap[folder.name] = folder.path
+                        
+                        
+                    }
+                }
+            }
+            catch { print("📭 Modules Folder not found") }
         }
+        
+        Prototype.prototypes.append(self)
     }
+    
+    
+    
+    
+    
     
     
     func getLowestDates() -> [Date] {
@@ -124,5 +135,38 @@ extension Optional {
         case .none:
             throw errorExpression()
         }
+    }
+}
+
+
+extension String {
+
+    func fileName() -> String {
+        return URL(fileURLWithPath: self).deletingPathExtension().lastPathComponent
+    }
+
+    func fileExtension() -> String {
+        return URL(fileURLWithPath: self).pathExtension
+    }
+}
+
+extension Double {
+    /// Rounds the double to decimal places value
+    func rounded(toPlaces places:Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
+
+
+
+extension Prototype {
+    static var modulesToSkip: [String] = ["input.coffee", "ScrollRange.coffee", "TextLayer.coffee", "input backup.coffee", "animateOnSpline.coffee", "SVGLayer.coffee", "distributeLayers.coffee", "audio.coffee", "text.coffee", "Pointer.coffee", "ControlPanel.coffee", "result.coffee", "all.coffee", "blur.coffee", "dark.coffee", "SVGIcon.coffee", "OrientationSimulator.coffee", "System-Sensor.coffee", "System.coffee", "textlayer.coffee", "gradientData.coffee", "simpleripple.coffee", "yandexDevices.coffee"]
+    static var modulesPathMap: [String: String] = [:]
+    
+    static func getModulesToSkipMap() -> [String: Int] {
+        var counts: [String: Int] = [:]
+        for item in Prototype.modulesToSkip { counts[item] = (counts[item] ?? 0) + 1 }
+        return counts
     }
 }

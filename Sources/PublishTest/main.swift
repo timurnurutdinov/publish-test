@@ -73,20 +73,26 @@ extension PublishingStep where Site == PublishTest {
         .step(named: "Read Prototype Folder") { context in
 //            let mainFolderPath = "~/Desktop/test/"
             let mainFolderPath = "~/Documents/Git/Prototyping-Queue/"
-            var prototypes = [Prototype]()
+//            var prototypes = [Prototype]()
             
             try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
-                prototypes.append(Prototype(withFolder: folder))
+                Prototype(withFolder: folder)
+            }
+            
+            let sortedModuleNames = Prototype.moduleNames.sorted { $0.1 > $1.1 }
+            let moduleFilterMap = Prototype.getModulesToSkipMap()
+            print(moduleFilterMap)
+            
+            let customModulesOnly = sortedModuleNames.filter { moduleFilterMap[$0.key] != 1 }
+            
+            for (key, value) in customModulesOnly {
+                print("\(key): \(value)")
+//                print("\(Prototype.modulesPathMap[key]!)")
             }
             
             
             
-            
-            
-//            let stats = SurgeTest(withPrototypes: prototypes)
-//            
-//            let dates = prototypes.map { $0.getLowestDateString() }
-//            Prototype.writeCSV(ofPrototypes: dates, withName: "creation.txt", separatedBy: "\n")
+            let stats = SurgeTest(withPrototypes: Prototype.prototypes)
 //            
 //            
 //            

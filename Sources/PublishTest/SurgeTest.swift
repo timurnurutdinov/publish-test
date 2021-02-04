@@ -35,19 +35,21 @@ struct SurgeTest {
         
         self.average = sum / Double(sumArray.count)
         self.stdvar = Surge.std(sumArray)
-        print("A: \(self.average), SV: \(self.stdvar)")
+        print("Average: \(self.average), Standard Variation: \(self.stdvar)")
         
         for prototype in prototypes { prototype.setZScore(withAverage: self.average, andVariation: self.stdvar) }
         let extremePrototypes = prototypes.filter { $0.zScore > 2 }
-        print("ECount: \(extremePrototypes.count)")
+        print("Extreme Prototypes Count: \(extremePrototypes.count)")
         
         for prototype in prototypes {
             if prototype.lines > self.maxLines { self.maxLines = prototype.lines }
         }
         print("M: \(self.maxLines)")
         
-//        self.zScore = sumArray.map { ($0 - self.average)/self.stdvar }
-//        print(self.zScore)
+        self.zScore = sumArray.map { ($0 - self.average)/self.stdvar }
+        let zScoreString: [String] = self.zScore.map { String($0.rounded(toPlaces: 3)) }
+        
+        Prototype.writeCSV(ofPrototypes: zScoreString, withName: "zIndex.txt", separatedBy: ",")
     }
 }
 
