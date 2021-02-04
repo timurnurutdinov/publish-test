@@ -91,8 +91,7 @@ extension PublishingStep where Site == PublishTest {
             }
             
             
-            
-            let stats = SurgeTest(withPrototypes: Prototype.prototypes)
+            Prototype.computeZScore()
 //            
 //            
 //            

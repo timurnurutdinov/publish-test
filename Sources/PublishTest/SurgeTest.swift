@@ -37,7 +37,7 @@ struct SurgeTest {
         self.stdvar = Surge.std(sumArray)
         print("Average: \(self.average), Standard Variation: \(self.stdvar)")
         
-        for prototype in prototypes { prototype.setZScore(withAverage: self.average, andVariation: self.stdvar) }
+        for prototype in prototypes { prototype.set(average: self.average, andVariation: self.stdvar) }
         let extremePrototypes = prototypes.filter { $0.zScore > 2 }
         print("Extreme Prototypes Count: \(extremePrototypes.count)")
         

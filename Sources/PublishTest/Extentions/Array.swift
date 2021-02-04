@@ -8,6 +8,14 @@
 import Foundation
 import Files
 
+
+extension Array where Element == Double {
+    func writeFile(withName name:String = "blank.txt", separatedBy separator:String = ",") {
+        let stringArray = self.map { String($0.rounded(toPlaces: 3)) }
+        stringArray.writeFile(withName: name, separatedBy: separator)
+    }
+}
+
 extension Array where Element == String {
     func writeFile(withName name:String = "blank.txt", separatedBy separator:String = ",") {
         do {

@@ -106,13 +106,13 @@ class Prototype {
         return formatter4.string(from: self.folder.creationDate!)
     }
     
-    func setZScore(withAverage average:Double, andVariation variation: Double) {
-        self.zScore = (Double(self.lines) - average) / variation
-        self.difficulty = min(Double(self.lines) / (average * 2.0), 1.0)
-        
-//        if self.zScore < -2 || self.zScore > 2 { print("L: \(self.lines) \(self.getID())") }
-//        if self.difficulty < 0.03 { print("Check: \(self.getID())") }
-    }
+//    func setZScore(withAverage average:Double, andVariation variation: Double) {
+//        self.zScore = (Double(self.lines) - average) / variation
+//        self.difficulty = min(Double(self.lines) / (average * 2.0), 1.0)
+//        
+////        if self.zScore < -2 || self.zScore > 2 { print("L: \(self.lines) \(self.getID())") }
+////        if self.difficulty < 0.03 { print("Check: \(self.getID())") }
+//    }
     
     func getID() -> String {
         return String(self.folder.name.split(separator: " ").first!)
