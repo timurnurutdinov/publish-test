@@ -9,14 +9,20 @@ import Files
 // 00093 yandex [desktop] Force Update – Pulse 2
 
 class Prototype {
+    
     var folder: Folder
     var name: Name
     
-    var lines: Int = -1
-    var moduleLines: Int = -1
-    
+    // +Complexity
     var zScore: Double = 0.0
     var difficulty = 0.0
+    
+    // Lines Count
+    var lines: Int = 0
+    var moduleLines: Int = 0
+    
+    
+    
     
     static var app = "app.coffee"
     static var modules = "modules/"
