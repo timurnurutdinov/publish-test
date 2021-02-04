@@ -49,7 +49,8 @@ struct SurgeTest {
         self.zScore = sumArray.map { ($0 - self.average)/self.stdvar }
         let zScoreString: [String] = self.zScore.map { String($0.rounded(toPlaces: 3)) }
         
-        Prototype.writeCSV(ofPrototypes: zScoreString, withName: "zIndex.txt", separatedBy: ",")
+        zScoreString.writeFile(withName: "zIndex.txt", separatedBy: ",")
+//        Prototype.writeCSV(withName: "zIndex.txt", separatedBy: ",")
     }
 }
 

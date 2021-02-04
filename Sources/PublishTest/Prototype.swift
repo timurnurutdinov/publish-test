@@ -57,7 +57,14 @@ class Prototype {
                         Prototype.moduleNames[folder.name] = (Prototype.moduleNames[folder.name] ?? 0) + 1
                         Prototype.modulesPathMap[folder.name] = folder.path
                         
+                        if let moduleFileURL = URL(string: folder.name, relativeTo: URL(string: modulesURL)) {
+                            print(moduleFileURL)
+                        }
+                        else {
+                            print(modulesURL)
+                        }
                         
+//                        let str = try Data(contentsOf: appURL!).withUnsafeBytes { String(decoding: $0, as: UTF8.self) }
                     }
                 }
             }
@@ -111,57 +118,15 @@ class Prototype {
         return String(self.folder.name.split(separator: " ").first!)
     }
     
-    
-    
-    // MOVE
-    static func writeCSV(ofPrototypes prototypes:[String], withName name:String = "test.txt", separatedBy separator:String = ",") {
-        do {
-            let folder = try Folder(path: "~/Desktop/output/")
-            let file = try folder.createFile(named: name)
-            try file.write(prototypes.joined(separator: separator))
-            
-        }
-        catch { }
-    }
+
 }
 
 
-
-extension Optional {
-    func orThrow(_ errorExpression: @autoclosure () -> Error) throws -> Wrapped {
-        switch self {
-        case .some(let value):
-            return value
-        case .none:
-            throw errorExpression()
-        }
-    }
-}
-
-
-extension String {
-
-    func fileName() -> String {
-        return URL(fileURLWithPath: self).deletingPathExtension().lastPathComponent
-    }
-
-    func fileExtension() -> String {
-        return URL(fileURLWithPath: self).pathExtension
-    }
-}
-
-extension Double {
-    /// Rounds the double to decimal places value
-    func rounded(toPlaces places:Int) -> Double {
-        let divisor = pow(10.0, Double(places))
-        return (self * divisor).rounded() / divisor
-    }
-}
 
 
 
 extension Prototype {
-    static var modulesToSkip: [String] = ["input.coffee", "ScrollRange.coffee", "TextLayer.coffee", "input backup.coffee", "animateOnSpline.coffee", "SVGLayer.coffee", "distributeLayers.coffee", "audio.coffee", "text.coffee", "Pointer.coffee", "ControlPanel.coffee", "result.coffee", "all.coffee", "blur.coffee", "dark.coffee", "SVGIcon.coffee", "OrientationSimulator.coffee", "System-Sensor.coffee", "System.coffee", "textlayer.coffee", "gradientData.coffee", "simpleripple.coffee", "yandexDevices.coffee"]
+    static var modulesToSkip: [String] = ["myModule.coffee", "input.coffee", "ScrollRange.coffee", "TextLayer.coffee", "input backup.coffee", "animateOnSpline.coffee", "SVGLayer.coffee", "distributeLayers.coffee", "audio.coffee", "text.coffee", "Pointer.coffee", "ControlPanel.coffee", "result.coffee", "all.coffee", "blur.coffee", "dark.coffee", "SVGIcon.coffee", "OrientationSimulator.coffee", "System-Sensor.coffee", "System.coffee", "textlayer.coffee", "gradientData.coffee", "simpleripple.coffee", "yandexDevices.coffee"]
     static var modulesPathMap: [String: String] = [:]
     
     static func getModulesToSkipMap() -> [String: Int] {
