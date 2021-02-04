@@ -76,22 +76,32 @@ extension PublishingStep where Site == PublishTest {
 //            var prototypes = [Prototype]()
             
             try Folder(path: mainFolderPath).subfolders.enumerated().forEach { (index, folder) in
+//                if (folder.name == "2020-01-26 [abro] Wallpapers – Compare App 3.framer") {
+//                    Prototype(withFolder: folder)
+//                }
                 Prototype(withFolder: folder)
             }
             
-            let sortedModuleNames = Prototype.moduleNames.sorted { $0.1 > $1.1 }
-            let moduleFilterMap = Prototype.getModulesToSkipMap()
-            print(moduleFilterMap)
-            
-            let customModulesOnly = sortedModuleNames.filter { moduleFilterMap[$0.key] != 1 }
-            
-            for (key, value) in customModulesOnly {
-                print("\(key): \(value)")
-//                print("\(Prototype.modulesPathMap[key]!)")
-            }
+//            let sortedModuleNames = Prototype.moduleNames.sorted { $0.1 > $1.1 }
+//            let moduleFilterMap = Prototype.getModulesToSkipMap()
+//            print(moduleFilterMap)
+//
+//            let customModulesOnly = sortedModuleNames.filter { moduleFilterMap[$0.key] != 1 }
+//
+//            for (key, value) in customModulesOnly {
+//                print("\(key): \(value)")
+////                print("\(Prototype.modulesPathMap[key]!)")
+//            }
             
             
             Prototype.computeZScore()
+            
+            let mLines = Prototype.prototypes.map { $0 }
+            let sortedMLines = mLines.sorted { $0.moduleLines > $1.moduleLines }
+            let moduleArray = sortedMLines.map { String("\(String(format: "%04d", $0.moduleLines)) \($0.name.origin)") }
+            moduleArray.writeFile(withName: "modules.txt", separatedBy: "\n")
+            
+//            print("Module lines: \() \(self.name.originTitle)")
 //            
 //            
 //            
@@ -114,7 +124,7 @@ extension PublishingStep where Site == PublishTest {
     
     static func testSurge() -> Self {
         .step(named: "testSurge") { context in
-            SurgeTest()
+            
         }
     }
     
