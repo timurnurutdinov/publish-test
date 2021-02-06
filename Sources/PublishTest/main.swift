@@ -82,40 +82,11 @@ extension PublishingStep where Site == PublishTest {
                 Prototype(withFolder: folder)
             }
             
-//            let sortedModuleNames = Prototype.moduleNames.sorted { $0.1 > $1.1 }
-//            let moduleFilterMap = Prototype.getModulesToSkipMap()
-//            print(moduleFilterMap)
-//
-//            let customModulesOnly = sortedModuleNames.filter { moduleFilterMap[$0.key] != 1 }
-//
-//            for (key, value) in customModulesOnly {
-//                print("\(key): \(value)")
-////                print("\(Prototype.modulesPathMap[key]!)")
-//            }
-            
             
             Prototype.computeZScore()
+            Prototype.logModules()
+            Prototype.framerGridData().writeFile("data.coffee", toFolder: "/Users/tilllur/Documents/Git/Prototyping-Queue/2020-12-20 [d] Projects List – Grid.framer/modules/")
             
-            let mLines = Prototype.prototypes.map { $0 }
-            let sortedMLines = mLines.sorted { $0.moduleLines > $1.moduleLines }
-            let moduleArray = sortedMLines.map { String("\(String(format: "%04d", $0.moduleLines)) \($0.name.origin)") }
-            moduleArray.writeFile(withName: "modules.txt", separatedBy: "\n")
-            
-//            print("Module lines: \() \(self.name.originTitle)")
-//            
-//            
-//            
-//            let isoDate = "2016-04-14"
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "yyyy-MM-dd"
-//            let date = dateFormatter.date(from:isoDate)! + 60 * 180
-//            print(date)
-//            
-//
-//            
-//            
-//            let temp3 = prototypes.map { String(format: "%.2f", $0.difficulty) }
-//            Prototype.writeCSV(ofPrototypes: temp3, withName: "difficulty.txt")
             
         }
     }

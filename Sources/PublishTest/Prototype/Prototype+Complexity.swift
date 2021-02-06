@@ -16,6 +16,14 @@ extension Prototype {
     static var zScore: [Double] = [Double]()
     
     
+//    func getNormalizedZScore() -> Double {
+//        return self.zScore.rounded(toPlaces: 2)
+//    }
+    
+    func getNormalizedComplexity() -> Double {
+        return self.difficulty.rounded(toPlaces: 2)
+    }
+    
     func set(average:Double, andVariation variation: Double) {
         self.zScore = (Double(self.lines) - average) / variation
         self.difficulty = min(Double(self.lines) / (average * 2.0), 1.0)
@@ -24,9 +32,11 @@ extension Prototype {
 //        if self.difficulty < 0.03 { print("Check: \(self.getID())") }
     }
     
+    
     static func getExtremePrototypes(fromPrototypes prototypes:[Prototype] = Prototype.prototypes) -> [Prototype] {
         return prototypes.filter { $0.zScore > 2 }
     }
+    
     
     
     static func computeZScore(prototypes:[Prototype] = Prototype.prototypes) {
@@ -50,6 +60,11 @@ extension Prototype {
         Prototype.zScore.writeFile(withName: "zIndex.txt", separatedBy: ",")
         
     }
+    
+//    static func copyZScoreResultFramer() {
+//        let framerProjectPath = "/Users/tilllur/Documents/Git/Prototyping-Queue/2020-12-20\ \[d\]\ Projects\ List\ –\ Grid.framer"
+//        
+//    }
 
 }
 

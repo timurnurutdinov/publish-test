@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Files
 
 extension String {
 
@@ -32,6 +33,17 @@ extension String {
     
     func notSkipped() -> Bool {
         return Prototype.skipMap[self] != 1
+    }
+    
+    func writeFile(_ name:String = "blank.txt", toFolder path:String = "~/Desktop/output/") {
+        do {
+            let folder = try Folder(path: path)
+            let file = try folder.createFile(named: name)
+            try file.write(self)
+        }
+        catch {
+            print("🛑 Failed to write file to \(path)")
+        }
     }
     
 }

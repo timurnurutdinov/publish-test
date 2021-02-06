@@ -32,23 +32,27 @@ extension Prototype {
             }
             self.lines += self.moduleLines
         }
-        catch { print("📭 Modules Folder not found") }
+        catch {
+//            print("📭 Modules Folder not found")
+        }
         
         
         if self.lines < 10 { print("📭 Empty Prototype: \(folder.name)") }
     }
     
     
-//    func countLines(forPath filePath: String) -> Int {
-//        do { return try File(path: filePath).lines() }
-//        catch { print("🛑 Failed to count lines in app.coffee") }
-//        return 0
-//    }
+    static func logModules() {
+        let mLines = Prototype.prototypes.map { $0 }
+        let sortedMLines = mLines.sorted { $0.moduleLines > $1.moduleLines }
+        let moduleArray = sortedMLines.map { String("\(String(format: "%04d", $0.moduleLines)) \($0.name.origin)") }
+        moduleArray.writeFile(withName: "modules.txt", separatedBy: "\n")
+    }
     
     
     
     
-    static var modulesToSkip: [String] = ["myModule.coffee", "input.coffee", "ScrollRange.coffee", "TextLayer.coffee", "input backup.coffee", "animateOnSpline.coffee", "SVGLayer.coffee", "distributeLayers.coffee", "audio.coffee", "text.coffee", "Pointer.coffee", "ControlPanel.coffee", "result.coffee", "all.coffee", "blur.coffee", "dark.coffee", "SVGIcon.coffee", "OrientationSimulator.coffee", "System-Sensor.coffee", "System.coffee", "textlayer.coffee", "gradientData.coffee", "simpleripple.coffee", "yandexDevices.coffee"]
+    
+    static var modulesToSkip: [String] = ["myModule.coffee", "data.coffee", "input.coffee", "ScrollRange.coffee", "TextLayer.coffee", "input backup.coffee", "animateOnSpline.coffee", "SVGLayer.coffee", "distributeLayers.coffee", "audio.coffee", "text.coffee", "Pointer.coffee", "ControlPanel.coffee", "result.coffee", "all.coffee", "blur.coffee", "dark.coffee", "SVGIcon.coffee", "OrientationSimulator.coffee", "System-Sensor.coffee", "System.coffee", "textlayer.coffee", "gradientData.coffee", "simpleripple.coffee", "yandexDevices.coffee"]
     
     static var skipMap: [String: Int] = Prototype.getModulesToSkipMap()
     
@@ -57,5 +61,31 @@ extension Prototype {
         for item in Prototype.modulesToSkip { counts[item] = (counts[item] ?? 0) + 1 }
         return counts
     }
-
+    
 }
+
+
+
+
+extension Prototype {
+    func framerCellData() -> String {
+//        func t() -> String { return "\t" }
+//        func dt() -> String { return "\(t())\(t())" }
+//        func n() -> String { return "\n" }
+        
+        var string = "\t{\n"
+        string.append("\t\tscore: \(self.getNormalizedComplexity()),\n")
+        string.append("\t\tproject: \"\(self.name.title)\",\n")
+        string.append("\t},\n")
+        
+        return string
+    }
+    
+    static func framerGridData() -> String {
+        var strArray = Prototype.prototypes.map { $0.framerCellData() }
+        var string = strArray.reduce("exports.data = [\n", +)
+        string.append("]\n\n")
+        return string
+    }
+}
+
