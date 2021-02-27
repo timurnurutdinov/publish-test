@@ -42,8 +42,10 @@ extension Prototype {
     
     static var prototypes: [Prototype] = []
     
-    static var app = "app.coffee"
-    static var modules = "modules/"
+    static let queue = "~/Documents/Git/Prototyping-Queue/"
+    static let outputFolderName = "output"
+    static let app = "app.coffee"
+    static let modules = "modules/"
     
 }
 
