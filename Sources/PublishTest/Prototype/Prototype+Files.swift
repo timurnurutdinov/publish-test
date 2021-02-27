@@ -69,9 +69,6 @@ extension Prototype {
 
 extension Prototype {
     func framerCellData() -> String {
-//        func t() -> String { return "\t" }
-//        func dt() -> String { return "\(t())\(t())" }
-//        func n() -> String { return "\n" }
         
         var string = "\t{\n"
         string.append("\t\tscore: \(self.getNormalizedComplexity()),\n")
@@ -85,6 +82,74 @@ extension Prototype {
         var strArray = Prototype.prototypes.map { $0.framerCellData() }
         var string = strArray.reduce("exports.data = [\n", +)
         string.append("]\n\n")
+        return string
+    }
+    
+    
+    func terminalImageOptimCommand() -> String {
+        var imagesPath = "imageoptim \"\(self.folder.path)images/\"\n"
+        do {
+            try Folder(path: "\(self.folder.path)imported/").subfolders.enumerated().forEach { (index, folder) in
+                imagesPath += "imageoptim \"\(folder.path)images/\"\n"
+            }
+        }
+        catch {}
+        return imagesPath
+    }
+    
+    static func getTerminalCommandList() -> String {
+        var shString = "#!/bin/sh\n"
+        var slicedArray = Array(Prototype.prototypes[151...170])
+//        print(slicedArray[slicedArray.count-1].folder.name)
+        
+        var strArray = slicedArray.map { $0.terminalImageOptimCommand() }
+        var string = strArray.reduce(shString, +)
+        string.writeFile("optim.sh", toFolder: "~/Desktop/")
+        return string
+    }
+    
+    
+    static func getProjectlist() -> String {
+        var titles = Prototype.prototypes.map { $0.name.title }
+        
+        var counts: [String: Int] = [:]
+        for item in titles { counts[item] = (counts[item] ?? 0) + 1 }
+        let sortedCounts = counts.sorted { $0.1 > $1.1 }
+        
+        var string = ""
+        for (key, value) in sortedCounts {
+            string.append("\(String(format: "%03d", value)): \(key)\n")
+//            print("\(String(format: "%03d", value)): \(key)")
+        }
+        
+//        var string = strArray.reduce(shString, +)
+        string.writeFile("projectTitles.txt", toFolder: "~/Desktop/output/")
+        return string
+    }
+    
+    
+    
+    
+    func terminalDeleteBackupCommand() -> String {
+        var string = ""
+//        print("\(self.folder.path)framer/backups/")
+        do {
+            try Folder(path: "\(self.folder.path)framer/backups/").files.enumerated().forEach { (index, folder) in
+                string += "rm \"\(folder.path)\"\n"
+//                print("rm2 \"\(folder.path)\"\n")
+            }
+        } catch {}
+        return string
+    }
+    
+    static func getTerminalCommandDeteleList() -> String {
+        var shString = "#!/bin/sh\n"
+        var slicedArray = Array(Prototype.prototypes[...])
+//        print(slicedArray[slicedArray.count-1].folder.name)
+        
+        var strArray = slicedArray.map { $0.terminalDeleteBackupCommand() }
+        var string = strArray.reduce(shString, +)
+        string.writeFile("rm.sh", toFolder: "~/Desktop/")
         return string
     }
 }
