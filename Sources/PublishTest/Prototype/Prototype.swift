@@ -44,6 +44,8 @@ extension Prototype {
     
     static let queue = "~/Documents/Git/Prototyping-Queue/"
     static let outputFolderName = "output"
+    static let outputFolderPath = "~/Desktop/output/"
+    
     static let app = "app.coffee"
     static let modules = "modules/"
     
