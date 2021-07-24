@@ -28,10 +28,11 @@ try PublishTest().publish(using: [
     .addMarkdownFiles(),
     
     .readPrototypes(),
+    .setRestrictions(),
     .computeComplexity(),
     
     .helperLogModules(),
-    .helperCommands(),
+//    .helperCommands(),
     .helperProjectTitles(),
     
     ]
@@ -117,6 +118,22 @@ extension PublishingStep where Site == PublishTest {
     static func helperProjectTitles() -> Self {
         .step(named: "H: Write projects titles by prototypes' count") { context in
             Prototype.getProjectlist()
+        }
+    }
+    
+    
+    
+    
+    
+    
+    static func setRestrictions() -> Self {
+        .step(named: "Setting Restrictions") { context in
+            
+            Prototype.setRestrictions()
+            
+//            let folder = try Folder(path: "~/Desktop/")
+//            try folder.createSubfolderIfNeeded(withName: Prototype.outputFolderName)
+            
         }
     }
     

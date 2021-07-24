@@ -42,7 +42,9 @@ extension Prototype {
     
     static var prototypes: [Prototype] = []
     
-    static let queue = "~/Documents/Git/Prototyping-Queue/"
+    static let queue = "~/Documents/testing-queue/"
+//    static let queue = "~/Documents/Git/Prototyping-Queue/"
+    
     static let outputFolderName = "output"
     static let outputFolderPath = "~/Desktop/output/"
     
