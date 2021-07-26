@@ -9,23 +9,43 @@ import Foundation
 
 extension Prototype {
     
-    static var restrictedTillName: String = "2019-05-18 [ios] Purify – Swipe.framer";
+    static var restrictedTillName: String = ""
     
     static var restrictedList = [String]()
     static var allowedList = [String]()
     
     static func setRestrictions(prototypes:[Prototype] = Prototype.prototypes) {
         
-        var allowedPrototypes = prototypes
+        var toEdgePrototypes:[Prototype] = prototypes
         
+        restrictedTillName = "2021-01-24 [pp] Geo View – Arrow Playground.framer"
+//        restrictedList.append("2018-10-10 [abro] Menu – Open 11.framer")
+//        allowedList.append("2019-05-18 [utils] Utils – Size.framer")
+//        allowedList.append("2019-05-18 [ios] Purify – Swipe.framer")
+        
+        // Slice to Edge
         let titles = Prototype.prototypes.map { $0.name.origin }
         if let indexOfRestrictedTillName = titles.firstIndex(of: Prototype.restrictedTillName) {
-            allowedPrototypes = prototypes[0...indexOfRestrictedTillName]
+            toEdgePrototypes = Array(prototypes.prefix(upTo: indexOfRestrictedTillName))
         }
         
-        // TODO: Remove restricted
+        // Remove restricted
+        let remainingPrototypes = toEdgePrototypes.filter {
+            !restrictedList.contains($0.name.origin)
+        }
         
-        // TODO: Add allowed
+        // Add allowed
+        let allowedPrototypes = prototypes.filter { prototype in
+            return allowedList.contains(prototype.name.origin)
+        }
+        
+        
+        
+        let uniquePrototypes = Array(Set(remainingPrototypes + allowedPrototypes))
+        let sortedPrototypes = uniquePrototypes.sorted { $0.name.origin < $1.name.origin }
+        
+        let allowedOutput = sortedPrototypes.map { $0.name.origin }
+        allowedOutput.writeFile(withName: "allowed.txt", separatedBy: "\n")
         
     }
     

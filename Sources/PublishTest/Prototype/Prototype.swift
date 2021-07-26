@@ -8,7 +8,7 @@ import Files
 
 // 00093 yandex [desktop] Force Update – Pulse 2
 
-class Prototype {
+class Prototype: Hashable  {
     
     var folder: Folder
     var name: Name
@@ -34,6 +34,15 @@ class Prototype {
         Prototype.prototypes.append(self)
     }
     
+    
+    static func == (lhs: Prototype, rhs: Prototype) -> Bool {
+        return lhs.name.origin == rhs.name.origin
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name.origin)
+    }
+    
 }
 
 
@@ -42,8 +51,8 @@ extension Prototype {
     
     static var prototypes: [Prototype] = []
     
-    static let queue = "~/Documents/testing-queue/"
-//    static let queue = "~/Documents/Git/Prototyping-Queue/"
+//    static let queue = "~/Documents/testing-queue/"
+    static let queue = "~/Documents/Git/Prototyping-Queue/"
     
     static let outputFolderName = "output"
     static let outputFolderPath = "~/Desktop/output/"
