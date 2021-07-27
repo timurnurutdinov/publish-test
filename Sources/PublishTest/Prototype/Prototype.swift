@@ -12,6 +12,8 @@ class Prototype: Hashable  {
     
     var folder: Folder
     var name: Name
+    var id: Int = -1
+    
     
     // +Complexity
     var zScore: Double = 0.0
@@ -29,11 +31,24 @@ class Prototype: Hashable  {
         self.name = Name(folder.name)
         if self.name.parseFailed() { return }
         
+        self.id = Prototype.getID()
+        
         self.countLines()
         
         Prototype.prototypes.append(self)
+        
+        
     }
     
+    
+    
+    
+    static var staticID = -1
+    
+    static func getID() -> Int {
+        Prototype.staticID += 1
+        return Prototype.staticID
+    }
     
     static func == (lhs: Prototype, rhs: Prototype) -> Bool {
         return lhs.name.origin == rhs.name.origin
