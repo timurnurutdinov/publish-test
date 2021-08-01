@@ -10,8 +10,10 @@ import Foundation
 struct Queue {
     
     var prototypes: [Prototype] = []
-    var prevState: [PrototypeConfig] = []
     var path = ""
+    
+    var prevState: [PrototypeConfig] = []
+    var nextState: [PrototypeConfig] = []
     
     
     // Complexity
@@ -24,6 +26,8 @@ struct Queue {
     mutating func setAvarage(_ value: Double) { self.average = value }
     mutating func setStandardVariation(_ value: Double) { self.standardVariation = value }
     mutating func setZScore(_ array: [Double]) { self.zScore = array }
+    
+    mutating func setState(_ state: [PrototypeConfig]) { self.nextState = state }
     
     
     
