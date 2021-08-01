@@ -30,7 +30,7 @@ struct PublishTest: Website {
 let mainScope = Queue(withPath: "~/Documents/Git/Prototyping-Queue/")
 let testScope = Queue(withPath: "~/Documents/testing-queue/")
 
-var scope = testScope
+var scope = mainScope
 
 
 

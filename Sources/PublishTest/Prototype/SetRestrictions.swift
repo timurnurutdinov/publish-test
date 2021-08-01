@@ -8,9 +8,18 @@
 import Foundation
 import Checksum
 
+struct PrototypeConfig: Codable {
+    var id: Int
+    var originName: String
+    var date: Date
+    var status: Status
+}
+
+
 extension Queue {
     
     mutating func applyRestrictionRules() {
+        return
         self.restrict(byName: "2021-01-24 [pp] Geo View – Arrow Playground.framer", tillEnd: true)
         self.restrict(byName: "2018-10-10 [abro] Menu – Open 11.framer")
         
@@ -19,20 +28,47 @@ extension Queue {
     }
     
     mutating func setRestrictions() {
-        readConfig()
-//        self.applyRestrictionRules()
-        
+        self.applyRestrictionRules()
         let allowedPrototypes = self.prototypes.filter { $0.status == .opened }
 //        self.duplicate(allowedPrototypes)
-
-        self.saveConfig()
-        
     }
     
     
     func saveConfig() {
         let config = self.prototypes.reduce("") { $0 + $1.getConfig() + "\n" }
         config.writeFile("config.txt", toFolder: "~/Documents/publish-test/")
+        
+        do {
+            let configSamples = self.prototypes.map { PrototypeConfig(id: $0.id, originName: $0.name.origin, date: $0.folder.modificationDate!, status: $0.status) }
+            
+            
+            
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            
+            let data = try encoder.encode(configSamples)
+            print(data)
+            if let jsonString = String(data: data, encoding: .utf8) {
+              jsonString.writeFile("config2.txt", toFolder: "~/Documents/publish-test/")
+            }
+            
+            
+            
+            let decoder = JSONDecoder()
+
+            do {
+                let decoded = try decoder.decode([PrototypeConfig].self, from: data)
+                print(decoded[0].name)
+            } catch {
+                print("Failed to decode JSON")
+            }
+            
+        } catch { print(error) }
+        
+        
+        
+        
+        
     }
     
     func readConfig() {

@@ -59,7 +59,7 @@ extension Prototype {
 }
 
 
-enum Status: String {
+enum Status: String, Codable {
     case opened = "opened"
     case closed = "closed"
 }
