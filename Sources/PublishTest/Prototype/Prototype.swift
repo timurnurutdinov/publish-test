@@ -24,6 +24,8 @@ class Prototype: Hashable  {
     var moduleLines: Int = 0
     var lines: Int = 0
     
+    var status: Status = .opened
+    
     
     init(withFolder folder: Folder) {
         self.folder = folder
@@ -31,21 +33,12 @@ class Prototype: Hashable  {
         self.name = Name(folder.name)
         if self.name.parseFailed() { return }
         
-        self.id = Prototype.getID()
-        
         self.countLines()
         
     }
     
     
     
-    
-    static var staticID = -1
-    
-    static func getID() -> Int {
-        Prototype.staticID += 1
-        return Prototype.staticID
-    }
     
     static func == (lhs: Prototype, rhs: Prototype) -> Bool {
         return lhs.name.origin == rhs.name.origin
@@ -55,10 +48,18 @@ class Prototype: Hashable  {
         hasher.combine(name.origin)
     }
     
+    func setID(_ id: Int) { self.id = id }
+    
 }
 
 
 extension Prototype {
     static let app = "app.coffee"
     static let moduleFolder = "modules/"
+}
+
+
+enum Status: String {
+    case opened = "opened"
+    case closed = "closed"
 }

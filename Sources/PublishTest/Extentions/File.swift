@@ -18,4 +18,13 @@ extension File {
         catch { print("Failed to count lines: \(self.path)") }
         return 0
     }
+    
+    func string() -> String {
+        do {
+            let str = try Data(contentsOf: self.url).withUnsafeBytes { String(decoding: $0, as: UTF8.self) }
+            return str
+        }
+        catch { print("Failed to count lines: \(self.path)") }
+        return ""
+    }
 }

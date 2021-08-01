@@ -25,19 +25,6 @@ struct Queue {
     mutating func setZScore(_ array: [Double]) { self.zScore = array }
     
     
-    // Restrictions
-    var restrictedTillName: String = ""
-    var restrictedList = [String]()
-    var allowedList = [String]()
-    
-    mutating func restrict(till tillName: String) { self.restrictedTillName = tillName }
-    mutating func restrict(byName name: String) { self.restrictedList.append(name) }
-    mutating func allow(byName name: String) { self.allowedList.append(name) }
-    
-    
-    
-    var moduleNames: [String: String] = [:]
-    
     
     init(withPath path: String) {
         self.path = path
@@ -45,6 +32,7 @@ struct Queue {
     }
     
     mutating func add(_ prototype: Prototype) {
+        prototype.setID(self.prototypes.count)
         self.prototypes.append(prototype)
     }
 }

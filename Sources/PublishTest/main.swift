@@ -38,7 +38,6 @@ var scope = testScope
 
 try PublishTest().publish(using: [
     .readPrototypes(),
-//    .smallTasks(),
     ]
 )
 
@@ -81,7 +80,7 @@ extension PublishingStep where Site == PublishTest {
         }
     }
     
-
+    
     
     
     

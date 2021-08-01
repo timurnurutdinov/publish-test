@@ -12,7 +12,7 @@ import Files
 
 extension Queue {
     
-    func duplicatePrototypes(allowedPrototypes:[Prototype]) {
+    func duplicate(_ allowedPrototypes:[Prototype]) {
         allowedPrototypes.enumerated().forEach { (index, prototype) in prototype.copyFiles() }
     }
     
