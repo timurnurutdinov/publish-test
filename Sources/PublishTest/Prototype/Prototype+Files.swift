@@ -165,3 +165,26 @@ extension Prototype {
     }
 }
 
+
+
+extension Prototype {
+    
+    static func duplicatePrototypes(allowedPrototypes:[Prototype]) {
+//        do { try Folder(path: Prototype.outputFolderPath).createSubfolderIfNeeded(withName: outputPrototypesFolderName) }
+//        catch { print("Can't create folder for prototypes") }
+        
+        allowedPrototypes.enumerated().forEach { (index, prototype) in prototype.copyFiles() }
+    }
+    
+    func copyFiles() {
+        do {
+            
+            let newRepositoryFolder = try Folder(path: Prototype.outputFolderPath).createSubfolderIfNeeded(withName: Prototype.outputPrototypesFolderName)
+            let originFolder = try Folder(path: self.folder.path)
+            
+            let newFolder = try originFolder.copy(to: newRepositoryFolder)
+            try newFolder.rename(to: String(self.id), keepExtension: false)
+            
+        } catch {}
+    }
+}

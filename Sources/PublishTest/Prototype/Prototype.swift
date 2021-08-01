@@ -10,6 +10,8 @@ import Files
 
 class Prototype: Hashable  {
     
+    static var prototypes: [Prototype] = []
+    
     var folder: Folder
     var name: Name
     var id: Int = -1
@@ -64,12 +66,11 @@ class Prototype: Hashable  {
 
 extension Prototype {
     
-    static var prototypes: [Prototype] = []
-    
-//    static let queue = "~/Documents/testing-queue/"
-    static let queue = "~/Documents/Git/Prototyping-Queue/"
+    static let queue = "~/Documents/testing-queue/"
+//    static let queue = "~/Documents/Git/Prototyping-Queue/"
     
     static let outputFolderName = "output"
+    static let outputPrototypesFolderName = "show"
     static let outputFolderPath = "~/Desktop/output/"
     
     static let app = "app.coffee"

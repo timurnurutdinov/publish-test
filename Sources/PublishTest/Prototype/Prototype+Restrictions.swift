@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Checksum
 
 extension Prototype {
     
@@ -40,10 +41,14 @@ extension Prototype {
         }
         
         
-        
+        // Result
         let uniquePrototypes = Array(Set(remainingPrototypes + allowedPrototypes))
         let sortedPrototypes = uniquePrototypes.sorted { $0.name.origin > $1.name.origin }
         
+        Prototype.duplicatePrototypes(allowedPrototypes: sortedPrototypes)
+        
+        
+        // Output
         let allowedOutput = sortedPrototypes.map { $0.name.origin }
         allowedOutput.writeFile(withName: "allowed.txt", separatedBy: "\n")
         

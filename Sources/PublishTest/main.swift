@@ -25,15 +25,17 @@ struct PublishTest: Website {
 
 // This will generate your website using the built-in Foundation theme:
 try PublishTest().publish(using: [
-    .addMarkdownFiles(),
+//    .addMarkdownFiles(),
+//
+//    .readPrototypes(),
+//    .setRestrictions(),
+//    .computeComplexity(),
     
-    .readPrototypes(),
-    .setRestrictions(),
-    .computeComplexity(),
+    .smallTasks(),
     
-    .helperLogModules(),
-//    .helperCommands(),
-    .helperProjectTitles(),
+//    .helperLogModules(),
+// //    .helperCommands(),
+//    .helperProjectTitles(),
     
     ]
 )
@@ -133,6 +135,16 @@ extension PublishingStep where Site == PublishTest {
             
 //            let folder = try Folder(path: "~/Desktop/")
 //            try folder.createSubfolderIfNeeded(withName: Prototype.outputFolderName)
+            
+        }
+    }
+    
+    
+    
+    static func smallTasks() -> Self {
+        .step(named: "Small Tasks") { context in
+            
+            FolderInfo.read()
             
         }
     }
