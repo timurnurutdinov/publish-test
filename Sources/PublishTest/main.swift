@@ -24,19 +24,21 @@ struct PublishTest: Website {
 }
 
 // This will generate your website using the built-in Foundation theme:
+
+
+
+let mainScope = Queue(withPath: "~/Documents/Git/Prototyping-Queue/")
+let testScope = Queue(withPath: "~/Documents/testing-queue/")
+
+var scope = testScope
+
+
+
+
+
 try PublishTest().publish(using: [
-//    .addMarkdownFiles(),
-//
-//    .readPrototypes(),
-//    .setRestrictions(),
-//    .computeComplexity(),
-    
-    .smallTasks(),
-    
-//    .helperLogModules(),
-// //    .helperCommands(),
-//    .helperProjectTitles(),
-    
+    .readPrototypes(),
+//    .smallTasks(),
     ]
 )
 
@@ -70,24 +72,16 @@ extension PublishingStep where Site == PublishTest {
     static func readPrototypes() -> Self {
         .step(named: "Read Prototype Queue") { context in
             
-            try Folder(path: Prototype.queue).subfolders.enumerated().forEach { (index, folder) in
-                Prototype(withFolder: folder)
+            try Folder(path: scope.path).subfolders.enumerated().forEach { (index, folder) in
+                scope.add(Prototype(withFolder: folder))
             }
             
-            let folder = try Folder(path: "~/Desktop/")
-            try folder.createSubfolderIfNeeded(withName: Prototype.outputFolderName)
-            
+            scope.computeZScore()
+            scope.setRestrictions()
         }
     }
     
-    
-    
-    static func computeComplexity() -> Self {
-        .step(named: "Compute Complexity Score") { context in
-            Prototype.computeZScore()
-        }
-    }
-    
+
     
     
     
@@ -98,55 +92,32 @@ extension PublishingStep where Site == PublishTest {
     
     
     
-    static func helperLogModules() -> Self {
-        .step(named: "H: Count modules size for each project") { context in
-            Prototype.logModules()
-        }
-    }
+//    static func helperLogModules() -> Self {
+//        .step(named: "H: Count modules size for each project") { context in
+//            Prototype.logModules()
+//        }
+//    }
     
-    static func helperGridData() -> Self {
-        .step(named: "H: Save Grid Data to Framer Prototype") { context in
-            Prototype.framerGridData().writeFile("data.coffee", toFolder: "/Users/tilllur/Documents/Git/Prototyping-Queue/2020-12-20 [d] Projects List – Grid.framer/modules/")
-        }
-    }
+//    static func helperGridData() -> Self {
+//        .step(named: "H: Save Grid Data to Framer Prototype") { context in
+//            Prototype.framerGridData().writeFile("data.coffee", toFolder: "/Users/tilllur/Documents/Git/Prototyping-Queue/2020-12-20 [d] Projects List – Grid.framer/modules/")
+//        }
+//    }
     
-    static func helperCommands() -> Self {
-        .step(named: "H: Generate SH scripts") { context in
-            Prototype.getTerminalCommandList()
-            Prototype.getTerminalCommandDeteleList()
-        }
-    }
+//    static func helperCommands() -> Self {
+//        .step(named: "H: Generate SH scripts") { context in
+//            Prototype.getTerminalCommandList()
+//            Prototype.getTerminalCommandDeteleList()
+//        }
+//    }
     
-    static func helperProjectTitles() -> Self {
-        .step(named: "H: Write projects titles by prototypes' count") { context in
-            Prototype.getProjectlist()
-        }
-    }
-    
-    
+//    static func helperProjectTitles() -> Self {
+//        .step(named: "H: Write projects titles by prototypes' count") { context in
+//            Prototype.getProjectlist()
+//        }
+//    }
     
     
     
-    
-    static func setRestrictions() -> Self {
-        .step(named: "Setting Restrictions") { context in
-            
-            Prototype.setRestrictions()
-            
-//            let folder = try Folder(path: "~/Desktop/")
-//            try folder.createSubfolderIfNeeded(withName: Prototype.outputFolderName)
-            
-        }
-    }
-    
-    
-    
-    static func smallTasks() -> Self {
-        .step(named: "Small Tasks") { context in
-            
-            FolderInfo.read()
-            
-        }
-    }
     
 }

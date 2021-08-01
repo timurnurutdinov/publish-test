@@ -10,8 +10,6 @@ import Files
 
 class Prototype: Hashable  {
     
-    static var prototypes: [Prototype] = []
-    
     var folder: Folder
     var name: Name
     var id: Int = -1
@@ -37,9 +35,6 @@ class Prototype: Hashable  {
         
         self.countLines()
         
-        Prototype.prototypes.append(self)
-        
-        
     }
     
     
@@ -63,18 +58,7 @@ class Prototype: Hashable  {
 }
 
 
-
 extension Prototype {
-    
-    static let queue = "~/Documents/testing-queue/"
-//    static let queue = "~/Documents/Git/Prototyping-Queue/"
-    
-    static let outputFolderName = "output"
-    static let outputPrototypesFolderName = "show"
-    static let outputFolderPath = "~/Desktop/output/"
-    
     static let app = "app.coffee"
-    static let modules = "modules/"
-    
+    static let moduleFolder = "modules/"
 }
-

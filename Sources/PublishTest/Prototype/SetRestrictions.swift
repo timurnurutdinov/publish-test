@@ -8,25 +8,15 @@
 import Foundation
 import Checksum
 
-extension Prototype {
+extension Queue {
     
-    static var restrictedTillName: String = ""
-    
-    static var restrictedList = [String]()
-    static var allowedList = [String]()
-    
-    static func setRestrictions(prototypes:[Prototype] = Prototype.prototypes) {
+    func setRestrictions() {
         
-        var toEdgePrototypes:[Prototype] = prototypes
-        
-//        restrictedTillName = "2021-01-24 [pp] Geo View – Arrow Playground.framer"
-//        restrictedList.append("2018-10-10 [abro] Menu – Open 11.framer")
-//        allowedList.append("2019-05-18 [utils] Utils – Size.framer")
-//        allowedList.append("2019-05-18 [ios] Purify – Swipe.framer")
+        var toEdgePrototypes:[Prototype] = self.prototypes
         
         // Slice to Edge
-        let titles = Prototype.prototypes.map { $0.name.origin }
-        if let indexOfRestrictedTillName = titles.firstIndex(of: Prototype.restrictedTillName) {
+        let titles = self.prototypes.map { $0.name.origin }
+        if let indexOfRestrictedTillName = titles.firstIndex(of: self.restrictedTillName) {
             toEdgePrototypes = Array(prototypes.prefix(upTo: indexOfRestrictedTillName))
         }
         
@@ -45,7 +35,7 @@ extension Prototype {
         let uniquePrototypes = Array(Set(remainingPrototypes + allowedPrototypes))
         let sortedPrototypes = uniquePrototypes.sorted { $0.name.origin > $1.name.origin }
         
-        Prototype.duplicatePrototypes(allowedPrototypes: sortedPrototypes)
+        self.duplicatePrototypes(allowedPrototypes: sortedPrototypes)
         
         
         // Output
@@ -56,5 +46,17 @@ extension Prototype {
         test.writeFile(withName: "allowedPaths.txt", separatedBy: "\n")
         
     }
+}
+
+
+
+extension Queue {
     
+    mutating func testRestrictins() {
+        self.restrict(till: "2021-01-24 [pp] Geo View – Arrow Playground.framer")
+        self.restrict(byName: "2018-10-10 [abro] Menu – Open 11.framer")
+        
+        self.allow(byName: "2019-05-18 [utils] Utils – Size.framer")
+        self.allow(byName: "2019-05-18 [ios] Purify – Swipe.framer")
+    }
 }

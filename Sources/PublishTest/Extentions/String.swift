@@ -31,9 +31,6 @@ extension String {
         }
     }
     
-    func notSkipped() -> Bool {
-        return Prototype.skipMap[self] != 1
-    }
     
     func writeFile(_ name:String = "blank.txt", toFolder path:String = "~/Desktop/output/") {
         do {

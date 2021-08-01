@@ -15,7 +15,7 @@ struct FolderInfo {
         
         do {
             let folder = try Folder(path: prototypePath)
-            Prototype.init(withFolder: folder)
+//            Prototype.init(withFolder: folder)
             
         } catch { }
     }
