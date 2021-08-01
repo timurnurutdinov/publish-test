@@ -10,6 +10,7 @@ import Foundation
 struct Queue {
     
     var prototypes: [Prototype] = []
+    var prevState: [PrototypeConfig] = []
     var path = ""
     
     
@@ -29,6 +30,7 @@ struct Queue {
     init(withPath path: String) {
         self.path = path
         self.createOutputFolders()
+        self.readState()
     }
     
     mutating func add(_ prototype: Prototype) {

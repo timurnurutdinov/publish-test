@@ -15,11 +15,11 @@ extension URL {
         return 0
     }
     
-    func read() -> String {
-        do { return try File(path: self.path).string() }
-        catch { print("🛑 Failed to read \(self.path)") }
-        return ""
-    }
+//    func read() -> String {
+//        do { return try File(path: self.path).string() }
+//        catch { print("🛑 Failed to read \(self.path)") }
+//        return ""
+//    }
     
     init(staticString string: StaticString) {
         guard let url = URL(string: "\(string)") else {

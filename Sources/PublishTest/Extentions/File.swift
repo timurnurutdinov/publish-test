@@ -19,12 +19,20 @@ extension File {
         return 0
     }
     
-    func string() -> String {
+//    func string() -> String {
+//        do {
+//            let str = try Data(contentsOf: self.url).withUnsafeBytes { String(decoding: $0, as: UTF8.self) }
+//            return str
+//        }
+//        catch { print("Failed to count lines: \(self.path)") }
+//        return ""
+//    }
+    
+    func testData() -> Data {
         do {
-            let str = try Data(contentsOf: self.url).withUnsafeBytes { String(decoding: $0, as: UTF8.self) }
-            return str
+            return try Data(contentsOf: self.url)
         }
         catch { print("Failed to count lines: \(self.path)") }
-        return ""
+        return Data()
     }
 }

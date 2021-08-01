@@ -7,6 +7,7 @@
 
 import Foundation
 import Checksum
+import Files
 
 struct PrototypeConfig: Codable {
     var id: Int
@@ -30,54 +31,46 @@ extension Queue {
     mutating func setRestrictions() {
         self.applyRestrictionRules()
         let allowedPrototypes = self.prototypes.filter { $0.status == .opened }
-//        self.duplicate(allowedPrototypes)
     }
     
     
-    func saveConfig() {
-        let config = self.prototypes.reduce("") { $0 + $1.getConfig() + "\n" }
-        config.writeFile("config.txt", toFolder: "~/Documents/publish-test/")
-        
+    
+    mutating func readState(configFile:String = "config.json",
+              fromFolder: String = "~/Documents/Git/publish-test/Content/") {
+        print("State Read")
+        do {
+            let file = try Folder(path: fromFolder).file(at: configFile)
+            let decoder = JSONDecoder()
+
+            do { self.prevState = try decoder.decode([PrototypeConfig].self, from: file.testData())
+            } catch { print("Failed to decode JSON") }
+            
+        }
+        catch { print(error) }
+    }
+    
+    
+    
+    func saveState(configFile:String = "config.json", toFolder: String = "~/Documents/Git/publish-test/Content/") {
         do {
             let configSamples = self.prototypes.map { PrototypeConfig(id: $0.id, originName: $0.name.origin, date: $0.folder.modificationDate!, status: $0.status) }
-            
-            
             
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             
             let data = try encoder.encode(configSamples)
-            print(data)
             if let jsonString = String(data: data, encoding: .utf8) {
-              jsonString.writeFile("config2.txt", toFolder: "~/Documents/publish-test/")
-            }
-            
-            
-            
-            let decoder = JSONDecoder()
-
-            do {
-                let decoded = try decoder.decode([PrototypeConfig].self, from: data)
-                print(decoded[0].name)
-            } catch {
-                print("Failed to decode JSON")
+                jsonString.writeFile(configFile, toFolder: toFolder)
             }
             
         } catch { print(error) }
         
-        
-        
-        
-        
     }
     
-    func readConfig() {
-        if let lines = URL(string: "~/Documents/publish-test/config.txt")?.read().split(separator: "\n", omittingEmptySubsequences: true) {
-            print(lines.first)
-        }
-        else { print("🛑 Config was not found") }
-    }
+    
 }
+
+
 
 
 
@@ -104,14 +97,4 @@ extension Queue {
         }
     }
 
-}
-
-
-extension Prototype {
-    func getConfig() -> String {
-        if let date = self.folder.modificationDate {
-            return "\(self.id), \(self.name.origin), \(date), \(self.status)"
-        }
-        return "-1, Unknown, +0000, closed"
-    }
 }
