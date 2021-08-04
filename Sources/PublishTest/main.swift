@@ -5,6 +5,14 @@ import Publish
 import Plot
 import Files
 
+
+
+public struct Test {
+    public func test() -> String { return "wow2" }
+    public init() {}
+}
+
+
 // This type acts as the configuration for your website.
 public struct PublishProcess: Website {
     public enum SectionID: String, WebsiteSectionID {
