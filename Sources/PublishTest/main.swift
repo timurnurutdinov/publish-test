@@ -6,7 +6,7 @@ import Plot
 import Files
 
 // This type acts as the configuration for your website.
-public struct PublishTest: Website {
+public struct PublishProcess: Website {
     public enum SectionID: String, WebsiteSectionID {
         case prototypes
     }
@@ -38,14 +38,14 @@ var scope = Queue(withPath: testQueue)
 
 
 
-try PublishTest().publish(using: [
+try PublishProcess().publish(using: [
     .readPrototypes(),
     ]
 )
 
 
 
-extension PublishingStep where Site == PublishTest {
+extension PublishingStep where Site == PublishProcess {
     
     static func addDefaultSectionTitles() -> Self {
         .step(named: "Default section titles") { context in

@@ -8,7 +8,7 @@
 import Publish
 import Plot
 
-extension Theme where Site == PublishTest {
+extension Theme where Site == PublishProcess {
     static var testTheme: Self {
         Theme(htmlFactory: PublishTestHTMLFactory())
     }
@@ -16,28 +16,28 @@ extension Theme where Site == PublishTest {
     private struct PublishTestHTMLFactory: HTMLFactory {
         
         
-        func makeSectionHTML(for section: Section<PublishTest>, context: PublishingContext<PublishTest>) throws -> HTML {
+        func makeSectionHTML(for section: Section<PublishProcess>, context: PublishingContext<PublishProcess>) throws -> HTML {
                 HTML(
                     .head(.title("My website"), .stylesheet("styles.css")),
                     .body(.div( .h1("My website"), .p("Writing HTML in Swift is pretty great!")))
                 )
         }
         
-        func makePageHTML(for page: Page, context: PublishingContext<PublishTest>) throws -> HTML {
+        func makePageHTML(for page: Page, context: PublishingContext<PublishProcess>) throws -> HTML {
                 HTML(
                     .head(.title("My website"), .stylesheet("styles.css")),
                     .body(.div( .h1("My website"), .p("Writing HTML in Swift is pretty great!")))
                 )
         }
         
-        func makeTagListHTML(for page: TagListPage, context: PublishingContext<PublishTest>) throws -> HTML? {
+        func makeTagListHTML(for page: TagListPage, context: PublishingContext<PublishProcess>) throws -> HTML? {
                 HTML(
                     .head(.title("My website"), .stylesheet("styles.css")),
                     .body(.div( .h1("My website"), .p("Writing HTML in Swift is pretty great!")))
                 )
         }
         
-        func makeTagDetailsHTML(for page: TagDetailsPage, context: PublishingContext<PublishTest>) throws -> HTML? {
+        func makeTagDetailsHTML(for page: TagDetailsPage, context: PublishingContext<PublishProcess>) throws -> HTML? {
                 HTML(
                     .head(.title("My website"), .stylesheet("styles.css")),
                     .body(.div( .h1("My website"), .p("Writing HTML in Swift is pretty great!")))
@@ -45,7 +45,7 @@ extension Theme where Site == PublishTest {
         }
         
         
-        func makeIndexHTML(for index: Index, context: PublishingContext<PublishTest>) throws -> HTML {
+        func makeIndexHTML(for index: Index, context: PublishingContext<PublishProcess>) throws -> HTML {
                 HTML(
                     .head(.title("My website"), .stylesheet("styles.css")),
                     .body(.div( .h1("My website"), .p("Writing HTML in Swift is pretty great!")))
@@ -53,8 +53,8 @@ extension Theme where Site == PublishTest {
         }
         
         func makeItemHTML(
-            for item: Item<PublishTest>,
-            context: PublishingContext<PublishTest>
+            for item: Item<PublishProcess>,
+            context: PublishingContext<PublishProcess>
         ) throws -> HTML {
             HTML(
                 .head(for: item, on: context.site),
