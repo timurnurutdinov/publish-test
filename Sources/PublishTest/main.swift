@@ -21,6 +21,8 @@ public struct PublishTest: Website {
     public var description = "Work in Progress"
     public var language: Language { .english }
     public var imagePath: Path? { nil }
+    
+    public init() {}
 }
 
 // This will generate your website using the built-in Foundation theme:
