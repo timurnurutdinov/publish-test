@@ -6,21 +6,21 @@ import Plot
 import Files
 
 // This type acts as the configuration for your website.
-struct PublishTest: Website {
-    enum SectionID: String, WebsiteSectionID {
+public struct PublishTest: Website {
+    public enum SectionID: String, WebsiteSectionID {
         case prototypes
     }
 
-    struct ItemMetadata: WebsiteItemMetadata {
+    public struct ItemMetadata: WebsiteItemMetadata {
         // Add any site-specific metadata that you want to use here.
     }
 
     // Update these properties to configure your website:
-    var url = URL(string: "https://tilllur.ru")!
-    var name = "TillluR"
-    var description = "Work in Progress"
-    var language: Language { .english }
-    var imagePath: Path? { nil }
+    public var url = URL(string: "https://tilllur.ru")!
+    public var name = "TillluR"
+    public var description = "Work in Progress"
+    public var language: Language { .english }
+    public var imagePath: Path? { nil }
 }
 
 // This will generate your website using the built-in Foundation theme:
