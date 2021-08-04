@@ -21,7 +21,8 @@ let package = Package(
     targets: [
         .target(
             name: "PublishTest",
-            dependencies: ["Publish", "Surge", "Checksum"]
+            dependencies: ["Publish", "Surge", "Checksum"],
+            path: "Sources"
         ),
     ]
 )
