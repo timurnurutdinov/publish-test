@@ -10,6 +10,7 @@ import Checksum
 import Files
 
 
+
 enum RestrictionReason: String {
     case internalAPI = "api"
     case temporaryNDA = "temp"
@@ -18,20 +19,6 @@ enum RestrictionReason: String {
 enum Status: String, Codable {
     case opened = "opened"
     case closed = "closed"
-}
-
-enum Action: String {
-    // nothing to remove
-    case none = "already updated"
-    case addAndOpen = "add/open"
-    case addAndClose = "add/close"
-    
-    // remove older version
-    case updateAndOpen = "update/open"
-    case updateAndClose = "update/close"
-    
-    // just remove
-    case remove = "remove"
 }
 
 
@@ -50,67 +37,32 @@ struct PrototypeConfig: Codable {
 
 
 
-
-// Most Valuable
 extension Queue {
     mutating func setRestrictions() {
         self.restrictLocally()
-        
-        self.updateActions()
-        self.setActions()
+        self.saveState()
+        self.setFolders()
     }
     
     mutating func restrictLocally() {
         // TODO: remove magic numbers
         self.restrict(byName: "2019-05-08 [abro] Verticals – Swipe 16.framer", tillEnd: true)
         self.allow(byName: "2019-05-18 [utils] Utils – Size.framer")
+        self.allow(byName: "2019-05-18 [utils] Temp – One.framer")
+    }
+    
+    func setFolders() {
+        self.cleanPrototypesFolder()
+        
+        let toAdd: [Prototype] = self.prototypes.filter { $0.status == .opened }
+        toAdd.enumerated().forEach { $1.addFolder() }
+        
+        let toRestrict: [Prototype] = self.prototypes.filter { $0.status == .closed }
+        toRestrict.enumerated().forEach { $1.addBlankFolder() }
+        
     }
 }
 
-
-
-
-extension Queue {
-    
-    mutating func updateActions() {
-        self.saveState()
-        let pairs = zip(self.prevState, self.nextState).map { $0 }
-        
-        pairs.enumerated().forEach { index, pair in
-            if pair.0 == pair.1 { self.prototypes[index].setAction(.none) }
-            else {
-                if pair.1.status == .opened { self.prototypes[index].setAction(.updateAndOpen) }
-                else { self.prototypes[index].setAction(.updateAndClose) }
-            }
-        }
-        
-    }
-    
-    
-    mutating func setActions() {
-        var doneString = ""
-        
-        if self.nextState.count <= self.prevState.count {
-            
-            self.prevState[self.nextState.count...].enumerated().forEach {
-                removeFolder(withID: $1.id)
-                doneString += "\($1.originName) -> \(Action.remove) (\($1.id))\n"
-            }
-        }
-        
-        else if self.nextState.count > self.prevState.count {
-            
-            self.prototypes[self.prevState.count...].enumerated().forEach {
-                if $1.status == .opened { $1.setAction(.addAndOpen) }
-                else { $1.setAction(.addAndClose) }
-            }
-        }
-        
-        self.setFolders()
-        self.logActions(with: doneString)
-    }
-    
-}
 
 
 
@@ -164,8 +116,8 @@ extension Queue {
         let names = self.prototypes.map { $0.name.origin }
         
         if let firstIndex = names.firstIndex(of: name) {
-            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.status = .closed } }
-            else { self.prototypes[firstIndex].status = .closed }
+            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.setStatus(.closed) } }
+            else { self.prototypes[firstIndex].setStatus(.closed) }
         }
 
     }
@@ -174,7 +126,7 @@ extension Queue {
         let names = self.prototypes.map { $0.name.origin }
         
         if let firstIndex = names.firstIndex(of: name) {
-            self.prototypes[firstIndex].status = .opened
+            self.prototypes[firstIndex].setStatus(.opened)
         }
     }
 
@@ -182,16 +134,16 @@ extension Queue {
 
 
 
-// Log
-extension Queue {
-    
-    func logActions(with removeLogOutput: String) {
-        
-        let realActions = self.prototypes.filter { $0.action != .none }
-        let actions = realActions.map { "\($0.name.origin) -> \($0.action.rawValue) (\($0.id))" }
-        let actionsOutput = actions.reduce("") { "\($0)\($1)\n" }
-        actionsOutput.writeFile("actions.txt")
-        
-        if actionsOutput != "" { print("Actions:\n\(removeLogOutput)\(actionsOutput)") }
-    }
-}
+// Update
+//extension Queue {
+//    
+//    func logActions(with removeLogOutput: String) {
+//        
+//        let realActions = self.prototypes.filter { $0.action != .none }
+//        let actions = realActions.map { "\($0.name.origin) -> \($0.action.rawValue) (\($0.id))" }
+//        let actionsOutput = actions.reduce("") { "\($0)\($1)\n" }
+//        actionsOutput.writeFile("actions.txt")
+//        
+//        if actionsOutput != "" { print("Actions:\n\(removeLogOutput)\(actionsOutput)") }
+//    }
+//}

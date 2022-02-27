@@ -25,7 +25,6 @@ class Prototype: Hashable  {
     var lines: Int = 0
     
     var status: Status = .opened
-    var action: Action = .none
     
     
     init(withFolder folder: Folder) {
@@ -50,7 +49,8 @@ class Prototype: Hashable  {
     }
     
     func setID(_ id: Int) { self.id = id }
-    func setAction(_ action: Action) { self.action = action }
+    func setStatus(_ status:Status) { self.status = status }
+//    func setAction(_ action: Action) { self.action = action }
     
 }
 
@@ -58,6 +58,8 @@ class Prototype: Hashable  {
 extension Prototype {
     static let app = "app.coffee"
     static let moduleFolder = "modules/"
+    
+    static let blankPrototype = "~/Documents/Git/publish-test/Content/blank.framer/"
 }
 
 

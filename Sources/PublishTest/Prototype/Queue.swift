@@ -46,9 +46,9 @@ struct Queue {
 
 
 struct OutputFolder {
-    static let name = "output"
     static let path = "~/Desktop/output/"
     
+    static let name = "output"
     static let prototypesFolder = "show"
 }
 
