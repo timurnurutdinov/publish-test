@@ -39,7 +39,7 @@ class Name {
     
     init(_ line: String) {
         self.origin = line
-        let pattern = #"([^\s]+) \[([^]]+)\] ([^–^-]+) [–-] ([^.]+)"#
+        let pattern = #"([^\s]+) \[([^]]+)\] ([^–^-]+) [—–-] ([^.]+)"#
 
         let groups = line.matchingStrings(regex: pattern)
         let flattened = groups.flatMap { $0 }

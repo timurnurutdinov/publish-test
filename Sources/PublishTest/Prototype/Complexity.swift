@@ -35,8 +35,16 @@ extension Queue {
         let computedScore = sumArray.map { ($0 - self.average)/self.standardVariation }
         self.setZScore(computedScore)
         
+        self.logExtremePrototypesNames()
+        
+    }
+    
+    func logExtremePrototypesNames() {
+        
         self.zScore.writeFile(withName: "zIndex.txt", separatedBy: ",")
         
+        let extremeNames = self.getExtremePrototypes().map { $0.name.origin }
+        extremeNames.writeFile(withName: "extreme prototypes.txt", separatedBy: "\n")
     }
 }
 

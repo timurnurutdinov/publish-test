@@ -85,6 +85,7 @@ extension PublishingStep where Site == PublishProcess {
                 scope.add(Prototype(withFolder: folder))
             }
             
+            print("Read \(scope.prototypes.count) prototypes")
             scope.computeZScore()
             scope.setRestrictions()
         }

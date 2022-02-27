@@ -61,25 +61,3 @@ extension Prototype {
 }
 
 
-enum Status: String, Codable {
-    case opened = "opened"
-    case closed = "closed"
-}
-
-enum Action: String {
-    case none = "no need for update"
-    case addAndOpen = "add/open"
-    case addAndClose = "add/close"
-    case updateAndOpen = "update/open"
-    case updateAndClose = "update/close"
-    case remove = "remove"
-    
-    
-    
-    
-//    case close = "close"
-//    case update = "update"
-//    case none = "none"
-//    case add = "add"
-//    case updateAndClose = "update/close"
-}
