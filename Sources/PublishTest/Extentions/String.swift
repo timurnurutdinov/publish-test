@@ -45,3 +45,15 @@ extension String {
     
 }
 
+
+
+extension String {
+    static func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyz"
+      return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
+    static func randomStringForURL() -> String {
+        return self.randomString(length: 8)
+    }
+}

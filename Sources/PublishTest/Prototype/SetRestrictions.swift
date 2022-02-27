@@ -27,11 +27,17 @@ struct PrototypeConfig: Codable {
     var originName: String
     var date: Date
     var status: Status
+    var url: String
     
     static func == (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
         return lhs.id == rhs.id && lhs.originName == rhs.originName && lhs.date == rhs.date && lhs.status == rhs.status
     }
 }
+
+//struct PublicConfig: Codable {
+//    var id: Int
+//    var url: String
+//}
 
 
 
@@ -41,6 +47,7 @@ extension Queue {
     mutating func setRestrictions() {
         self.restrictLocally()
         self.saveState()
+        self.saveState(configFile: OutputFolder.prototypesJSON, toFolder: OutputFolder.path)
         self.setFolders()
     }
     
@@ -83,11 +90,13 @@ extension Queue {
         catch { print(error) }
     }
     
+    
     mutating func saveState(configFile:String = "config.json", toFolder: String = "~/Documents/Git/publish-test/Content/") {
         do {
             
             let nextState = self.prototypes.map {
-                PrototypeConfig(id: $0.id, originName: $0.name.origin, date: $0.folder.modificationDate!, status: $0.status) }
+                PrototypeConfig(id: $0.id, originName: $0.name.origin, date: $0.folder.modificationDate!, status: $0.status, url: $0.url)
+            }
             
             self.setState(nextState)
             
@@ -99,9 +108,12 @@ extension Queue {
                 jsonString.writeFile(configFile, toFolder: toFolder)
             }
             
+//            self.savePublicState()
+            
         } catch { print(error) }
     }
     
+        
 }
 
 
@@ -145,5 +157,25 @@ extension Queue {
 //        actionsOutput.writeFile("actions.txt")
 //        
 //        if actionsOutput != "" { print("Actions:\n\(removeLogOutput)\(actionsOutput)") }
+//    }
+//}
+
+
+
+//// TODO: Remove?
+//extension Queue {
+//    mutating func savePublicState(configFile:String = "public.json") {
+//        do {
+//            let publicState = self.prototypes.map {
+//                PrototypeConfig(id: $0.id, originName: $0.name.origin, date: $0.folder.modificationDate!, status: $0.status, url: $0.url)
+//            }
+//            
+//            let encoder = JSONEncoder()
+//            encoder.outputFormatting = .prettyPrinted
+//            
+//            let data = try encoder.encode(publicState)
+//            if let jsonString = String(data: data, encoding: .utf8) { jsonString.writeFile(configFile, toFolder: OutputFolder.path) }
+//            
+//        } catch { print(error) }
 //    }
 //}

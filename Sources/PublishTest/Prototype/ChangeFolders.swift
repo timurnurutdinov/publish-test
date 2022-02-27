@@ -44,7 +44,7 @@ extension Prototype {
             if isRestricted { originFolder = try Folder(path: Prototype.blankPrototype) }
 
             let newFolder = try originFolder.copy(to: listFolder)
-            try newFolder.rename(to: String(self.id), keepExtension: false)
+            try newFolder.rename(to: self.url, keepExtension: false)
 
         } catch { print() }
     }

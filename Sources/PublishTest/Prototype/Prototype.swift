@@ -25,6 +25,7 @@ class Prototype: Hashable  {
     var lines: Int = 0
     
     var status: Status = .opened
+    var url = ""
     
     
     init(withFolder folder: Folder) {
@@ -34,6 +35,7 @@ class Prototype: Hashable  {
         if self.name.parseFailed() { return }
         
         self.countLines()
+        self.url = String.randomStringForURL()
         
     }
     
@@ -50,7 +52,7 @@ class Prototype: Hashable  {
     
     func setID(_ id: Int) { self.id = id }
     func setStatus(_ status:Status) { self.status = status }
-//    func setAction(_ action: Action) { self.action = action }
+    
     
 }
 

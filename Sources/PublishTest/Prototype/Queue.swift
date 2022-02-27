@@ -41,14 +41,22 @@ struct Queue {
         prototype.setID(self.prototypes.count)
         self.prototypes.append(prototype)
     }
+    
+//    mutating func addURL(_ url: String) { self.urls.insert(url) }
+    
+//    mutating func prepareShortIDList() {
+//        let shortIDList = Set(self.prototypes.map { String.randomStringForURL() })
+//    }
 }
 
 
 
 struct OutputFolder {
+    // TODO: change folder
     static let path = "~/Desktop/output/"
-    
     static let name = "output"
-    static let prototypesFolder = "show"
+    
+    static let prototypesFolder = "p"
+    static let prototypesJSON = "p.json"
 }
 
