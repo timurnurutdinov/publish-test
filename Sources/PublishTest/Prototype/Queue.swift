@@ -53,10 +53,15 @@ struct Queue {
 
 struct OutputFolder {
     // TODO: change folder
-    static let path = "~/Desktop/output/"
-    static let name = "output"
+    static let name = "output" // Bad
+    static let path = "~/Documents/Git/tilllur.ru/"
     
     static let prototypesFolder = "p"
+    static let prototypesStaticFolder = "s"
     static let prototypesJSON = "p.json"
+    
 }
+
+
+
 

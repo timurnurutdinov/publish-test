@@ -15,6 +15,12 @@ extension URL {
         return 0
     }
     
+    func string() -> String {
+        do { return try File(path: self.path).readAsString() }
+        catch { print("🛑 Failed to get string from app.coffee") }
+        return ""
+    }
+    
 //    func read() -> String {
 //        do { return try File(path: self.path).string() }
 //        catch { print("🛑 Failed to read \(self.path)") }

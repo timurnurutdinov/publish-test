@@ -26,6 +26,7 @@ class Prototype: Hashable  {
     
     var status: Status = .opened
     var url = ""
+    var staticURL = ""
     
     
     init(withFolder folder: Folder) {
@@ -52,6 +53,7 @@ class Prototype: Hashable  {
     
     func setID(_ id: Int) { self.id = id }
     func setStatus(_ status:Status) { self.status = status }
+    func setStaticURL(_ url:String) { self.staticURL = url }
     
     
 }

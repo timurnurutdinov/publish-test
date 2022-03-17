@@ -40,7 +40,7 @@ public struct PublishProcess: Website {
 let mainQueue = "~/Documents/Git/Prototyping-Queue/"
 let testQueue = "~/Documents/testing-queue/"
 
-var scope = Queue(withPath: testQueue)
+var scope = Queue(withPath: mainQueue)
 
 
 
@@ -87,7 +87,9 @@ extension PublishingStep where Site == PublishProcess {
             
             print("Read \(scope.prototypes.count) prototypes")
             scope.computeZScore()
-            scope.setRestrictions()
+            scope.setPermissions()
+            
+            scope.find()
         }
     }
     
