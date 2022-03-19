@@ -32,7 +32,15 @@ extension String {
     }
     
     
-    func writeFile(_ name:String = "blank.txt", toFolder path:String = "~/Desktop/output/") {
+    func writeTempFile(_ name:String = "blank.txt") {
+        self.writeFile(name, toFolder: "~/Desktop/output/")
+    }
+    
+    func writeTempFile(_ name:String = "blank.txt", toFolder path:String) {
+        self.writeFile(name, toFolder: "~/Desktop/output/" + path)
+    }
+    
+    func writeFile(_ name:String = "blank.txt", toFolder path:String) {
         do {
             let folder = try Folder(path: path)
             let file = try folder.createFile(named: name)

@@ -33,7 +33,6 @@ public struct PublishProcess: Website {
     public init() {}
 }
 
-// This will generate your website using the built-in Foundation theme:
 
 
 
@@ -46,58 +45,54 @@ var scope = Queue(withPath: mainQueue)
 
 
 
-//try PublishProcess().publish(using: [
-//    .publishPrototypes(),
-//    ]
-//)
-
-//try PublishProcess().publish(using: [
-//    .findText("emit"),
-//    ]
-//)
-
 try PublishProcess().publish(using: [
-    .updatePresentationComponent(),
+    .read(),
+//    .publish(),
+    
+//    .findText("emit"),
+    .getZScore(),
+    .getProjectList(),
+//    .updatePComponent(),
     ]
 )
 
 
 
+
 extension PublishingStep where Site == PublishProcess {
     
-    static func publishPrototypes() -> Self {
-        .step(named: "Read Prototype Queue") { context in
-            
+    static func read() -> Self {
+        .step(named: "Read Prototypes") { context in
             try Folder(path: scope.path).subfolders.enumerated().forEach { (index, folder) in
                 scope.add(Prototype(withFolder: folder))
             }
-            
-            print("Read \(scope.prototypes.count) prototypes")
-            scope.computeZScore()
+        }
+    }
+    
+    static func publish() -> Self {
+        .step(named: "Publish Prototypes") { context in
+//
             scope.setPermissions()
         }
     }
     
     
-    static func findText(_ toFind: String) -> Self {
-        .step(named: "Looking for \(toFind)") { context in
-            
-            try Folder(path: scope.path).subfolders.enumerated().forEach { (index, folder) in
-                scope.add(Prototype(withFolder: folder))
-            }
-
-            scope.find()
-        }
+    
+    
+    static func getZScore() -> Self {
+        .step(named: "Util: Get Score") { context in scope.computeZScore() }
     }
     
+    static func getProjectList() -> Self {
+        .step(named: "Util: Get Project List") { context in scope.getProjectlist() }
+    }
     
+    static func findText(_ toFind: String) -> Self {
+        .step(named: "Util: Look for \"\(toFind)\"") { context in scope.find() }
+    }
     
-    static func updatePresentationComponent() -> Self {
-        .step(named: "Updating Presentations") { context in
-            
-            PresentationComponent()
-//                .update()
-        }
+    static func updatePComponent() -> Self {
+        .step(named: "Utils: Update PComponent") { context in PresentationComponent() }
     }
     
     
