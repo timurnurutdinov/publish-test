@@ -18,11 +18,6 @@ class PresentationComponent {
         do {
             
             self.code = changeAppFile()
-//            self.code.writeFile(PresentationComponent.nameFile, toFolder: "~/Desktop")
-            
-//            try Folder(path: PresentationComponent.componentFolder).files.enumerated().forEach { (index, file) in
-//                if (file.name == "app.coffee") { self.app = file }
-//            }
             
             try Folder(path: PresentationComponent.moduleFolder).files.enumerated().forEach { (index, file) in
                 if (file.name.fileExtension() == "coffee") { self.modules.append(file) }
@@ -65,12 +60,8 @@ class PresentationComponent {
 
 
 extension PresentationComponent {
-//    static let appFileName = "app.coffee"
-//    static let name = "PresentationComponent"
     static let nameFile = "PresentationComponent.coffee"
-//    static let assetFolder = "Presentation-Queue"
-//    static let moduleFolder = "modules/"
-    
+
     static let presentationFolder = "~/Documents/Git/PresentationComponent/Presentation-Queue"
     static let componentFolder = "~/Documents/Git/PresentationComponent/Presentation.framer"
     static let moduleFolder = "~/Documents/Git/PresentationComponent/Presentation.framer/modules"
