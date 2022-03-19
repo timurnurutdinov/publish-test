@@ -56,9 +56,11 @@ struct OutputFolder {
     static let name = "output" // Bad
     static let path = "~/Documents/Git/tilllur.ru/"
     
-    static let prototypesFolder = "p"
+    static let prototypesDynamicFolder = "d"
     static let prototypesStaticFolder = "s"
-    static let prototypesJSON = "p.json"
+    static let presentationFolder = "p"
+    
+    static let prototypesJSON = "d.json"
     
 }
 

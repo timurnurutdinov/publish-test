@@ -13,7 +13,7 @@ extension Prototype {
     
     func addFolder(_ isRestricted: Bool = false) {
         do {
-            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesFolder)
+            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder)
             
             var originFolder = try Folder(path: self.folder.path)
 //            if isRestricted { originFolder = try Folder(path: Prototype.blankPrototype) }

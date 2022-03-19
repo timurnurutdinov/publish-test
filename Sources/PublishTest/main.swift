@@ -46,8 +46,18 @@ var scope = Queue(withPath: mainQueue)
 
 
 
+//try PublishProcess().publish(using: [
+//    .publishPrototypes(),
+//    ]
+//)
+
+//try PublishProcess().publish(using: [
+//    .findText("emit"),
+//    ]
+//)
+
 try PublishProcess().publish(using: [
-    .readPrototypes(),
+    .updatePresentationComponent(),
     ]
 )
 
@@ -55,30 +65,7 @@ try PublishProcess().publish(using: [
 
 extension PublishingStep where Site == PublishProcess {
     
-    static func addDefaultSectionTitles() -> Self {
-        .step(named: "Default section titles") { context in
-            context.mutateAllSections { section in
-                guard section.title.isEmpty else { return }
-
-                switch section.id {
-                case .prototypes:
-                    section.title = "My Prototypes"
-//                case .links:
-//                    section.title = "External links"
-//                case .about:
-//                    section.title = "About this site"
-                }
-            }
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    static func readPrototypes() -> Self {
+    static func publishPrototypes() -> Self {
         .step(named: "Read Prototype Queue") { context in
             
             try Folder(path: scope.path).subfolders.enumerated().forEach { (index, folder) in
@@ -88,8 +75,28 @@ extension PublishingStep where Site == PublishProcess {
             print("Read \(scope.prototypes.count) prototypes")
             scope.computeZScore()
             scope.setPermissions()
+        }
+    }
+    
+    
+    static func findText(_ toFind: String) -> Self {
+        .step(named: "Looking for \(toFind)") { context in
             
+            try Folder(path: scope.path).subfolders.enumerated().forEach { (index, folder) in
+                scope.add(Prototype(withFolder: folder))
+            }
+
             scope.find()
+        }
+    }
+    
+    
+    
+    static func updatePresentationComponent() -> Self {
+        .step(named: "Updating Presentations") { context in
+            
+            PresentationComponent()
+//                .update()
         }
     }
     
