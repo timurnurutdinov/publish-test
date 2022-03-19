@@ -37,8 +37,8 @@ struct PrototypeConfig: Codable {
 
 extension Queue {
     
-    mutating func setPermissions() {
-        self.cleanPrototypesFolder()
+    mutating func publish() {
+        self.cleanFolders()
         
         self.setDynamicURL()
         self.setStaticURL()
@@ -57,7 +57,7 @@ extension Queue {
 
 extension Queue {
     
-    func cleanPrototypesFolder() {
+    func cleanFolders() {
         do {
             try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder).delete()
             try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder)

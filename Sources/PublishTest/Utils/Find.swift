@@ -11,20 +11,19 @@ extension Queue {
     
     static var existScope: [Prototype] = []
     
-    func find() {
-        self.prototypes.map { $0.findLine() }
-        let foundNames = Queue.existScope.map { $0.name.origin }
-        print(foundNames)
+    func find(_ line:String) {
+        self.prototypes.map { $0.find(line) }
+        Queue.existScope.map { print($0.name.origin) }
     }
 }
 
 extension Prototype {
     
-    func findLine() {
+    func find(_ line: String) {
         if let appCoffeeURL = URL(string: Prototype.app, relativeTo: self.folder.url) {
             let code = appCoffeeURL.string()
             
-            if code.contains("emit") {
+            if code.contains(line) {
                 Queue.existScope.append(self)
             }
         }

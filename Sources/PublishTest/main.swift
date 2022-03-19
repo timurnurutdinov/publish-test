@@ -47,11 +47,14 @@ var scope = Queue(withPath: mainQueue)
 
 try PublishProcess().publish(using: [
     .read(),
-//    .publish(),
+//    .setScore(),
+//    .setProjects(),
     
-//    .findText("emit"),
-    .getZScore(),
-    .getProjectList(),
+//    .publish(),
+//    .publishPresentation(),
+
+    
+    .findText("originX"),
 //    .updatePComponent(),
     ]
 )
@@ -70,29 +73,30 @@ extension PublishingStep where Site == PublishProcess {
     }
     
     static func publish() -> Self {
-        .step(named: "Publish Prototypes") { context in
-//
-            scope.setPermissions()
-        }
+        .step(named: "Publish Prototypes") { context in scope.publish() }
     }
     
     
     
     
-    static func getZScore() -> Self {
-        .step(named: "Util: Get Score") { context in scope.computeZScore() }
+    static func setScore() -> Self {
+        .step(named: "Get Score") { context in scope.setScore() }
     }
     
-    static func getProjectList() -> Self {
-        .step(named: "Util: Get Project List") { context in scope.getProjectlist() }
+    static func setProjects() -> Self {
+        .step(named: "🔗 Get Project List") { context in scope.getProjectlist() }
     }
     
-    static func findText(_ toFind: String) -> Self {
-        .step(named: "Util: Look for \"\(toFind)\"") { context in scope.find() }
+    static func findText(_ line: String) -> Self {
+        .step(named: "🔗 Looking for \"\(line)\"") { context in scope.find(line) }
     }
     
     static func updatePComponent() -> Self {
-        .step(named: "Utils: Update PComponent") { context in PresentationComponent() }
+        .step(named: "🔗 Update PComponent") { context in PresentationComponent().update() }
+    }
+    
+    static func publishPresentation() -> Self {
+        .step(named: "Publish Presentations") { context in PresentQueue().publish() }
     }
     
     

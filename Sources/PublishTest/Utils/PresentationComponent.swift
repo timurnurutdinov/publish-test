@@ -9,21 +9,18 @@ import Foundation
 import Files
 
 class PresentationComponent {
-//    var app: File? = nil
     var code: String = ""
     var modules: [File] = []
-    var presentations: [Folder] = []
     
-    init() {
+    func update() {
         do {
-            
             self.code = changeAppFile()
             
             try Folder(path: PresentationComponent.moduleFolder).files.enumerated().forEach { (index, file) in
                 if (file.name.fileExtension() == "coffee") { self.modules.append(file) }
             }
             
-            try Folder(path: PresentationComponent.presentationFolder).subfolders.enumerated().forEach { (index, folder) in
+            try Folder(path: PresentQueue.presentationFolder).subfolders.enumerated().forEach { (index, folder) in
                 let currentModuleFolderPath = folder.path + "/modules"
                 let currentModuleFolder = try Folder(path: currentModuleFolderPath)
                 
@@ -62,7 +59,6 @@ class PresentationComponent {
 extension PresentationComponent {
     static let nameFile = "PresentationComponent.coffee"
 
-    static let presentationFolder = "~/Documents/Git/PresentationComponent/Presentation-Queue"
     static let componentFolder = "~/Documents/Git/PresentationComponent/Presentation.framer"
     static let moduleFolder = "~/Documents/Git/PresentationComponent/Presentation.framer/modules"
     static let appFile = "~/Documents/Git/PresentationComponent/Presentation.framer/app.coffee"

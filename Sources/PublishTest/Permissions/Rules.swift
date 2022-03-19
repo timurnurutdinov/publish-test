@@ -19,3 +19,11 @@ extension Queue {
         self.allow(byName: "2022-02-08 [pp] Yandex 2022 – Flow.framer", withURL: "yandex-2022")
     }
 }
+
+
+
+extension PresentQueue {
+    func openForProduction() {
+        self.allow(byName: "2022-03-19 [presentation] Navigation View — Demo.framer", withURL: "navigation-view")
+    }
+}

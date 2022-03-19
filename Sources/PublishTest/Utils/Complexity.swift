@@ -16,7 +16,7 @@ extension Queue {
         return self.prototypes.filter { $0.zScore > 2 }
     }
     
-    mutating func computeZScore() {
+    mutating func setScore() {
         
         // Sum lines of all prototypes
         let sumArray = self.prototypes.map { Double($0.lines) }

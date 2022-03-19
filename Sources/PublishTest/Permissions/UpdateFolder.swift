@@ -11,43 +11,29 @@ import Files
 
 extension Prototype {
     
-    func addFolder(_ isRestricted: Bool = false) {
-        do {
-            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder)
-            
-            var originFolder = try Folder(path: self.folder.path)
-//            if isRestricted { originFolder = try Folder(path: Prototype.blankPrototype) }
-
-            let newFolder = try originFolder.copy(to: listFolder)
-            try newFolder.rename(to: self.url, keepExtension: false)
-
-        } catch { print() }
+    func addFolder() {
+        self.addFolder(toFolder: OutputFolder.prototypesDynamicFolder, renamedTo: self.url)
     }
     
     
-//    func addBlankFolder() { self.addFolder(true) }
-    
     func addFolderByURL() {
+        self.addFolder(toFolder: OutputFolder.prototypesStaticFolder, renamedTo: self.staticURL)
+    }
+    
+    
+    func addFolder(toFolder: String, renamedTo newName: String) {
         do {
-            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesStaticFolder)
+            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: toFolder)
             let originFolder = try Folder(path: self.folder.path)
 
             let newFolder = try originFolder.copy(to: listFolder)
-            try newFolder.rename(to: self.staticURL, keepExtension: false)
-
+            if !newName.isEmpty {
+                try newFolder.rename(to: newName, keepExtension: false)
+            }
         } catch { print() }
     }
-    
-    
-//    func removeFolder() {
-//        do {
-//            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesFolder)
-//            let folder = try Folder(path: listFolder.path + "\(self.id)")
-//            try folder.delete()
-//        }
-//        catch { print(error) }
-//    }
-    
+
+
 }
 
 

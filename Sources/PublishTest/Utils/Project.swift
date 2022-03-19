@@ -10,7 +10,7 @@ import Files
 
 extension Queue {
     
-    func getProjectlist() -> String {
+    func getProjectlist() {
         let titles = self.prototypes.map { $0.name.title }
 
         var counts: [String: Int] = [:]
@@ -38,9 +38,7 @@ extension Queue {
                 allKeyProjects.writeTempFile("\(key).txt", toFolder: "projects")
             }
         }
-        
         catch { print("Failed projects") }
-        return string
     }
     
 }
