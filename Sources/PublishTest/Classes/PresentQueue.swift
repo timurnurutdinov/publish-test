@@ -16,8 +16,7 @@ class PresentQueue {
             try Folder(path: PresentQueue.presentationFolder).subfolders.enumerated().forEach { (index, folder) in
                 self.prototypes.append(Prototype(withFolder: folder))
             }
-        }
-        catch { print("Failed to read Presentations") }
+        } catch { print("Failed to read Presentations") }
     }
     
     func publish() {
@@ -45,8 +44,7 @@ class PresentQueue {
         do {
             try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.presentationFolder).delete()
             try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.presentationFolder)
-        }
-        catch { print() }
+        } catch { print() }
     }
 }
 

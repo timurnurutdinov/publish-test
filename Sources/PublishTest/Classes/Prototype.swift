@@ -29,8 +29,10 @@ class Prototype: Hashable  {
     var staticURL = ""
     
     
-    init(withFolder folder: Folder) {
+    
+    init(withFolder folder: Folder, andID id: Int = -1) {
         self.folder = folder
+        self.id = id
         
         self.name = Name(folder.name)
         if self.name.parseFailed() { return }
@@ -51,7 +53,7 @@ class Prototype: Hashable  {
         hasher.combine(name.origin)
     }
     
-    func setID(_ id: Int) { self.id = id }
+//    func setID(_ id: Int) { self.id = id }
     func setStatus(_ status:Status) { self.status = status }
     func setStaticURL(_ url:String) { self.staticURL = url }
     

@@ -7,11 +7,6 @@ import Files
 
 
 
-public struct Test {
-    public func test() -> String { return "wow2" }
-    public init() {}
-}
-
 
 // This type acts as the configuration for your website.
 public struct PublishProcess: Website {
@@ -25,8 +20,8 @@ public struct PublishProcess: Website {
 
     // Update these properties to configure your website:
     public var url = URL(string: "https://tilllur.ru")!
-    public var name = "TillluR"
-    public var description = "Work in Progress"
+    public var name = "tilllur"
+    public var description = ""
     public var language: Language { .english }
     public var imagePath: Path? { nil }
     
@@ -36,40 +31,30 @@ public struct PublishProcess: Website {
 
 
 
-let mainQueue = "~/Documents/Git/Prototyping-Queue/"
-let testQueue = "~/Documents/testing-queue/"
 
-var scope = Queue(withPath: mainQueue)
-
-
-
+var scope = Queue(withPath: Queue.production)
 
 
 try PublishProcess().publish(using: [
     .read(),
-//    .setScore(),
-//    .setProjects(),
+    .setScore(),
+    .setProjects(),
     
-//    .publish(),
-//    .publishPresentation(),
+    .publish(),
+    .publishPresentation(),
 
     
-    .findText("originX"),
-//    .updatePComponent(),
+//    .findText("originX"),
+    .updatePComponent(),
     ]
 )
-
 
 
 
 extension PublishingStep where Site == PublishProcess {
     
     static func read() -> Self {
-        .step(named: "Read Prototypes") { context in
-            try Folder(path: scope.path).subfolders.enumerated().forEach { (index, folder) in
-                scope.add(Prototype(withFolder: folder))
-            }
-        }
+        .step(named: "Read Prototypes") { context in scope.read() }
     }
     
     static func publish() -> Self {

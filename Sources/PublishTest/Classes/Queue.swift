@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Files
 
 struct Queue {
     
@@ -37,16 +38,21 @@ struct Queue {
         self.readState()
     }
     
-    mutating func add(_ prototype: Prototype) {
-        prototype.setID(self.prototypes.count)
-        self.prototypes.append(prototype)
+    mutating func read(_ selectedPath:String = Queue.production) {
+        do {
+            try Folder(path: selectedPath).subfolders.enumerated().forEach { (index, folder) in
+                self.prototypes.append(Prototype(withFolder: folder, andID: self.prototypes.count))
+            }
+        } catch { print("Failed to read Queue")}
     }
     
-//    mutating func addURL(_ url: String) { self.urls.insert(url) }
-    
-//    mutating func prepareShortIDList() {
-//        let shortIDList = Set(self.prototypes.map { String.randomStringForURL() })
-//    }
+}
+
+
+
+extension Queue {
+    static let production = "~/Documents/Git/Prototyping-Queue/"
+    static let testing = "~/Documents/testing-queue/"
 }
 
 
