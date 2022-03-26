@@ -38,12 +38,14 @@ struct Queue {
         self.readState()
     }
     
-    mutating func read(_ selectedPath:String = Queue.production) {
+    mutating func read() {
         do {
-            try Folder(path: selectedPath).subfolders.enumerated().forEach { (index, folder) in
+            try Folder(path: self.path).subfolders.enumerated().forEach { (index, folder) in
                 self.prototypes.append(Prototype(withFolder: folder, andID: self.prototypes.count))
             }
         } catch { print("Failed to read Queue")}
+        
+        print("Read: \(self.prototypes.count)")
     }
     
 }
@@ -52,7 +54,7 @@ struct Queue {
 
 extension Queue {
     static let production = "~/Documents/Git/Prototyping-Queue/"
-    static let testing = "~/Documents/testing-queue/"
+    static let testing = "~/Desktop/testing-queue/"
 }
 
 

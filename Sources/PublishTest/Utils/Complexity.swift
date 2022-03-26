@@ -36,6 +36,7 @@ extension Queue {
         self.setZScore(computedScore)
         
         self.logExtremePrototypesNames()
+        self.logModules()
         
     }
     

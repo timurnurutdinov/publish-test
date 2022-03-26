@@ -30,7 +30,7 @@ class PresentationComponent {
                 }
                 
                 self.code.writeFile(PresentationComponent.nameFile, toFolder: currentModuleFolderPath)
-                try modules.map { try $0.copy(to: currentModuleFolder) }
+                try self.modules.map { try $0.copy(to: currentModuleFolder) }
             }
         }
         catch { print("Failed to read PresentationComponent folder") }
@@ -40,9 +40,9 @@ class PresentationComponent {
     func changeAppFile() -> String {
         if let appCoffeeURL = URL(string: PresentationComponent.appFile) {
             let originCode = appCoffeeURL.string()
+            
             let className = "class Presentation extends PageComponent"
             let newClassName = "class exports.Presentation extends PageComponent"
-            
             let tempCode = originCode.replacingOccurrences(of: className, with: newClassName)
             
             let separator = "# Code for development"
@@ -59,10 +59,8 @@ class PresentationComponent {
 extension PresentationComponent {
     static let nameFile = "PresentationComponent.coffee"
 
-    static let componentFolder = "~/Documents/Git/PresentationComponent/Presentation.framer"
-    static let moduleFolder = "~/Documents/Git/PresentationComponent/Presentation.framer/modules"
-    static let appFile = "~/Documents/Git/PresentationComponent/Presentation.framer/app.coffee"
+    static let componentFolder = "~/Documents/Git/FramerComponents/Presentation.framer"
+    static let moduleFolder = "~/Documents/Git/FramerComponents/Presentation.framer/modules"
+    static let appFile = "~/Documents/Git/FramerComponents/Presentation.framer/app.coffee"
 
 }
-
-

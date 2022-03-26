@@ -50,5 +50,5 @@ class PresentQueue {
 
 
 extension PresentQueue {
-    static let presentationFolder = "~/Documents/Git/PresentationComponent/Presentation-Queue"
+    static let presentationFolder = "~/Documents/Git/FramerComponents/Presentation-Queue"
 }

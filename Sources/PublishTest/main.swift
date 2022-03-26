@@ -32,7 +32,7 @@ public struct PublishProcess: Website {
 
 
 
-var scope = Queue(withPath: Queue.production)
+var scope = Queue(withPath: Queue.testing)
 
 
 try PublishProcess().publish(using: [
@@ -40,12 +40,16 @@ try PublishProcess().publish(using: [
     .setScore(),
     .setProjects(),
     
-    .publish(),
-    .publishPresentation(),
+    .updatePreviewComponent(),
+    
+//    .publish(),
+    
+//    .updatePresentationComponent(),
+//    .publishPresentation(),
 
     
-//    .findText("originX"),
-    .updatePComponent(),
+//    .findText("query"),
+//    .makeTimestamp()
     ]
 )
 
@@ -55,6 +59,10 @@ extension PublishingStep where Site == PublishProcess {
     
     static func read() -> Self {
         .step(named: "Read Prototypes") { context in scope.read() }
+    }
+    
+    static func updatePreviewComponent() -> Self {
+        .step(named: "🔗 Update Preview Component") { context in PreviewComponent().update(for: scope) }
     }
     
     static func publish() -> Self {
@@ -76,14 +84,17 @@ extension PublishingStep where Site == PublishProcess {
         .step(named: "🔗 Looking for \"\(line)\"") { context in scope.find(line) }
     }
     
-    static func updatePComponent() -> Self {
-        .step(named: "🔗 Update PComponent") { context in PresentationComponent().update() }
+    static func updatePresentationComponent() -> Self {
+        .step(named: "🔗 Update Presentation Component") { context in PresentationComponent().update() }
     }
     
     static func publishPresentation() -> Self {
         .step(named: "Publish Presentations") { context in PresentQueue().publish() }
     }
     
+    static func makeTimestamp() -> Self {
+        .step(named: "Timestamped") { context in Timestamp() }
+    }
     
     
     
