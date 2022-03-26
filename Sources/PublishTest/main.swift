@@ -32,14 +32,13 @@ public struct PublishProcess: Website {
 
 
 
-var scope = Queue(withPath: Queue.testing)
+var scope = Queue(withPath: Queue.production)
 
 
 try PublishProcess().publish(using: [
     .read(),
     .setScore(),
     .setProjects(),
-    
     .updatePreviewComponent(),
     
 //    .publish(),
@@ -49,7 +48,7 @@ try PublishProcess().publish(using: [
 
     
 //    .findText("query"),
-//    .makeTimestamp()
+    .makeTimestamp()
     ]
 )
 

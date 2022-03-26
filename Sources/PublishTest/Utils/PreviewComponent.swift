@@ -9,13 +9,12 @@ import Foundation
 import Files
 
 class PreviewComponent {
-    var code: String = ""
+    
     var modules: [File] = []
     var folders: [Folder] = []
     
     func update(for scope: Queue) {
         do {
-            self.code = changeAppFile()
             
             try Folder(path: PreviewComponent.moduleFolder).files.enumerated().forEach { (index, file) in
                 if (file.name.fileExtension() == "coffee") { self.modules.append(file) }
@@ -26,6 +25,11 @@ class PreviewComponent {
             }
             
             try scope.prototypes.forEach { prototype in
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "YY"
+                
+                let code = self.changeAppFile(for: prototype.name, with: dateFormatter)
+                
                 let currentModuleFolder = try prototype.folder.createSubfolderIfNeeded(withName: "modules")
                 
                 try Folder(path: currentModuleFolder.path).files.enumerated().forEach { (i, file) in
@@ -37,7 +41,7 @@ class PreviewComponent {
                     if (folder.name == PreviewComponent.assetsFolderName) { try folder.delete() }
                 }
                 
-                self.code.writeFile(PreviewComponent.nameFile, toFolder: currentModuleFolder.path)
+                code.writeFile(PreviewComponent.nameFile, toFolder: currentModuleFolder.path)
                 try self.modules.map { try $0.copy(to: currentModuleFolder) }
                 try self.folders.map { try $0.copy(to: currentModuleFolder) }
             }
@@ -46,7 +50,7 @@ class PreviewComponent {
     }
     
     
-    func changeAppFile() -> String {
+    func changeAppFile(for prototypeName:Name, with dateFormatter:DateFormatter) -> String {
         if let appCoffeeURL = URL(string: PreviewComponent.appFile) {
             let originCode = appCoffeeURL.string()
             
@@ -54,8 +58,8 @@ class PreviewComponent {
             let newClassName = "class exports.Preview extends Layer"
             let tempCode = originCode.replacingOccurrences(of: className, with: newClassName)
             
-            let oldLine = "prototypeCreationYear: \"2020\""
-            let newLine = "prototypeCreationYear: \"2021\""
+            let oldLine = "prototypeCreationYear: \"20:20\""
+            let newLine = "prototypeCreationYear: \"\(prototypeName.getStatusBarTime(with: dateFormatter))\""
             let tempCode2 = tempCode.replacingOccurrences(of: oldLine, with: newLine)
 
             let separator = "# Code for development"
@@ -69,6 +73,15 @@ class PreviewComponent {
 }
 
 
+extension Name {
+    
+    func getStatusBarTime(with dateFormatter:DateFormatter) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY"
+        let timestamp = dateFormatter.string(from: self.date)
+        return "\(timestamp.prefix(2)):\(timestamp.suffix(2))"
+    }
+}
 
 
 extension PreviewComponent {
