@@ -11,7 +11,7 @@ import Files
 extension Queue {
     
     func getProjectlist() {
-        let titles = self.prototypes.map { $0.name.title }
+        let titles = self.prototypes.map { $0.name.project }
 
         var counts: [String: Int] = [:]
         for item in titles { counts[item] = (counts[item] ?? 0) + 1 }
@@ -31,8 +31,8 @@ extension Queue {
             try folder.createSubfolderIfNeeded(withName: "projects")
             
             for (key, _) in bigProjects {
-                let keyTitles = self.prototypes.filter { $0.name.title == key }
-                let keyStrings = keyTitles.map { "\($0.name.scene)\n" }
+                let keyTitles = self.prototypes.filter { $0.name.project == key }
+                let keyStrings = keyTitles.map { "\($0.name.title)\n" }
                 let sortedKeyStrings = keyStrings.sorted { $0 < $1 }
                 let allKeyProjects = sortedKeyStrings.reduce("", +)
                 allKeyProjects.writeTempFile("\(key).txt", toFolder: "projects")

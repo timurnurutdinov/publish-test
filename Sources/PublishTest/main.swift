@@ -39,9 +39,9 @@ try PublishProcess().publish(using: [
     .read(),
     .setScore(),
     .setProjects(),
-    .updatePreviewComponent(),
+//    .updatePreviewComponent(),
     
-//    .publish(),
+    .publish(),
     
 //    .updatePresentationComponent(),
 //    .publishPresentation(),

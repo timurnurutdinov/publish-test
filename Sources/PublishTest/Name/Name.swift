@@ -27,8 +27,8 @@ class Name {
     
     var date: Date = Date()
     var type: ProjectType = .unknown
+    var project: String = ""
     var title: String = ""
-    var scene: String = ""
     
     var originDate: String = ""
     var originType: String = ""
@@ -53,8 +53,8 @@ class Name {
             self.date = Name.getDate(self.originDate)
             self.type = Name.getType(self.originType)
             
-            self.title = flattened[3]
-            self.scene = flattened[4]
+            self.project = flattened[3]
+            self.title = flattened[4]
             
             self.successParse = true
         }

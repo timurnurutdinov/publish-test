@@ -26,7 +26,7 @@ extension Name {
     }
     
     static func printTitles(_ names: [Name]) {
-        let types = names.map { $0.title }
+        let types = names.map { $0.project }
         var counts: [String: Int] = [:]
         for item in types { counts[item] = (counts[item] ?? 0) + 1 }
         let sortedCounts = counts.sorted { $0.1 > $1.1 }

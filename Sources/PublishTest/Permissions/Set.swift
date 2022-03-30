@@ -47,6 +47,8 @@ extension Queue {
         
         self.saveState()
         self.saveState(configFile: OutputFolder.prototypesJSON, toFolder: OutputFolder.path)
+        
+        self.savePrototypesPageJSON()
     }
     
     mutating func setDynamicURL() { self.closeForProduction() }
