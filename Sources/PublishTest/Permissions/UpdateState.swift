@@ -51,38 +51,3 @@ extension Queue {
 
 
 
-
-
-
-enum IntBoolforJSON: Int, Codable {
-    case opened = 1
-    case closed = 0
-}
-
-struct PrototypeJSON: Codable {
-    var i: Int // index
-    var t: String // title
-    var p: String // project title
-    var year: String // year
-    var fav: IntBoolforJSON // fav
-    var s: IntBoolforJSON // status
-}
-
-extension Queue {
-    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = OutputFolder.path) {
-        do {
-            
-            let minimalState = self.prototypes.map {
-                PrototypeJSON(i: $0.id, t: $0.name.title, p: $0.name.project, year: "2021", fav: .closed, s: .closed)
-            }
-            
-            
-            let encoder = JSONEncoder()
-//            encoder.outputFormatting = .prettyPrinted
-            
-            let data = try encoder.encode(minimalState)
-            if let jsonString = String(data: data, encoding: .utf8) { jsonString.writeFile(configFile, toFolder: toFolder) }
-            
-        } catch { print(error) }
-    }
-}

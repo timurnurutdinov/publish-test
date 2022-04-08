@@ -48,6 +48,15 @@ struct Queue {
         print("Read: \(self.prototypes.count)")
     }
     
+    mutating func readLast() {
+        do {
+            let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
+            self.prototypes.append(Prototype(withFolder: lastFolder, andID: self.prototypes.count))
+        } catch { print("Failed to read Queue")}
+        
+        print("Read: \(self.prototypes.count)")
+    }
+    
 }
 
 

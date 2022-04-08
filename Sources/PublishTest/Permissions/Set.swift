@@ -51,6 +51,10 @@ extension Queue {
         self.savePrototypesPageJSON()
     }
     
+    mutating func savePrototypesJSON() {
+        self.savePrototypesPageJSON()
+    }
+    
     mutating func setDynamicURL() { self.closeForProduction() }
     func setStaticURL() { self.openForProduction() }
 }

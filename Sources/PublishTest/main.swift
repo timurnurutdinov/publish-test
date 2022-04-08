@@ -37,10 +37,15 @@ var scope = Queue(withPath: Queue.production)
 
 try PublishProcess().publish(using: [
     .read(),
+//    .readLast(),
+    
     .setScore(),
     .setProjects(),
-//    .updatePreviewComponent(),
+    .updatePreviewComponent(),
     
+//        .updateFramerLibrary(),
+    
+    .savePrototypesJSON(),
     .publish(),
     
 //    .updatePresentationComponent(),
@@ -48,6 +53,7 @@ try PublishProcess().publish(using: [
 
     
 //    .findText("query"),
+//        .notFoundText(inHTML: "<body></body>"),
     .makeTimestamp()
     ]
 )
@@ -60,8 +66,16 @@ extension PublishingStep where Site == PublishProcess {
         .step(named: "Read Prototypes") { context in scope.read() }
     }
     
+    static func readLast() -> Self {
+        .step(named: "Read Last Prototype") { context in scope.readLast() }
+    }
+    
     static func updatePreviewComponent() -> Self {
         .step(named: "🔗 Update Preview Component") { context in PreviewComponent().update(for: scope) }
+    }
+    
+    static func savePrototypesJSON() -> Self {
+        .step(named: "Save Prototypes JSON") { context in scope.savePrototypesJSON() }
     }
     
     static func publish() -> Self {
@@ -83,8 +97,20 @@ extension PublishingStep where Site == PublishProcess {
         .step(named: "🔗 Looking for \"\(line)\"") { context in scope.find(line) }
     }
     
+    static func findText(inHTML line: String) -> Self {
+        .step(named: "🔗 Looking for \"\(line)\"") { context in scope.find(inHTML: line) }
+    }
+    
+    static func notFoundText(inHTML line: String) -> Self {
+        .step(named: "🔗 Looking for \"\(line)\"") { context in scope.find(inHTML: line, false) }
+    }
+    
     static func updatePresentationComponent() -> Self {
         .step(named: "🔗 Update Presentation Component") { context in PresentationComponent().update() }
+    }
+    
+    static func updateFramerLibrary() -> Self {
+        .step(named: "🔗 Update Library") { context in UpdateLibrary().update() }
     }
     
     static func publishPresentation() -> Self {
