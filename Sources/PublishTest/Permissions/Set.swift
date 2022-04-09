@@ -11,36 +11,12 @@ import Files
 
 
 
-enum RestrictionReason: String {
-    case internalAPI = "api"
-    case temporaryNDA = "temp"
-}
-
-enum Status: String, Codable {
-    case opened = "opened"
-    case closed = "closed"
-}
-
-
-struct PrototypeConfig: Codable {
-    var id: Int
-    var originName: String
-    var date: Date
-    var status: Status
-    var url: String
-    
-    static func == (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
-        return lhs.id == rhs.id && lhs.originName == rhs.originName && lhs.date == rhs.date && lhs.status == rhs.status
-    }
-}
-
-
-
 extension Queue {
     
     mutating func publishDynamic() {
         self.cleanDynamicFolders()
         self.setDynamicRules()
+        self.setFeatured()
         self.copyDynamicPrototypes()
         
         self.saveState()

@@ -17,9 +17,15 @@ struct PrototypeJSON: Codable {
     var t: String // title
     var p: String // project title
     var y: String // year
-    var f: IntBoolforJSON // fav
+    var f: Featured // fav
     var s: IntBoolforJSON // status
     var u: String // url
+}
+
+extension Prototype {
+    func getJsonID() -> Int {
+        return self.id + 1
+    }
 }
 
 extension Queue {
@@ -33,7 +39,7 @@ extension Queue {
             
             
             let minimalState = filtered.map {
-                PrototypeJSON(i: ($0.id + 1), t: $0.name.title, p: $0.name.project, y: $0.name.getYear(), f: .closed, s: .closed, u: $0.url)
+                PrototypeJSON(i: $0.getJsonID(), t: $0.name.title, p: $0.name.project, y: $0.name.getYear(), f: $0.featured, s: .closed, u: $0.url)
             }
             
             

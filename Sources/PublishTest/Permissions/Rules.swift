@@ -13,6 +13,14 @@ extension Queue {
         self.restrict(byName: "2016-01-18 [ios] Beeline Music – Onboarding.framer", tillEnd: true)
     }
     
+    func setFeatured() {
+        self.feature(byName: "2015-10-01 [ios] 10tracks – Onboarding Swipes.framer")
+        self.feature(byName: "2015-03-23 [ios] Adme – Pull to Refresh 1.framer")
+        self.feature(byName: "2015-03-24 [ios] Adme – Pull to Refresh 2.framer")
+        self.feature(byName: "2015-05-04 [ios] Social Parse – Edit.framer")
+        
+    }
+    
     func setStaticRules() {
         self.allow(byName: "2019-05-18 [utils] Utils – Size.framer", withURL: "size")
         self.allow(byName: "2022-02-08 [pp] Yandex 2022 – Flow.framer", withURL: "yandex-2022")

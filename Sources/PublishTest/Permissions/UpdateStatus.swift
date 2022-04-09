@@ -14,15 +14,15 @@ extension Queue {
         let names = self.prototypes.map { $0.name.origin }
         
         if let firstIndex = names.firstIndex(of: name) {
-            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.setStatus(.closed) } }
-            else { self.prototypes[firstIndex].setStatus(.closed) }
+            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.status = .closed } }
+            else { self.prototypes[firstIndex].status = .closed }
         }
     }
     
     mutating func allow(byName name: String) {
         let names = self.prototypes.map { $0.name.origin }
         if let firstIndex = names.firstIndex(of: name) {
-            self.prototypes[firstIndex].setStatus(.opened)
+            self.prototypes[firstIndex].status = .opened
         }
     }
     
@@ -30,6 +30,13 @@ extension Queue {
         let names = self.prototypes.map { $0.name.origin }
         if let firstIndex = names.firstIndex(of: name) {
             self.prototypes[firstIndex].setStaticURL(url)
+        }
+    }
+    
+    func feature(byName name: String) {
+        let names = self.prototypes.map { $0.name.origin }
+        if let firstIndex = names.firstIndex(of: name) {
+            self.prototypes[firstIndex].featured = .starred
         }
     }
 
