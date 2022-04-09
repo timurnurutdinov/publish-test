@@ -9,14 +9,13 @@ import Foundation
 import Files
 
 class UpdateLibrary {
-//    static var refProject = "2022-03-31 [bro] Groups — Flow.framer"
     static var refIndexHTML = "index.html"
     static var refFramerFolder = "framer"
 //    static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
-    static var framerLibraryFiles = ["framer.js", "style.css"]
+//    static var framerLibraryFiles = ["framer.js", "style.css"]
+    static var framerLibraryFiles = ["framer.js"]
     
     var refFile: File? = nil
-//    var refFolder: Folder? = nil
     var refFramerFiles: [File] = []
     
     func update() {

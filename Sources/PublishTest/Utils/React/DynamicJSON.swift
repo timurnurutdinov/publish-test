@@ -26,14 +26,14 @@ extension Queue {
     mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = OutputFolder.path) {
         do {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "YY"
+            dateFormatter.dateFormat = "YYYY"
             
             let reversedPrototypes = self.prototypes.reversed()
             let filtered = reversedPrototypes.filter { $0.status == Status.opened }
             
             
             let minimalState = filtered.map {
-                PrototypeJSON(i: $0.id, t: $0.name.title, p: $0.name.project, y: $0.name.getStatusBarTime(with: dateFormatter), f: .closed, s: .closed, u: $0.url)
+                PrototypeJSON(i: ($0.id + 1), t: $0.name.title, p: $0.name.project, y: $0.name.getYear(), f: .closed, s: .closed, u: $0.url)
             }
             
             

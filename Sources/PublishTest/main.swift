@@ -45,15 +45,15 @@ try PublishProcess().publish(using: [
 //    .updatePreviewComponent(),
 //    .updateFramerLibrary(),
     
-//    .publishDynamic(),
-    .publishStatic(),
+    .publishDynamic(),
+//    .publishStatic(),
     
 //    .updatePresentationComponent(),
 //    .publishPresentation(),
 
     
 //    .findText("query"),
-//        .notFoundText(inHTML: "<body></body>"),
+//    .notFoundText(inHTML: "<body></body>"),
     .makeTimestamp()
     ]
 )

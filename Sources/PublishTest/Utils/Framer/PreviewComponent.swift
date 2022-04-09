@@ -59,7 +59,7 @@ class PreviewComponent {
             let tempCode = originCode.replacingOccurrences(of: className, with: newClassName)
             
             let oldLine = "prototypeCreationYear: \"20:20\""
-            let newLine = "prototypeCreationYear: \"\(prototypeName.getStatusBarTime(with: dateFormatter))\""
+            let newLine = "prototypeCreationYear: \"\(prototypeName.getStatusBarTime())\""
             let tempCode2 = tempCode.replacingOccurrences(of: oldLine, with: newLine)
 
             let separator = "# Code for development"
@@ -75,11 +75,17 @@ class PreviewComponent {
 
 extension Name {
     
-    func getStatusBarTime(with dateFormatter:DateFormatter) -> String {
+    func getStatusBarTime() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY"
         let timestamp = dateFormatter.string(from: self.date)
         return "\(timestamp.prefix(2)):\(timestamp.suffix(2))"
+    }
+    
+    func getYear() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY"
+        return dateFormatter.string(from: self.date)
     }
 }
 
