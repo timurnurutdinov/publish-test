@@ -35,15 +35,13 @@ struct PrototypeConfig: Codable {
 }
 
 
+
 extension Queue {
     
-    mutating func publish() {
-        self.cleanFolders()
-        
-        self.setDynamicURL()
-        self.setStaticURL()
-        
-        self.setFolders()
+    mutating func publishDynamic() {
+        self.cleanDynamicFolders()
+        self.setDynamicRules()
+        self.copyDynamicPrototypes()
         
         self.saveState()
         self.saveState(configFile: OutputFolder.prototypesJSON, toFolder: OutputFolder.path)
@@ -51,34 +49,47 @@ extension Queue {
         self.savePrototypesPageJSON()
     }
     
-    mutating func savePrototypesJSON() {
-        self.savePrototypesPageJSON()
+    func cleanDynamicFolders() {
+        do {
+            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder).delete()
+            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder)
+        }
+        catch { print() }
     }
     
-    mutating func setDynamicURL() { self.closeForProduction() }
-    func setStaticURL() { self.openForProduction() }
+    func copyDynamicPrototypes() {
+        let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
+        dynamicPrototypes.enumerated().forEach { (_, prototype) in
+            prototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: prototype.url)
+        }
+    }
+    
 }
 
 
 
 extension Queue {
     
-    func cleanFolders() {
+    mutating func publishStatic() {
+        self.cleanStaticFolders()
+        self.setStaticRules()
+        self.copyStaticPrototypes()
+    }
+    
+    func cleanStaticFolders() {
         do {
-            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder).delete()
-            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder)
             try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesStaticFolder).delete()
             try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesStaticFolder)
         }
         catch { print() }
     }
     
-    func setFolders() {
-        let toAddDynamic: [Prototype] = self.prototypes.filter { $0.status == .opened }
-        toAddDynamic.enumerated().forEach { $1.addFolder() }
+    func copyStaticPrototypes() {
+        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.staticURL != "" }
+        staticPrototypes.enumerated().forEach { (_, prototype) in
+            prototype.copy(toFolder: OutputFolder.prototypesStaticFolder, renameTo: prototype.staticURL)
+        }
         
-        let toAddStatic:[Prototype] = self.prototypes.filter { $0.staticURL != "" }
-        toAddStatic.enumerated().forEach { $1.addFolderByURL() }
     }
 }
 

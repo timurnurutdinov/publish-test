@@ -36,7 +36,7 @@ class PresentQueue {
     func setFolders() {
         let toAddStatic:[Prototype] = self.prototypes.filter { $0.staticURL != "" }
         toAddStatic.enumerated().forEach {
-            $1.addFolder(toFolder: OutputFolder.presentationFolder, renamedTo: $1.staticURL)
+            $1.copy(toFolder: OutputFolder.presentationFolder, renameTo: $1.staticURL)
         }
     }
     

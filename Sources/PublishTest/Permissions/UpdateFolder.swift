@@ -11,17 +11,17 @@ import Files
 
 extension Prototype {
     
-    func addFolder() {
-        self.addFolder(toFolder: OutputFolder.prototypesDynamicFolder, renamedTo: self.url)
-    }
+//    func copyDynamicFolder() {
+//        self.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: self.url)
+//    }
     
     
-    func addFolderByURL() {
-        self.addFolder(toFolder: OutputFolder.prototypesStaticFolder, renamedTo: self.staticURL)
-    }
+//    func copyStaticFolder() {
+//        self.copy(toFolder: OutputFolder.prototypesStaticFolder, renameTo: self.staticURL)
+//    }
     
     
-    func addFolder(toFolder: String, renamedTo newName: String) {
+    func copy(toFolder: String, renameTo newName: String) {
         do {
             let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: toFolder)
             let originFolder = try Folder(path: self.folder.path)

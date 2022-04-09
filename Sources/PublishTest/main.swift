@@ -39,14 +39,14 @@ try PublishProcess().publish(using: [
     .read(),
 //    .readLast(),
     
-    .setScore(),
-    .setProjects(),
-    .updatePreviewComponent(),
+//    .setScore(),
+//    .setProjects(),
     
-//        .updateFramerLibrary(),
+//    .updatePreviewComponent(),
+//    .updateFramerLibrary(),
     
-    .savePrototypesJSON(),
-    .publish(),
+//    .publishDynamic(),
+    .publishStatic(),
     
 //    .updatePresentationComponent(),
 //    .publishPresentation(),
@@ -74,12 +74,12 @@ extension PublishingStep where Site == PublishProcess {
         .step(named: "🔗 Update Preview Component") { context in PreviewComponent().update(for: scope) }
     }
     
-    static func savePrototypesJSON() -> Self {
-        .step(named: "Save Prototypes JSON") { context in scope.savePrototypesJSON() }
+    static func publishStatic() -> Self {
+        .step(named: "Publish Static Prototypes") { context in scope.publishStatic() }
     }
     
-    static func publish() -> Self {
-        .step(named: "Publish Prototypes") { context in scope.publish() }
+    static func publishDynamic() -> Self {
+        .step(named: "Publish Dynamic Prototypes") { context in scope.publishDynamic() }
     }
     
     
