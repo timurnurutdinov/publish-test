@@ -36,22 +36,21 @@ var scope = Queue(withPath: Queue.production)
 
 
 try PublishProcess().publish(using: [
-//    .read(),
-    .readLast(),
+    .read(),
+//    .readLast(),
     
 //    .setScore(),
 //    .setProjects(),
     
-    .updatePreviewComponent(),
+//    .updatePreviewComponent(),
 //    .updateFramerLibrary(),
     
-//    .publishDynamic(),
+    .publishDynamic(),
 //    .publishStatic(),
     
 //    .updatePresentationComponent(),
 //    .publishPresentation(),
 
-    
 //    .findText("query"),
 //    .notFoundText(inHTML: "<body></body>"),
     .makeTimestamp()
@@ -104,6 +103,14 @@ extension PublishingStep where Site == PublishProcess {
     static func notFoundText(inHTML line: String) -> Self {
         .step(named: "🔗 Looking for \"\(line)\"") { context in scope.find(inHTML: line, false) }
     }
+    
+//    static func updateURLMap() -> Self {
+//        .step(named: "Update URL Map") { context in scope.updateURLMap() }
+//    }
+    
+    
+    
+    
     
     static func updatePresentationComponent() -> Self {
         .step(named: "🔗 Update Presentation Component") { context in PresentationComponent().update() }

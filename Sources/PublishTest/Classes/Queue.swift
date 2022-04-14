@@ -13,8 +13,7 @@ struct Queue {
     var prototypes: [Prototype] = []
     var path = ""
     
-    var prevState: [PrototypeConfig] = []
-    var nextState: [PrototypeConfig] = []
+    var urlState = Set<PrototypeConfig>()
     
     
     // Complexity
@@ -28,33 +27,12 @@ struct Queue {
     mutating func setStandardVariation(_ value: Double) { self.standardVariation = value }
     mutating func setZScore(_ array: [Double]) { self.zScore = array }
     
-    mutating func setState(_ state: [PrototypeConfig]) { self.nextState = state }
-    
     
     
     init(withPath path: String) {
         self.path = path
         self.createOutputFolders()
-        self.readState()
-    }
-    
-    mutating func read() {
-        do {
-            try Folder(path: self.path).subfolders.enumerated().forEach { (index, folder) in
-                self.prototypes.append(Prototype(withFolder: folder, andID: self.prototypes.count))
-            }
-        } catch { print("Failed to read Queue")}
-        
-        print("Read: \(self.prototypes.count)")
-    }
-    
-    mutating func readLast() {
-        do {
-            let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
-            self.prototypes.append(Prototype(withFolder: lastFolder, andID: self.prototypes.count))
-        } catch { print("Failed to read Queue")}
-        
-        print("Read: \(self.prototypes.count)")
+        self.readURLState()
     }
     
 }
@@ -64,6 +42,48 @@ struct Queue {
 extension Queue {
     static let production = "~/Documents/Git/Prototyping-Queue/"
     static let testing = "~/Desktop/testing-queue/"
+    
+    
+    mutating func addPrototype(for folder: Folder) {
+        let prototype = Prototype(withFolder: folder)
+        let url = self.getURLState(for: prototype.name)
+        prototype.setDynamicURL(url)
+        self.prototypes.append(prototype)
+    }
+    
+    
+    mutating func getURLState(for name: Name) -> String {
+        let newConf = PrototypeConfig(originName: name.origin, url: String.randomStringForURL())
+        let elem = self.urlState.first { $0.originName == newConf.originName }
+        
+        if elem != nil { return elem!.url }
+        else {
+            self.urlState.insert(newConf)
+            return newConf.url
+        }
+        
+    }
+    
+    
+    mutating func read() {
+        do {
+            try Folder(path: self.path).subfolders.enumerated().forEach { (index, folder) in
+                self.addPrototype(for: folder)
+            }
+        } catch { print("Failed to read Queue")}
+        
+        self.saveURLState()
+    }
+    
+    
+    mutating func readLast() {
+        do {
+            let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
+            self.addPrototype(for: lastFolder)
+        } catch { print("Failed to read Queue")}
+        
+        self.saveURLState()
+    }
 }
 
 
@@ -84,3 +104,13 @@ struct OutputFolder {
 
 
 
+extension Queue {
+    
+    func createOutputFolders() {
+        do {
+            let folder = try Folder(path: "~/Desktop/")
+            try folder.createSubfolderIfNeeded(withName: OutputFolder.name)
+        }
+        catch { print("Failed to create: \(OutputFolder.path)") }
+    }
+}

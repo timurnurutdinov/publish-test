@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Files
 
 // Set status
 extension Queue {
@@ -43,6 +44,9 @@ extension Queue {
 }
 
 
+
+
+
 extension Prototype {
     
     func copy(toFolder: String, renameTo newName: String) {
@@ -60,13 +64,3 @@ extension Prototype {
 
 }
 
-extension Queue {
-    
-    func createOutputFolders() {
-        do {
-            let folder = try Folder(path: "~/Desktop/")
-            try folder.createSubfolderIfNeeded(withName: OutputFolder.name)
-        }
-        catch { print("Failed to create: \(OutputFolder.path)") }
-    }
-}

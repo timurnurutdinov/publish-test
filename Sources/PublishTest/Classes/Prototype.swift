@@ -10,7 +10,7 @@ class Prototype: Hashable  {
     
     var folder: Folder
     var name: Name
-    var id: Int = -1
+//    var id: Int = -1
     
     
     // +Complexity
@@ -24,20 +24,22 @@ class Prototype: Hashable  {
     
     var status: Status = .opened
     var featured: Featured = .none
-    var url = ""
+    
+    var dynamicURL = ""
     var staticURL = ""
     
     
     
-    init(withFolder folder: Folder, andID id: Int = -1) {
+    init(withFolder folder: Folder) {
         self.folder = folder
-        self.id = id
+//        self.id = id
         
         self.name = Name(folder.name)
         if self.name.parseFailed() { return }
         
+        // TODO
         self.countLines()
-        self.url = String.randomStringForURL()
+//        self.url = String.randomStringForURL()
         
     }
     
@@ -55,6 +57,7 @@ class Prototype: Hashable  {
 //    func setID(_ id: Int) { self.id = id }
     func setStatus(_ status:Status) { self.status = status }
     func setStaticURL(_ url:String) { self.staticURL = url }
+    func setDynamicURL(_ url:String) { self.dynamicURL = url }
     
     
 }
@@ -84,14 +87,17 @@ enum Featured: Int, Codable {
 }
 
 
-struct PrototypeConfig: Codable {
-    var id: Int
+
+
+struct PrototypeConfig: Codable, Hashable {
     var originName: String
-    var date: Date
-    var status: Status
     var url: String
     
     static func == (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
-        return lhs.id == rhs.id && lhs.originName == rhs.originName && lhs.date == rhs.date && lhs.status == rhs.status
+        return lhs.originName == rhs.originName
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(originName)
     }
 }

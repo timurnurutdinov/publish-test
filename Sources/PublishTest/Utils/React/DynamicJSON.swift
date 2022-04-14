@@ -22,11 +22,6 @@ struct PrototypeJSON: Codable {
     var u: String // url
 }
 
-extension Prototype {
-    func getJsonID() -> Int {
-        return self.id + 1
-    }
-}
 
 extension Queue {
     mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = OutputFolder.path) {
@@ -38,8 +33,14 @@ extension Queue {
             let filtered = reversedPrototypes.filter { $0.status == Status.opened }
             
             
-            let minimalState = filtered.map {
-                PrototypeJSON(i: $0.getJsonID(), t: $0.name.title, p: $0.name.project, y: $0.name.getYear(), f: $0.featured, s: .closed, u: $0.url)
+            let minimalState = filtered.reversed().enumerated().map { (index, prototype) in
+                PrototypeJSON(i: index,
+                              t: prototype.name.title,
+                              p: prototype.name.project,
+                              y: prototype.name.getYear(),
+                              f: prototype.featured,
+                              s: .closed,
+                              u: prototype.dynamicURL)
             }
             
             

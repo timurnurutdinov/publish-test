@@ -19,8 +19,8 @@ extension Queue {
         self.setFeatured()
         self.copyDynamicPrototypes()
         
-        self.saveState()
-        self.saveState(configFile: OutputFolder.prototypesJSON, toFolder: OutputFolder.path)
+//        self.saveState()
+//        self.saveState(configFile: OutputFolder.prototypesJSON, toFolder: OutputFolder.path)
         
         self.savePrototypesPageJSON()
     }
@@ -36,7 +36,7 @@ extension Queue {
     func copyDynamicPrototypes() {
         let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: prototype.url)
+            prototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: prototype.dynamicURL)
         }
     }
     

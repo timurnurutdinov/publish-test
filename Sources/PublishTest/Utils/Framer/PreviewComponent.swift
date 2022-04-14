@@ -28,7 +28,7 @@ class PreviewComponent {
             }
             
             var updatePrototypes = scope.prototypes
-            let templatePrototype = Prototype(withFolder: try Folder(path: self.templateModuleFolder), andID: -1)
+            let templatePrototype = Prototype(withFolder: try Folder(path: self.templateModuleFolder))
             updatePrototypes.append(templatePrototype)
             
             
