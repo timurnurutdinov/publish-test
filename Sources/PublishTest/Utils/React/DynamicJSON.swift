@@ -20,6 +20,11 @@ struct PrototypeJSON: Codable {
 
 extension Prototype {
     static var blankURL = "blank"
+    
+    func closedDescription() -> String {
+        if (self.status == .api) { return "Internal API Restriction" }
+        return "Temporarily Unavailable"
+    }
 }
 
 extension Queue {
@@ -27,9 +32,6 @@ extension Queue {
         do {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY"
-            
-//            let reversedPrototypes = self.prototypes.reversed()
-//            let filtered = reversedPrototypes.filter { $0.status == Status.opened }
             
             
             let minimalState = self.prototypes.enumerated().map { (index, prototype) -> PrototypeJSON in
@@ -45,7 +47,7 @@ extension Queue {
                 else {
                     return PrototypeJSON(i: (index + 1),
                                          t: "NDA",
-                                         p: "Temporarily Unavailable",
+                                         p: prototype.closedDescription(),
                                          y: prototype.name.getYear(),
                                          f: prototype.featured,
                                          s: prototype.status,

@@ -55,9 +55,9 @@ class Name {
             
             self.successParse = true
         }
-        else {
-            print("📭 Name skipped: pattern doesn't match for: \(line)")
-        }
+//        else {
+//            print("📭 Name skipped: pattern doesn't match for: \(line)")
+//        }
     }
     
     func isValid() -> Bool {

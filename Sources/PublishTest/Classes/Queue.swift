@@ -53,6 +53,9 @@ extension Queue {
             prototype.setDynamicURL(url)
             self.prototypes.append(prototype)
         }
+        else {
+            print("📭 Name skipped: pattern doesn't match for: \(name.origin)")
+        }
     }
     
     
