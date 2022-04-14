@@ -32,7 +32,6 @@ class Name {
     
     var originDate: String = ""
     var originType: String = ""
-//    var originTitle: String = ""
     
     var successParse = false
     
@@ -44,11 +43,9 @@ class Name {
         let groups = line.matchingStrings(regex: pattern)
         let flattened = groups.flatMap { $0 }
         
-        // Success Parse
         if flattened.count > 4 {
             self.originDate = flattened[1]
             self.originType = flattened[2]
-//            self.originTitle = flattened[3]
             
             self.date = Name.getDate(self.originDate)
             self.type = Name.getType(self.originType)

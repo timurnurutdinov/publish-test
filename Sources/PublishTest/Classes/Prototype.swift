@@ -10,7 +10,6 @@ class Prototype: Hashable  {
     
     var folder: Folder
     var name: Name
-//    var id: Int = -1
     
     
     // +Complexity
@@ -30,16 +29,13 @@ class Prototype: Hashable  {
     
     
     
+    
     init(withFolder folder: Folder) {
         self.folder = folder
-//        self.id = id
-        
         self.name = Name(folder.name)
-        if self.name.parseFailed() { return }
         
         // TODO
         self.countLines()
-//        self.url = String.randomStringForURL()
         
     }
     
@@ -63,30 +59,22 @@ class Prototype: Hashable  {
 }
 
 
-extension Prototype {
-    static let app = "app.coffee"
-    static let moduleFolder = "modules/"
-    
-    static let blankPrototype = "~/Documents/Git/publish-test/Content/blank.framer/"
-}
 
+//enum RestrictionReason: Int, Codable {
+//    case nda = 0
+//    case api = 1
+//}
 
-enum RestrictionReason: String {
-    case internalAPI = "api"
-    case temporaryNDA = "temp"
-}
-
-enum Status: String, Codable {
-    case opened = "opened"
-    case closed = "closed"
+enum Status: Int, Codable {
+    case nda = 0
+    case opened = 1
+    case api = 2
 }
 
 enum Featured: Int, Codable {
     case none = 0
     case starred = 1
 }
-
-
 
 
 struct PrototypeConfig: Codable, Hashable {
@@ -100,4 +88,12 @@ struct PrototypeConfig: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(originName)
     }
+}
+
+
+
+
+extension Prototype {
+    static let app = "app.coffee"
+    static let moduleFolder = "modules/"
 }

@@ -11,12 +11,12 @@ import Files
 // Set status
 extension Queue {
     
-    mutating func restrict(byName name: String, tillEnd: Bool = false, byReason reason: RestrictionReason = RestrictionReason.temporaryNDA) {
+    mutating func restrict(byName name: String, tillEnd: Bool = false, byReason reason: Status = .nda) {
         let names = self.prototypes.map { $0.name.origin }
         
         if let firstIndex = names.firstIndex(of: name) {
-            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.status = .closed } }
-            else { self.prototypes[firstIndex].status = .closed }
+            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.status = .nda } }
+            else { self.prototypes[firstIndex].status = .nda }
         }
     }
     

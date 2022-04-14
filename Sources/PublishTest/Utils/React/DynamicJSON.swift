@@ -7,18 +7,13 @@
 
 import Foundation
 
-enum IntBoolforJSON: Int, Codable {
-    case opened = 1
-    case closed = 0
-}
-
 struct PrototypeJSON: Codable {
     var i: Int // index
     var t: String // title
     var p: String // project title
     var y: String // year
     var f: Featured // fav
-    var s: IntBoolforJSON // status
+    var s: Status // status
     var u: String // url
 }
 
@@ -39,7 +34,7 @@ extension Queue {
                               p: prototype.name.project,
                               y: prototype.name.getYear(),
                               f: prototype.featured,
-                              s: .closed,
+                              s: prototype.status,
                               u: prototype.dynamicURL)
             }
             

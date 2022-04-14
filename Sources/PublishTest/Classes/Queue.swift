@@ -45,10 +45,14 @@ extension Queue {
     
     
     mutating func addPrototype(for folder: Folder) {
-        let prototype = Prototype(withFolder: folder)
-        let url = self.getURLState(for: prototype.name)
-        prototype.setDynamicURL(url)
-        self.prototypes.append(prototype)
+        let name = Name(folder.name)
+        
+        if (name.isValid()) {
+            let prototype = Prototype(withFolder: folder)
+            let url = self.getURLState(for: prototype.name)
+            prototype.setDynamicURL(url)
+            self.prototypes.append(prototype)
+        }
     }
     
     
