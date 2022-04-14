@@ -35,7 +35,7 @@ extension Queue {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
 
-            let data = try encoder.encode(self.urlState)
+            let data = try encoder.encode(self.urlState.sorted(by: >))
             if let jsonString = String(data: data, encoding: .utf8) { jsonString.writeFile(configFile, toFolder: toFolder) }
 
         } catch { print(error) }

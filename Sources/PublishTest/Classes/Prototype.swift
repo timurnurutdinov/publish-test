@@ -77,7 +77,8 @@ enum Featured: Int, Codable {
 }
 
 
-struct PrototypeConfig: Codable, Hashable {
+struct PrototypeConfig: Codable, Hashable, Comparable {
+    
     var originName: String
     var url: String
     
@@ -87,6 +88,10 @@ struct PrototypeConfig: Codable, Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(originName)
+    }
+    
+    static func < (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
+        return lhs.originName < rhs.originName
     }
 }
 
