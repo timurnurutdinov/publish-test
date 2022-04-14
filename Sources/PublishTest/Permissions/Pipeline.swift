@@ -17,10 +17,9 @@ extension Queue {
         self.cleanDynamicFolders()
         self.setDynamicRules()
         self.setFeatured()
-        self.copyDynamicPrototypes()
         
-//        self.saveState()
-//        self.saveState(configFile: OutputFolder.prototypesJSON, toFolder: OutputFolder.path)
+        self.copyDynamicPrototypes()
+        self.copyBlankPrototype()
         
         self.savePrototypesPageJSON()
     }
@@ -40,6 +39,14 @@ extension Queue {
         }
     }
     
+    func copyBlankPrototype() {
+        do {
+            let folder = try Folder(path: "~/Documents/Git/FramerComponents/Blank.framer")
+            let blankPrototype = Prototype(withFolder: folder)
+            blankPrototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: Prototype.blankURL)
+        }
+        catch { print("Failed to copy Blank.framer") }
+    }
 }
 
 

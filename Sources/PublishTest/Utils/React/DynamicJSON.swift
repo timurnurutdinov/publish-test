@@ -18,31 +18,46 @@ struct PrototypeJSON: Codable {
 }
 
 
+extension Prototype {
+    static var blankURL = "blank"
+}
+
 extension Queue {
     mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = OutputFolder.path) {
         do {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY"
             
-            let reversedPrototypes = self.prototypes.reversed()
-            let filtered = reversedPrototypes.filter { $0.status == Status.opened }
+//            let reversedPrototypes = self.prototypes.reversed()
+//            let filtered = reversedPrototypes.filter { $0.status == Status.opened }
             
             
-            let minimalState = filtered.reversed().enumerated().map { (index, prototype) in
-                PrototypeJSON(i: index,
-                              t: prototype.name.title,
-                              p: prototype.name.project,
-                              y: prototype.name.getYear(),
-                              f: prototype.featured,
-                              s: prototype.status,
-                              u: prototype.dynamicURL)
+            let minimalState = self.prototypes.enumerated().map { (index, prototype) -> PrototypeJSON in
+                if (prototype.status == .opened) {
+                    return PrototypeJSON(i: (index + 1),
+                                         t: prototype.name.title,
+                                         p: prototype.name.project,
+                                         y: prototype.name.getYear(),
+                                         f: prototype.featured,
+                                         s: prototype.status,
+                                         u: prototype.dynamicURL)
+                }
+                else {
+                    return PrototypeJSON(i: (index + 1),
+                                         t: "NDA",
+                                         p: "Temporarily Unavailable",
+                                         y: prototype.name.getYear(),
+                                         f: prototype.featured,
+                                         s: prototype.status,
+                                         u: Prototype.blankURL)
+                }
+                
             }
             
             
             let encoder = JSONEncoder()
-//            encoder.outputFormatting = .prettyPrinted
             
-            let data = try encoder.encode(minimalState)
+            let data = try encoder.encode(minimalState.reversed())
             if let jsonString = String(data: data, encoding: .utf8) { jsonString.writeFile(configFile, toFolder: toFolder) }
             
         } catch { print(error) }
