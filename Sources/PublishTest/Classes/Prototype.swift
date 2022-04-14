@@ -6,8 +6,6 @@ import Foundation
 import Files
 
 
-// 00093 yandex [desktop] Force Update – Pulse 2
-
 class Prototype: Hashable  {
     
     var folder: Folder

@@ -12,6 +12,9 @@ class PreviewComponent {
     
     var modules: [File] = []
     var folders: [Folder] = []
+    var shellString = ""
+    
+    let templateModuleFolder = "/Applications/Framer.app/Contents/Resources/FramerTemplateExtras"
     
     func update(for scope: Queue) {
         do {
@@ -24,7 +27,13 @@ class PreviewComponent {
                 if (folder.name == PreviewComponent.assetsFolderName) { self.folders.append(folder) }
             }
             
-            try scope.prototypes.forEach { prototype in
+            var updatePrototypes = scope.prototypes
+            let templatePrototype = Prototype(withFolder: try Folder(path: self.templateModuleFolder), andID: -1)
+            updatePrototypes.append(templatePrototype)
+            
+            
+            
+            try updatePrototypes.forEach { prototype in
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "YY"
                 
@@ -44,9 +53,15 @@ class PreviewComponent {
                 code.writeFile(PreviewComponent.nameFile, toFolder: currentModuleFolder.path)
                 try self.modules.map { try $0.copy(to: currentModuleFolder) }
                 try self.folders.map { try $0.copy(to: currentModuleFolder) }
+                
+                self.shellString.append(prototype.getShellCommand())
             }
+            
+//            try
+            
         }
         catch { print("Failed to read PreviewComponent folder") }
+        self.shellString.writeTempFile("shell.txt")
     }
     
     
@@ -68,6 +83,19 @@ class PreviewComponent {
 
         print("Failed to copy PreviewComponent")
         return ""
+    }
+    
+    
+    
+}
+
+
+extension Prototype {
+    
+    func getShellCommand() -> String {
+        let command = "python ~/Documents/Git/FramerComponents/FramerModuleBuilder/make.pyc \"\(self.folder.path)modules\" \"\(self.folder.path)framer/framer.modules.js\"\n"
+        
+        return command
     }
     
 }
@@ -96,7 +124,7 @@ extension PreviewComponent {
 
     static let componentFolder = "~/Documents/Git/FramerComponents/Preview.framer"
     static let moduleFolder = "~/Documents/Git/FramerComponents/Preview.framer/modules"
-    static let assetsFolder = "~/Documents/Git/FramerComponents/Preview.framer/PreviewComponentAssets"
+    static let assetsFolder = "~/Documents/Git/FramerComponents/Preview.framer/modules/PreviewComponentAssets"
     static let appFile = "~/Documents/Git/FramerComponents/Preview.framer/app.coffee"
 
 }

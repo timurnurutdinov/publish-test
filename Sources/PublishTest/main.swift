@@ -36,16 +36,16 @@ var scope = Queue(withPath: Queue.production)
 
 
 try PublishProcess().publish(using: [
-    .read(),
-//    .readLast(),
+//    .read(),
+    .readLast(),
     
 //    .setScore(),
 //    .setProjects(),
     
-//    .updatePreviewComponent(),
+    .updatePreviewComponent(),
 //    .updateFramerLibrary(),
     
-    .publishDynamic(),
+//    .publishDynamic(),
 //    .publishStatic(),
     
 //    .updatePresentationComponent(),

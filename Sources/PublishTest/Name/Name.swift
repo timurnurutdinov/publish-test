@@ -59,7 +59,7 @@ class Name {
             self.successParse = true
         }
         else {
-            print("📭 Skipped for not matching the pattern: \(line)")
+            print("📭 Name skipped: pattern doesn't match for: \(line)")
         }
     }
     
