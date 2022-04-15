@@ -10,7 +10,7 @@ import Foundation
 extension Queue {
     
     mutating func setDynamicRules() {
-        self.restrict(byName: "2016-07-29 [android] yamblz 1 – Stats 1.framer", tillEnd: true)
+        self.restrict(byName: "2016-08-15 [android] yamblz 1 – Scroll Screen.framer", tillEnd: true)
 //        self.allow(byName: "2021-12-01 [pp] Fullscreen – Flow.framer")
     }
     

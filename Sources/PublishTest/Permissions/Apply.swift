@@ -57,10 +57,29 @@ extension Prototype {
             let newFolder = try originFolder.copy(to: listFolder)
             if !newName.isEmpty {
                 try newFolder.rename(to: newName, keepExtension: false)
+                self.updateTitle(in: newFolder)
             }
         } catch { print() }
     }
+    
+    func updateTitle(in folder: Folder) {
+        do {
+            let fileURL = URL(fileURLWithPath: folder.path + "framer/framer.generated.js")
+            let content = fileURL.string()
+            
+            var newTitle = self.name.title.replacingOccurrences(of: ".framer", with: "")
+            if (self.name.title == "") { newTitle = "Blank" }
+            
+            let updateContent = content.replacingOccurrences(of: self.name.origin, with: newTitle)
+            
+            let framerFile = try File(path: folder.path + "framer/framer.generated.js")
+            try framerFile.delete()
+            
+            updateContent.writeFile("framer.generated.js", toFolder: folder.path + "framer/")
 
+            
+        } catch { print("?") }
+    }
 
 }
 
