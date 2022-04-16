@@ -62,7 +62,7 @@ extension Prototype {
         } catch { print() }
     }
     
-    
+        
     func updateTitle(in folder: Folder) {
         do {
             let fileURL = URL(fileURLWithPath: folder.path + "framer/framer.generated.js")

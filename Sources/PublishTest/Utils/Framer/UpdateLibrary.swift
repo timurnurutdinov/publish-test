@@ -11,17 +11,19 @@ import Files
 class UpdateLibrary {
     static var refIndexHTML = "index.html"
     static var refFramerFolder = "framer"
+    
+    
 //    static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
 //    static var framerLibraryFiles = ["framer.js", "style.css"]
     static var framerLibraryFiles = ["framer2.js"]
-//    static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
     
     var refFile: File? = nil
     var refFramerFiles: [File] = []
     
+    
     func update() {
         do {
-            let refFolder = try Folder(path: "/Applications/Framer.app/Contents/Resources/FramerTemplate")
+            let refFolder = try Folder(path: "~/Documents/Git/FramerComponents/Preview.framer")
             
             try refFolder.files.enumerated().forEach { (index, file) in
                 if (file.name == "index.html") { self.refFile = file }
@@ -37,6 +39,7 @@ class UpdateLibrary {
                     }
                 }
             }
+            
             
             try scope.prototypes.forEach { prototype in
                 if (prototype.name.origin != refFolder.name) {

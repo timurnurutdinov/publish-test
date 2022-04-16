@@ -10,14 +10,15 @@ import Foundation
 extension Queue {
     
     mutating func setDynamicRules() {
-        self.restrict(byName: "2016-08-15 [android] yamblz 1 – Scroll Screen.framer", tillEnd: true)
+        self.restrict(byName: "2016-10-04 [ios] Dino – Start Buttons.framer", tillEnd: true)
 //        self.allow(byName: "2021-12-01 [pp] Fullscreen – Flow.framer")
     }
     
     func setFeatured() {
+        self.feature(byName: "2016-09-28 [android] yamblz team – Flow 3.framer")
+        self.feature(byName: "2016-09-12 [android] yamblz team – Flow 1.framer")
         self.feature(byName: "2016-01-18 [ios] Beeline Music – Onboarding.framer")
         self.feature(byName: "2015-10-01 [ios] 10tracks – Onboarding Swipes.framer")
-        
     }
     
     func setStaticRules() {
@@ -37,5 +38,11 @@ extension PresentQueue {
 
 
 
-//setFun("2016-04-04 [ios] Twiage – Unlock Phone.framer")
-//setFun("2016-07-29 [android] yamblz 1 – Stats 1.framer")
+
+//2016-09-22 [android] yamblz team – Onboarding.framer
+//2016-08-16 [android] yamblz start – Unlock Album 3.framer
+//2016-08-15 [android] yamblz start – Album Stats 3.framer
+//2016-04-04 [ios] Twiage – Unlock Phone.framer
+
+
+
