@@ -62,20 +62,29 @@ extension Prototype {
         } catch { print() }
     }
     
+    
     func updateTitle(in folder: Folder) {
         do {
             let fileURL = URL(fileURLWithPath: folder.path + "framer/framer.generated.js")
+            let separators = ["\"documentTitle\":\"", "\"};"]
+            
             let content = fileURL.string()
             
             var newTitle = self.name.title.replacingOccurrences(of: ".framer", with: "")
             if (self.name.title == "") { newTitle = "Blank" }
             
-            let updateContent = content.replacingOccurrences(of: self.name.origin, with: newTitle)
+            let parts = content.components(separatedBy: separators[0])
+            if (parts.count == 2) {
+                let nextParts = parts[1].components(separatedBy: separators[1])
+                let updatedContent = parts[0] + separators[0] + newTitle + separators[1] + nextParts[1]
+                
+                let framerFile = try File(path: folder.path + "framer/framer.generated.js")
+                try framerFile.delete()
+                
+                updatedContent.writeFile("framer.generated.js", toFolder: folder.path + "framer/")
+            }
             
-            let framerFile = try File(path: folder.path + "framer/framer.generated.js")
-            try framerFile.delete()
             
-            updateContent.writeFile("framer.generated.js", toFolder: folder.path + "framer/")
 
             
         } catch { print("?") }
