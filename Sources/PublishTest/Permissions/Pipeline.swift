@@ -37,6 +37,7 @@ extension Queue {
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
             prototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: prototype.dynamicURL)
         }
+        print("Published \(dynamicPrototypes.count)/\(self.prototypes.count)")
     }
     
     func copyBlankPrototype() {

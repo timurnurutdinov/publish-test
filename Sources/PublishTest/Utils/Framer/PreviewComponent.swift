@@ -27,10 +27,10 @@ class PreviewComponent {
                 if (folder.name == PreviewComponent.assetsFolderName) { self.folders.append(folder) }
             }
             
+            
             var updatePrototypes = scope.prototypes
             let templatePrototype = Prototype(withFolder: try Folder(path: self.templateModuleFolder))
             updatePrototypes.append(templatePrototype)
-            
             
             
             try updatePrototypes.forEach { prototype in
@@ -38,7 +38,6 @@ class PreviewComponent {
                 dateFormatter.dateFormat = "YY"
                 
                 let code = self.changeAppFile(for: prototype.name, with: dateFormatter)
-                
                 let currentModuleFolder = try prototype.folder.createSubfolderIfNeeded(withName: "modules")
                 
                 try Folder(path: currentModuleFolder.path).files.enumerated().forEach { (i, file) in

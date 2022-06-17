@@ -27,6 +27,7 @@ class Prototype: Hashable  {
     var dynamicURL = ""
     var staticURL = ""
     
+    var iconIndex = -1
     
     
     
@@ -54,7 +55,7 @@ class Prototype: Hashable  {
     func setStatus(_ status:Status) { self.status = status }
     func setStaticURL(_ url:String) { self.staticURL = url }
     func setDynamicURL(_ url:String) { self.dynamicURL = url }
-    
+    func setIndex(_ index:Int) { self.iconIndex = index }
     
 }
 

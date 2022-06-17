@@ -42,8 +42,8 @@ class PresentationComponent {
         if let appCoffeeURL = URL(string: PresentationComponent.appFile) {
             let originCode = appCoffeeURL.string()
             
-            let className = "class Presentation extends PageComponent"
-            let newClassName = "class exports.Presentation extends PageComponent"
+            let className = "class Presentation extends"
+            let newClassName = "class exports.Presentation extends"
             let tempCode = originCode.replacingOccurrences(of: className, with: newClassName)
             
             let separator = "# Code for development"

@@ -9,6 +9,16 @@ import Foundation
 import Files
 
 // Set status
+
+extension Prototype {
+    mutating func restrict(byReason reason: Status = .nda) {
+        self.status = .nda
+    }
+    mutating func allow() {
+        self.status = .opened
+    }
+}
+
 extension Queue {
     
     mutating func restrict(byName name: String, tillEnd: Bool = false, byReason reason: Status = .nda) {
@@ -18,13 +28,25 @@ extension Queue {
             if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.status = .nda } }
             else { self.prototypes[firstIndex].status = .nda }
         }
+        
+        else { print("Failed to restrict \(name)") }
     }
     
-    mutating func allow(byName name: String) {
+    mutating func allow(byName name: String, tillName secondName: String = "") {
         let names = self.prototypes.map { $0.name.origin }
+        
         if let firstIndex = names.firstIndex(of: name) {
-            self.prototypes[firstIndex].status = .opened
+            
+            if (secondName == "") { self.prototypes[firstIndex].status = .opened }
+            else if let secondIndex = names.firstIndex(of: secondName) {
+                self.prototypes[firstIndex...secondIndex].enumerated().forEach { $1.status = .opened }
+            }
+            else {
+//                self.prototypes[firstIndex].status = .opened
+                print("Gap rules failed for s: \(name), f: \(name)")
+            }
         }
+        else { print("Failed to allow with name \(name)") }
     }
     
     func allow(byName name: String, withURL url: String) {
@@ -32,6 +54,7 @@ extension Queue {
         if let firstIndex = names.firstIndex(of: name) {
             self.prototypes[firstIndex].setStaticURL(url)
         }
+        else { print("Failed to allow with URL \(name)") }
     }
     
     func feature(byName name: String) {
@@ -39,6 +62,7 @@ extension Queue {
         if let firstIndex = names.firstIndex(of: name) {
             self.prototypes[firstIndex].featured = .starred
         }
+        else { print("Failed to feature \(name)") }
     }
 
 }
@@ -55,10 +79,14 @@ extension Prototype {
             let originFolder = try Folder(path: self.folder.path)
 
             let newFolder = try originFolder.copy(to: listFolder)
+            
             if !newName.isEmpty {
                 try newFolder.rename(to: newName, keepExtension: false)
                 self.updateTitle(in: newFolder)
+                self.updateIcon(in: newFolder)
             }
+            
+            
         } catch { print() }
     }
     
@@ -84,10 +112,41 @@ extension Prototype {
                 updatedContent.writeFile("framer.generated.js", toFolder: folder.path + "framer/")
             }
             
+        }
+        catch { print("Failed to update title for \(self.name.origin)") }
+    }
+    
+    func getIndex() -> String {
+        if (self.iconIndex > 0) { return "\(self.iconIndex)"}
+        return ""
+    }
+    
+    func updateIcon(in folder: Folder) {
+        if (self.iconIndex <= 0) {
+            print("Icon update skipped for \(self.name.origin)")
+            return
+        }
+        
+        do {
+            let icons = ["icon-76.png", "icon-120.png", "icon-152.png", "icon-180.png", "icon-192.png"]
             
-
-            
-        } catch { print("?") }
+            try icons.enumerated().forEach { (index, iconName) in
+//                print("?")
+                let iconFile = try File(path: folder.path + "framer/images/" + iconName)
+//                print("??")
+                try iconFile.delete()
+//                print("???")
+                
+//                print ("~/Documents/Git/FramerComponents/touchIcons/\(self.iconIndex)/" + iconName)
+                let newIcon = try File(path: "~/Documents/Git/FramerComponents/touchIcons/\(self.iconIndex)/" + iconName)
+//                print("????")
+                let iconFolder = try Folder(path: folder.path + "framer/images/")
+//                print("?????")
+                try newIcon.copy(to: iconFolder)
+//                print("??????")
+            }
+        }
+        catch { print("Failed to update icons for \(self.name.origin)") }
     }
 
 }

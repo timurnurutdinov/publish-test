@@ -44,7 +44,7 @@ extension Queue {
     static let testing = "~/Desktop/testing-queue/"
     
     
-    mutating func addPrototype(for folder: Folder) {
+    mutating func addPrototype(for folder: Folder, shouldUpdateIndex:Bool = true) {
         let name = Name(folder.name)
         
         if (name.isValid()) {
@@ -52,6 +52,9 @@ extension Queue {
             let url = self.getURLState(for: prototype.name)
             prototype.setDynamicURL(url)
             self.prototypes.append(prototype)
+            if (shouldUpdateIndex) { prototype.setIndex(self.prototypes.count) }
+            
+            prototype.getPermissionWithTag()
         }
         else {
             print("📭 Name skipped: pattern doesn't match for: \(name.origin)")
@@ -86,7 +89,8 @@ extension Queue {
     mutating func readLast() {
         do {
             let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
-            self.addPrototype(for: lastFolder)
+            self.addPrototype(for: lastFolder, shouldUpdateIndex: false)
+//            self.addPrototype(for: lastFolder)
         } catch { print("Failed to read Queue")}
         
         self.saveURLState()
