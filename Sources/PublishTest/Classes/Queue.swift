@@ -76,7 +76,7 @@ extension Queue {
     }
     
     
-    mutating func read() {
+    public mutating func read() {
         do {
             try Folder(path: self.path).subfolders.enumerated().forEach { (index, folder) in
                 self.addPrototype(for: folder)
@@ -87,7 +87,7 @@ extension Queue {
     }
     
     
-    mutating func readLast() {
+    public mutating func readLast() {
         do {
             let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
             self.addPrototype(for: lastFolder, shouldUpdateIndex: false)
