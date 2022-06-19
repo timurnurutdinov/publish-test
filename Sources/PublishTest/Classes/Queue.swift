@@ -8,7 +8,7 @@
 import Foundation
 import Files
 
-struct Queue {
+public struct Queue {
     
     var prototypes: [Prototype] = []
     var path = ""
