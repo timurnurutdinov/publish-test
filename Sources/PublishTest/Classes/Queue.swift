@@ -29,7 +29,7 @@ public struct Queue {
     
     
     
-    init(withPath path: String) {
+    public init(withPath path: String) {
         self.path = path
         self.createOutputFolders()
         self.readURLState()
