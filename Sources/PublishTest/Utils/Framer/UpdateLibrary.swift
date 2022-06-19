@@ -41,30 +41,30 @@ class UpdateLibrary {
             }
             
             
-            try scope.prototypes.forEach { prototype in
-                if (prototype.name.origin != refFolder.name) {
-                    
-                    // Index.html
-                    try prototype.folder.files.enumerated().forEach { (i, file) in
-                        if (file.name == "index.html") { try file.delete() }
-                    }
-                    
-                    try self.refFile!.copy(to: prototype.folder)
-                    
-                    // Framer folder
-                    let currentFramerFolderPath = prototype.folder.path + "/framer"
-                    let currentFramerFolder = try Folder(path: currentFramerFolderPath)
-
-                    try currentFramerFolder.files.enumerated().forEach { (i, file) in
-                        if (UpdateLibrary.framerLibraryFiles.contains(file.name)) { try file.delete() }
-                    }
-
-                    try self.refFramerFiles.map {
-                        try $0.copy(to: currentFramerFolder)
-                    }
-                    
-                }
-            }
+//            try scope.prototypes.forEach { prototype in
+//                if (prototype.name.origin != refFolder.name) {
+//                    
+//                    // Index.html
+//                    try prototype.folder.files.enumerated().forEach { (i, file) in
+//                        if (file.name == "index.html") { try file.delete() }
+//                    }
+//                    
+//                    try self.refFile!.copy(to: prototype.folder)
+//                    
+//                    // Framer folder
+//                    let currentFramerFolderPath = prototype.folder.path + "/framer"
+//                    let currentFramerFolder = try Folder(path: currentFramerFolderPath)
+//
+//                    try currentFramerFolder.files.enumerated().forEach { (i, file) in
+//                        if (UpdateLibrary.framerLibraryFiles.contains(file.name)) { try file.delete() }
+//                    }
+//
+//                    try self.refFramerFiles.map {
+//                        try $0.copy(to: currentFramerFolder)
+//                    }
+//                    
+//                }
+//            }
             
             
             

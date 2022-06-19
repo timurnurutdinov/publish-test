@@ -6,7 +6,7 @@ import Foundation
 import Files
 
 
-class Prototype: Hashable  {
+public class Prototype: Hashable  {
     
     var folder: Folder
     var name: Name
@@ -43,11 +43,11 @@ class Prototype: Hashable  {
     
     
     
-    static func == (lhs: Prototype, rhs: Prototype) -> Bool {
+    public static func == (lhs: Prototype, rhs: Prototype) -> Bool {
         return lhs.name.origin == rhs.name.origin
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(name.origin)
     }
     
