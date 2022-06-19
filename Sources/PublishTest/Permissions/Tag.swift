@@ -16,10 +16,13 @@ extension Prototype {
             
             if let tags = resourceValues.tagNames {
                 if (tags.contains("Private")) {
-                    print("Closed?")
+                    self.restrict()
                 }
                 else if (tags.contains("Public")) {
-                    print("Published?")
+                    self.allow()
+                }
+                else {
+                    self.restrict()
                 }
             }
 

@@ -11,10 +11,10 @@ import Files
 // Set status
 
 extension Prototype {
-    mutating func restrict(byReason reason: Status = .nda) {
+    func restrict(byReason reason: Status = .nda) {
         self.status = .nda
     }
-    mutating func allow() {
+    func allow() {
         self.status = .opened
     }
 }
@@ -25,8 +25,8 @@ extension Queue {
         let names = self.prototypes.map { $0.name.origin }
         
         if let firstIndex = names.firstIndex(of: name) {
-            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.status = .nda } }
-            else { self.prototypes[firstIndex].status = .nda }
+            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.restrict(byReason: reason) } }
+            else { self.prototypes[firstIndex].restrict(byReason: reason) }
         }
         
         else { print("Failed to restrict \(name)") }
@@ -37,9 +37,9 @@ extension Queue {
         
         if let firstIndex = names.firstIndex(of: name) {
             
-            if (secondName == "") { self.prototypes[firstIndex].status = .opened }
+            if (secondName == "") { self.prototypes[firstIndex].allow() }
             else if let secondIndex = names.firstIndex(of: secondName) {
-                self.prototypes[firstIndex...secondIndex].enumerated().forEach { $1.status = .opened }
+                self.prototypes[firstIndex...secondIndex].enumerated().forEach { $1.allow() }
             }
             else {
 //                self.prototypes[firstIndex].status = .opened
@@ -48,6 +48,8 @@ extension Queue {
         }
         else { print("Failed to allow with name \(name)") }
     }
+    
+    
     
     func allow(byName name: String, withURL url: String) {
         let names = self.prototypes.map { $0.name.origin }

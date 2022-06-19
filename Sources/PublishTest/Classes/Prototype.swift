@@ -21,7 +21,7 @@ class Prototype: Hashable  {
     var moduleLines: Int = 0
     var lines: Int = 0
     
-    var status: Status = .opened
+    var status: Status = .nda
     var featured: Featured = .none
     
     var dynamicURL = ""

@@ -10,16 +10,16 @@ import Foundation
 extension Queue {
     
     mutating func setDynamicRules() {
-        self.restrict(byName: "2017-02-21 [abro] Password Manager – Generate Password 2.framer", tillEnd: true)
+//        self.restrict(byName: "2017-02-21 [abro] Password Manager – Generate Password 2.framer", tillEnd: true)
         
-        self.restrict(byName: "2016-12-08 [ibro] Browser 2017 – Flow 5 TODOTODOTODO.framer")
-        self.restrict(byName: "2016-12-07 [ibro] Browser 2017 – Flow 4 TODOTODOTODO.framer")
-        self.restrict(byName: "2016-12-04 [ibro] Browser 2017 – Flow 3 TODOTODOTODO.framer")
-        self.restrict(byName: "2016-12-03 [ibro] Browser 2017 – Flow 2 TODOTODOTODO.framer")
-        self.restrict(byName: "2016-11-30 [ibro] Browser 2017 – Flow 1 TODOTODOTODO.framer")
+//        self.restrict(byName: "2016-12-08 [ibro] Browser 2017 – Flow 5 TODOTODOTODO.framer")
+//        self.restrict(byName: "2016-12-07 [ibro] Browser 2017 – Flow 4 TODOTODOTODO.framer")
+//        self.restrict(byName: "2016-12-04 [ibro] Browser 2017 – Flow 3 TODOTODOTODO.framer")
+//        self.restrict(byName: "2016-12-03 [ibro] Browser 2017 – Flow 2 TODOTODOTODO.framer")
+//        self.restrict(byName: "2016-11-30 [ibro] Browser 2017 – Flow 1 TODOTODOTODO.framer")
         
-        self.allow(byName: "2021-12-01 [pp] Fullscreen – Flow.framer", tillName: "2022-02-18 [pp] Fullscreen – Video 3.framer")
-        self.allow(byName: "2021-04-22 [pp] Yandex 2021 – Tooltips Playground.framer", tillName: "2021-07-20 [pp] Yandex 2021 – Inc for Plus.framer")
+//        self.allow(byName: "2021-12-01 [pp] Fullscreen – Flow.framer", tillName: "2022-02-18 [pp] Fullscreen – Video 3.framer")
+//        self.allow(byName: "2021-04-22 [pp] Yandex 2021 – Tooltips Playground.framer", tillName: "2021-07-20 [pp] Yandex 2021 – Inc for Plus.framer")
         
         
 //        self.allow(byName: "2021-12-22 [pp] Fullscreen – Video 1.framer")
