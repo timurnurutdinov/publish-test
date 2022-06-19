@@ -28,6 +28,7 @@ public struct Queue {
     mutating func setZScore(_ array: [Double]) { self.zScore = array }
     
     
+    public init() {}
     
     public init(withPath path: String) {
         self.path = path
