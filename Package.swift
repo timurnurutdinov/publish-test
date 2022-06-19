@@ -8,8 +8,12 @@ let package = Package(
         .macOS(.v12),
     ],
     products: [
+        .executable(
+            name: "PublishTestApp",
+            targets: ["PublishTest"]
+        ),
         .library(
-            name: "PublishTest",
+            name: "PublishTestPackage",
             targets: ["PublishTest"]
         )
     ],
