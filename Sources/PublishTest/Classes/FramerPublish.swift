@@ -1,44 +1,44 @@
+
+import Foundation
+import Publish
+import Plot
+import Files
+
+
+
+
+//public struct FramerPublish {
 //
-//import Foundation
-//import Publish
-//import Plot
-//import Files
+//    public init(_ withPath: String) {
 //
-//
-//
-//
-////public struct FramerPublish {
-////
-////    public init(_ withPath: String) {
-////
-////    }
-////}
-//
-//
-//// This type acts as the configuration for your website.
-//public struct PublishProcess: Website {
-//    public enum SectionID: String, WebsiteSectionID {
-//        case prototypes
 //    }
-//
-//    public struct ItemMetadata: WebsiteItemMetadata {
-//        // Add any site-specific metadata that you want to use here.
-//    }
-//
-//    // Update these properties to configure your website:
-//    public var url = URL(string: "https://tilllur.ru")!
-//    public var name = "tilllur"
-//    public var description = ""
-//    public var language: Language { .english }
-//    public var imagePath: Path? { nil }
-//
-//    public init() {}
 //}
-//
-//
-//
-//
-//
+
+
+// This type acts as the configuration for your website.
+public struct PublishProcess: Website {
+    public enum SectionID: String, WebsiteSectionID {
+        case prototypes
+    }
+
+    public struct ItemMetadata: WebsiteItemMetadata {
+        // Add any site-specific metadata that you want to use here.
+    }
+
+    // Update these properties to configure your website:
+    public var url = URL(string: "https://tilllur.ru")!
+    public var name = "tilllur"
+    public var description = ""
+    public var language: Language { .english }
+    public var imagePath: Path? { nil }
+
+    public init() {}
+}
+
+
+
+
+
 //var scope = Queue(withPath: Queue.production)
 //
 //
@@ -63,19 +63,24 @@
 //    .makeTimestamp()
 //    ]
 //)
-//
-//
-//
-//extension PublishingStep where Site == PublishProcess {
-//
-//    static func read() -> Self {
-//        .step(named: "Read Prototypes") { context in scope.read() }
-//    }
-//
-//    static func readLast() -> Self {
-//        .step(named: "Read Last Prototype") { context in scope.readLast() }
-//    }
-//
+
+
+
+extension PublishingStep where Site == PublishProcess {
+
+    public static func read() -> Self {
+        .step(named: "Read Prototypes") { context in
+//            scope.read()
+        }
+    }
+
+    public static func readLast() -> Self {
+        .step(named: "Read Last Prototype") { context in
+//            scope.readLast()
+            print("Inside")
+        }
+    }
+
 //    static func updatePreviewComponent() -> Self {
 //        .step(named: "🔗 Update Preview Component") { context in PreviewComponent().update(for: scope) }
 //    }
@@ -169,8 +174,8 @@
 ////            Prototype.getProjectlist()
 ////        }
 ////    }
-//
-//
-//
-//
-//}
+
+
+
+
+}

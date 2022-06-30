@@ -6,10 +6,10 @@ import Foundation
 import Files
 
 
-public class Prototype: Hashable  {
+public class Prototype: Hashable, Identifiable  {
     
     var folder: Folder
-    var name: Name
+    public var name: Name
     
     
     // +Complexity

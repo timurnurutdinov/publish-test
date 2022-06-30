@@ -22,8 +22,8 @@ enum ProjectType: String {
 
 // 2020-10-29 [touch] United Feed – Resize.framer
 
-class Name {
-    var origin: String = ""
+public class Name {
+    public var origin: String = ""
     
     var date: Date = Date()
     var type: ProjectType = .unknown

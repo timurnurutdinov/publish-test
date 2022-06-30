@@ -36,6 +36,11 @@ public struct Queue {
         self.readURLState()
     }
     
+    public func getPrototypes() -> [Prototype] {
+        print("wut? \(self.prototypes)")
+        return self.prototypes
+    }
+    
 }
 
 
@@ -88,9 +93,11 @@ extension Queue {
     
     
     public mutating func readLast() {
+        print("?")
         do {
             let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
             self.addPrototype(for: lastFolder, shouldUpdateIndex: false)
+            print("????")
 //            self.addPrototype(for: lastFolder)
         } catch { print("Failed to read Queue")}
         
