@@ -92,13 +92,18 @@ extension Queue {
     }
     
     
-    public mutating func readLast() {
-        print("?")
+    public mutating func readLast(_ count: Int = 1) {
         do {
-            let lastFolder = (try Folder(path: self.path).subfolders.reversed().first)!
-            self.addPrototype(for: lastFolder, shouldUpdateIndex: false)
-            print("????")
-//            self.addPrototype(for: lastFolder)
+            let projects = try Folder(path: self.path).subfolders.reversed().map { $0 }
+            var selectedProjects = ArraySlice<Folder>()
+            
+            if (count == 0) { selectedProjects = projects[...] }
+            else { selectedProjects = projects[..<count] }
+            
+            selectedProjects.enumerated().forEach { (index, folder) in
+                self.addPrototype(for: folder)
+            }
+            
         } catch { print("Failed to read Queue")}
         
         self.saveURLState()

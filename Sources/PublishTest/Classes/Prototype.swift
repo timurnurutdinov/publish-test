@@ -8,7 +8,7 @@ import Files
 
 public class Prototype: Hashable, Identifiable  {
     
-    var folder: Folder
+    public var folder: Folder
     public var name: Name
     
     
