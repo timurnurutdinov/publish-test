@@ -27,8 +27,8 @@ public class Name {
     
     var date: Date = Date()
     var type: ProjectType = .unknown
-    var project: String = ""
-    var title: String = ""
+    public var project: String = ""
+    public var title: String = ""
     
     var originDate: String = ""
     var originType: String = ""
@@ -36,7 +36,7 @@ public class Name {
     var successParse = false
     
     
-    init(_ line: String) {
+    public init(_ line: String) {
         self.origin = line
         let pattern = #"([^\s]+) \[([^]]+)\] ([^–^-]+) [—–-] ([^.]+)"#
 

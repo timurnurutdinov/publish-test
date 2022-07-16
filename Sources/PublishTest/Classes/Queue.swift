@@ -46,6 +46,31 @@ public struct Queue {
 
 
 extension Queue {
+
+    public static func load(fromPath path: String = "~/Documents/Git/Prototyping-Queue/") -> Queue {
+        var queue = Queue(withPath: path)
+        do {
+            queue.read()
+            return queue
+        }
+        catch {}
+        return Queue()
+    }
+    
+    public static func load(last n: Int = 10, fromPath path: String = "~/Documents/Git/Prototyping-Queue/") -> Queue {
+        var queue = Queue(withPath: path)
+        do {
+            queue.readLast(n)
+            return queue
+        }
+        catch {}
+        return Queue()
+    }
+
+}
+
+
+extension Queue {
     static let production = "~/Documents/Git/Prototyping-Queue/"
     static let testing = "~/Desktop/testing-queue/"
     

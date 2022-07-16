@@ -40,7 +40,7 @@ extension Name {
 
 extension Name {
     
-    func compactDate() -> String {
+    public func compactDate() -> String {
         let formatter4 = DateFormatter()
         formatter4.dateFormat = "d MMM y"
         return formatter4.string(from: self.date)
