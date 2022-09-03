@@ -51,6 +51,11 @@ extension Queue {
     
     func setStaticRules() {
 //        self.allow(byName: "2019-05-18 [utils] Utils – Size.framer", withURL: "size")
+        
+        self.allow(byName: "2022-07-26 [d] Yandex Search 2022 — Desktop Resize.framer", withURL: "search-desktop-2022-resize")
+        self.allow(byName: "2022-07-14 [d] Yandex Search 2022 — Desktop.framer", withURL: "search-desktop-2022")
+        self.allow(byName: "2022-07-23 [pp] Yandex Search 2022 — Flow 6.framer", withURL: "search-2022")
+        
         self.allow(byName: "2022-02-08 [pp] Yandex 2022 – Flow.framer", withURL: "yandex-2022")
         self.allow(byName: "2022-03-31 [bro] Groups — Flow.framer", withURL: "bro-groups")
         self.allow(byName: "2022-04-20 [pp] Yandex Search 2022 — Flow 2.framer", withURL: "search-input")

@@ -5,7 +5,6 @@
 import Foundation
 import Files
 
-
 public class Prototype: Hashable, Identifiable  {
     
     public var folder: Folder
@@ -21,7 +20,7 @@ public class Prototype: Hashable, Identifiable  {
     var moduleLines: Int = 0
     var lines: Int = 0
     
-    var status: Status = .nda
+    public var status: Status = .nda
     var featured: Featured = .none
     
     var dynamicURL = ""
@@ -66,7 +65,7 @@ public class Prototype: Hashable, Identifiable  {
 //    case api = 1
 //}
 
-enum Status: Int, Codable {
+public enum Status: Int, Codable {
     case nda = 0
     case opened = 1
     case api = 2

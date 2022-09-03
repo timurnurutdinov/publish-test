@@ -37,7 +37,6 @@ public struct Queue {
     }
     
     public func getPrototypes() -> [Prototype] {
-        print("wut? \(self.prototypes)")
         return self.prototypes
     }
     

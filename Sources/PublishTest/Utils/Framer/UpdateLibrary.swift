@@ -8,20 +8,22 @@
 import Foundation
 import Files
 
-class UpdateLibrary {
+public class UpdateLibrary {
     static var refIndexHTML = "index.html"
     static var refFramerFolder = "framer"
     
     
-//    static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
+    static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
 //    static var framerLibraryFiles = ["framer.js", "style.css"]
-    static var framerLibraryFiles = ["framer2.js"]
+//    static var framerLibraryFiles = ["framer2.js"]
     
     var refFile: File? = nil
     var refFramerFiles: [File] = []
     
+    public init() {}
     
-    func update() {
+    
+    public func update(forPrototypes prototypes: [Prototype]) {
         do {
             let refFolder = try Folder(path: "~/Documents/Git/FramerComponents/Preview.framer")
             
@@ -35,40 +37,41 @@ class UpdateLibrary {
                     try folder.files.enumerated().forEach { (indexFile, file) in
                         if (UpdateLibrary.framerLibraryFiles.contains(file.name)) {
                             refFramerFiles.append(file)
+                            print("Added as ref file \(file.name)")
                         }
                     }
                 }
             }
             
             
-//            try scope.prototypes.forEach { prototype in
-//                if (prototype.name.origin != refFolder.name) {
-//                    
-//                    // Index.html
-//                    try prototype.folder.files.enumerated().forEach { (i, file) in
-//                        if (file.name == "index.html") { try file.delete() }
-//                    }
-//                    
-//                    try self.refFile!.copy(to: prototype.folder)
-//                    
-//                    // Framer folder
-//                    let currentFramerFolderPath = prototype.folder.path + "/framer"
-//                    let currentFramerFolder = try Folder(path: currentFramerFolderPath)
-//
-//                    try currentFramerFolder.files.enumerated().forEach { (i, file) in
-//                        if (UpdateLibrary.framerLibraryFiles.contains(file.name)) { try file.delete() }
-//                    }
-//
-//                    try self.refFramerFiles.map {
-//                        try $0.copy(to: currentFramerFolder)
-//                    }
-//                    
-//                }
-//            }
+            try prototypes.forEach { prototype in
+                if (prototype.name.origin != refFolder.name) {
+                    
+                    // Index.html
+                    try prototype.folder.files.enumerated().forEach { (i, file) in
+                        if (file.name == "index.html") { try file.delete() }
+                    }
+                    
+                    try self.refFile!.copy(to: prototype.folder)
+                    
+                    // Framer folder
+                    let currentFramerFolderPath = prototype.folder.path + "/framer"
+                    let currentFramerFolder = try Folder(path: currentFramerFolderPath)
+
+                    try currentFramerFolder.files.enumerated().forEach { (i, file) in
+                        if (UpdateLibrary.framerLibraryFiles.contains(file.name)) { try file.delete() }
+                    }
+
+                    try self.refFramerFiles.map {
+                        try $0.copy(to: currentFramerFolder)
+                    }
+                    
+                }
+            }
             
             
             
-            
+            print("Updated")
         }
         catch { print("Failed to Update") }
     }

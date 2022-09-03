@@ -58,7 +58,7 @@ extension Name {
         }
     }
     
-    static func getDate(_ line: String) -> Date {
+    public static func getDate(_ line: String) -> Date {
         let dateFormat = "yyyy-MM-dd"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat

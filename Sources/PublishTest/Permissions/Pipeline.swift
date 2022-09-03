@@ -55,7 +55,7 @@ extension Queue {
 
 extension Queue {
     
-    mutating func publishStatic() {
+    public mutating func publishStatic() {
         self.cleanStaticFolders()
         self.setStaticRules()
         self.copyStaticPrototypes()
