@@ -23,8 +23,10 @@ public class Prototype: Hashable, Identifiable  {
     public var status: Status = .nda
     var featured: Featured = .none
     
-    var dynamicURL = ""
-    var staticURL = ""
+//    var dynamicURL = ""
+//    var staticURL = ""
+    
+    var seed: Seed = Seed(nameStatic: "", nameDynamic: "")
     
     var iconIndex = -1
     
@@ -52,8 +54,8 @@ public class Prototype: Hashable, Identifiable  {
     
 //    func setID(_ id: Int) { self.id = id }
     func setStatus(_ status:Status) { self.status = status }
-    func setStaticURL(_ url:String) { self.staticURL = url }
-    func setDynamicURL(_ url:String) { self.dynamicURL = url }
+    func setStaticURL(_ url:String) { self.seed.nameStatic = url }
+    func setDynamicURL(_ url:String) { self.seed.nameDynamic = url }
     func setIndex(_ index:Int) { self.iconIndex = index }
     
 }

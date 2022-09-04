@@ -28,7 +28,7 @@ extension Prototype {
 }
 
 extension Queue {
-    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = OutputFolder.path) {
+    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = SiteFolder.path) {
         do {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY"
@@ -42,7 +42,7 @@ extension Queue {
                                          y: prototype.name.getYear(),
                                          f: prototype.featured,
                                          s: prototype.status,
-                                         u: prototype.dynamicURL)
+                                         u: prototype.seed.nameDynamic)
                 }
                 else {
                     return PrototypeJSON(i: (index + 1),

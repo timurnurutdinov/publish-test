@@ -17,35 +17,38 @@ extension Queue {
     }
     
     mutating func setScore() {
+        return
+        // TODO: FIX
         
-        // Sum lines of all prototypes
-        let sumArray = self.prototypes.map { Double($0.lines) }
-        let sum = Surge.sum(sumArray)
-        
-        // Get Average & Standard Variation
-        self.setAvarage(sum / Double(sumArray.count))
-        self.setStandardVariation(Surge.std(sumArray))
-        print("Average: \(self.average), Standard Variation: \(self.standardVariation)")
-        
-        // Select Extreme Prototypes
-        for prototype in self.prototypes { prototype.set(average: self.average, andVariation: self.standardVariation) }
-        
-        print("Extreme Prototypes Count: \(self.getExtremePrototypes().count)")
-        
-        let computedScore = sumArray.map { ($0 - self.average)/self.standardVariation }
-        self.setZScore(computedScore)
-        
-        self.logExtremePrototypesNames()
-        self.logModules()
+//        // Sum lines of all prototypes
+//        let sumArray = self.prototypes.map { Double($0.lines) }
+//        let sum = Surge.sum(sumArray)
+//
+//        // Get Average & Standard Variation
+//        self.setAvarage(sum / Double(sumArray.count))
+//        self.setStandardVariation(Surge.std(sumArray))
+//        print("Average: \(self.average), Standard Variation: \(self.standardVariation)")
+//
+//        // Select Extreme Prototypes
+//        for prototype in self.prototypes { prototype.set(average: self.average, andVariation: self.standardVariation) }
+//
+//        print("Extreme Prototypes Count: \(self.getExtremePrototypes().count)")
+//
+//        let computedScore = sumArray.map { ($0 - self.average)/self.standardVariation }
+//        self.setZScore(computedScore)
+//
+//        self.logExtremePrototypesNames()
+//        self.logModules()
         
     }
     
     func logExtremePrototypesNames() {
+        return
         
-        self.zScore.writeFile(withName: "zIndex.txt", separatedBy: ",")
-        
-        let extremeNames = self.getExtremePrototypes().map { $0.name.origin }
-        extremeNames.writeFile(withName: "extreme prototypes.txt", separatedBy: "\n")
+//        self.zScore.writeFile(withName: "zIndex.txt", separatedBy: ",")
+//        
+//        let extremeNames = self.getExtremePrototypes().map { $0.name.origin }
+//        extremeNames.writeFile(withName: "extreme prototypes.txt", separatedBy: "\n")
     }
 }
 

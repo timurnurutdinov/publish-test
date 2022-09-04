@@ -26,8 +26,8 @@ extension Queue {
     
     func cleanDynamicFolders() {
         do {
-            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder).delete()
-            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesDynamicFolder)
+            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: self.scope.outputDynamic).delete()
+            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: self.scope.outputDynamic)
         }
         catch { print() }
     }
@@ -35,7 +35,7 @@ extension Queue {
     func copyDynamicPrototypes() {
         let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: prototype.dynamicURL)
+            prototype.copy(toFolder: self.scope.outputDynamic, renameTo: prototype.seed.nameDynamic)
         }
         print("Published \(dynamicPrototypes.count)/\(self.prototypes.count)")
     }
@@ -44,7 +44,7 @@ extension Queue {
         do {
             let folder = try Folder(path: "~/Documents/Git/FramerComponents/Blank.framer")
             let blankPrototype = Prototype(withFolder: folder)
-            blankPrototype.copy(toFolder: OutputFolder.prototypesDynamicFolder, renameTo: Prototype.blankURL)
+            blankPrototype.copy(toFolder: self.scope.outputDynamic, renameTo: Prototype.blankURL)
         }
         catch { print("Failed to copy Blank.framer") }
     }
@@ -63,16 +63,16 @@ extension Queue {
     
     func cleanStaticFolders() {
         do {
-            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesStaticFolder).delete()
-            try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: OutputFolder.prototypesStaticFolder)
+            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: self.scope.outputStatic).delete()
+            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: self.scope.outputStatic)
         }
         catch { print() }
     }
     
     func copyStaticPrototypes() {
-        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.staticURL != "" }
+        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.seed.nameStatic != "" }
         staticPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: OutputFolder.prototypesStaticFolder, renameTo: prototype.staticURL)
+            prototype.copy(toFolder: self.scope.outputStatic, renameTo: prototype.seed.nameStatic)
         }
         
     }

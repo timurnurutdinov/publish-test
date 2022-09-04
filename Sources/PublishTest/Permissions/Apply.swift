@@ -77,7 +77,7 @@ extension Prototype {
     
     func copy(toFolder: String, renameTo newName: String) {
         do {
-            let listFolder = try Folder(path: OutputFolder.path).createSubfolderIfNeeded(withName: toFolder)
+            let listFolder = try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: toFolder)
             let originFolder = try Folder(path: self.folder.path)
 
             let newFolder = try originFolder.copy(to: listFolder)

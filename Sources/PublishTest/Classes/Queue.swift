@@ -8,36 +8,50 @@
 import Foundation
 import Files
 
+
+public struct ScopeEnum {
+    public static var production    = Scope("~/Documents/Git/Prototyping-Queue/",
+                                            static: "~/Documents/Git/tilllur.ru/s",
+                                            dynamic: "~/Documents/Git/tilllur.ru/d")
+    
+    public static var presentations = Scope("~/Documents/Git/FramerComponents/Presentation-Queue",
+                                            static: "~/Documents/Git/tilllur.ru/p",
+                                            dynamic: "~/Documents/Git/tilllur.ru/remove")
+    
+    public static var other         = Scope("~/Documents/Git/FramerComponents/Experiment-Queue",
+                                            static: "~/Documents/Git/tilllur.ru/utils",
+                                            dynamic: "~/Documents/Git/tilllur.ru/remove")
+}
+
+
+
+public struct Scope: Equatable {
+    public var input: String
+    public var outputStatic: String
+    public var outputDynamic: String
+
+    init(_ input:String, static outputStatic: String, dynamic outputDynamic: String) {
+        self.input = input
+        self.outputStatic = outputStatic
+        self.outputDynamic = outputDynamic
+    }
+    
+    public static func == (lhs: Scope, rhs: Scope) -> Bool {
+        return (lhs.input == rhs.input)
+    }
+}
+
+
+
+
+
 public struct Queue {
+    public var scope: Scope
+    public var prototypes: [Prototype] = []
     
-    var prototypes: [Prototype] = []
-    var path = ""
-    
-    var urlState = Set<PrototypeConfig>()
-    
-    
-    // Complexity
-    var maxLines = 0
-    var average: Double = 0.0
-    var standardVariation: Double = 1.0
-    var zScore: [Double] = [Double]()
-    
-    mutating func setMaxLines(_ value: Int) { self.maxLines = value }
-    mutating func setAvarage(_ value: Double) { self.average = value }
-    mutating func setStandardVariation(_ value: Double) { self.standardVariation = value }
-    mutating func setZScore(_ array: [Double]) { self.zScore = array }
-    
-    
-    public init() {}
-    
-    public init(withPath path: String) {
-        self.path = path
-        self.createOutputFolders()
-        self.readURLState()
-    }
-    
-    public func getPrototypes() -> [Prototype] {
-        return self.prototypes
+    public init(_ scope: Scope) {
+        self.scope = scope
+        self.createOutputFolders() // TODO: remove
     }
     
 }
@@ -45,41 +59,14 @@ public struct Queue {
 
 
 extension Queue {
-
-    public static func load(fromPath path: String = "~/Documents/Git/Prototyping-Queue/") -> Queue {
-        var queue = Queue(withPath: path)
-        do {
-            queue.read()
-            return queue
-        }
-        catch {}
-        return Queue()
-    }
-    
-    public static func load(last n: Int = 10, fromPath path: String = "~/Documents/Git/Prototyping-Queue/") -> Queue {
-        var queue = Queue(withPath: path)
-        do {
-            queue.readLast(n)
-            return queue
-        }
-        catch {}
-        return Queue()
-    }
-
-}
-
-
-extension Queue {
-    static let production = "~/Documents/Git/Prototyping-Queue/"
-    static let testing = "~/Desktop/testing-queue/"
-    
     
     mutating func addPrototype(for folder: Folder, shouldUpdateIndex:Bool = true) {
         let name = Name(folder.name)
         
         if (name.isValid()) {
             let prototype = Prototype(withFolder: folder)
-            let url = self.getURLState(for: prototype.name)
+//            let url = self.getURLState(for: prototype.name)
+            let url = "temp"
             prototype.setDynamicURL(url)
             self.prototypes.append(prototype)
             if (shouldUpdateIndex) { prototype.setIndex(self.prototypes.count) }
@@ -92,33 +79,33 @@ extension Queue {
     }
     
     
-    mutating func getURLState(for name: Name) -> String {
-        let newConf = PrototypeConfig(originName: name.origin, url: String.randomStringForURL())
-        let elem = self.urlState.first { $0.originName == newConf.originName }
-        
-        if elem != nil { return elem!.url }
-        else {
-            self.urlState.insert(newConf)
-            return newConf.url
-        }
-        
-    }
+//    mutating func getURLState(for name: Name) -> String {
+//        let newConf = PrototypeConfig(originName: name.origin, url: String.randomStringForURL())
+//        let elem = self.urlState.first { $0.originName == newConf.originName }
+//
+//        if elem != nil { return elem!.url }
+//        else {
+//            self.urlState.insert(newConf)
+//            return newConf.url
+//        }
+//
+//    }
     
     
     public mutating func read() {
         do {
-            try Folder(path: self.path).subfolders.enumerated().forEach { (index, folder) in
+            try Folder(path: self.scope.input).subfolders.reversed().enumerated().forEach { (index, folder) in
                 self.addPrototype(for: folder)
             }
         } catch { print("Failed to read Queue")}
         
-        self.saveURLState()
+//        self.saveURLState()
     }
     
     
     public mutating func readLast(_ count: Int = 1) {
         do {
-            let projects = try Folder(path: self.path).subfolders.reversed().map { $0 }
+            let projects = try Folder(path: self.scope.input).subfolders.reversed().map { $0 }
             var selectedProjects = ArraySlice<Folder>()
             
             if (count == 0) { selectedProjects = projects[...] }
@@ -130,35 +117,42 @@ extension Queue {
             
         } catch { print("Failed to read Queue")}
         
-        self.saveURLState()
+//        self.saveURLState()
     }
 }
 
 
 
-struct OutputFolder {
-    // TODO: change folder
-    static let name = "output" // Bad
+struct SiteFolder {
     static let path = "~/Documents/Git/tilllur.ru/"
-    
-    static let prototypesDynamicFolder = "d"
-    static let prototypesStaticFolder = "s"
-    static let presentationFolder = "p"
-    
     static let prototypesJSON = "d.json"
-    
 }
 
 
 
 
 extension Queue {
+    static let dirtyOutputName = "output" // Bad
     
     func createOutputFolders() {
         do {
-            let folder = try Folder(path: "~/Desktop/")
-            try folder.createSubfolderIfNeeded(withName: OutputFolder.name)
+            let folder = try Folder(path: "~/Documents/PublishTest")
+            try folder.createSubfolderIfNeeded(withName: Queue.dirtyOutputName)
         }
-        catch { print("Failed to create: \(OutputFolder.path)") }
+        catch { print("Failed to created OUTPUT temp") }
     }
 }
+
+
+//struct PrototypeComplexity {
+//    // Complexity
+//    var maxLines = 0
+//    var average: Double = 0.0
+//    var standardVariation: Double = 1.0
+//    var zScore: [Double] = [Double]()
+//
+//    mutating func setMaxLines(_ value: Int) { self.maxLines = value }
+//    mutating func setAvarage(_ value: Double) { self.average = value }
+//    mutating func setStandardVariation(_ value: Double) { self.standardVariation = value }
+//    mutating func setZScore(_ array: [Double]) { self.zScore = array }
+//}
