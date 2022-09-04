@@ -27,6 +27,7 @@ extension Prototype {
     }
 }
 
+
 extension Queue {
     mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = SiteFolder.path) {
         do {
@@ -34,7 +35,7 @@ extension Queue {
             dateFormatter.dateFormat = "YYYY"
             
             
-            let minimalState = self.prototypes.enumerated().map { (index, prototype) -> PrototypeJSON in
+            let minimalState = self.prototypes.reversed().enumerated().map { (index, prototype) -> PrototypeJSON in
                 if (prototype.status == .opened) {
                     return PrototypeJSON(i: (index + 1),
                                          t: prototype.name.title,

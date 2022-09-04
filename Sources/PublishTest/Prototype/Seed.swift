@@ -74,5 +74,38 @@ extension Prototype {
 
         } catch { print(error) }
     }
+    
+    
+}
+
+
+extension Queue {
+    public func updateIcons() {
+        self.prototypes.reversed().enumerated().forEach { (index, prototype) in
+            prototype.updateIcon(withIndex: index)
+        }
+    }
+}
+
+extension Prototype {
+    
+    func updateIcon(withIndex index: Int) {
+        
+        let iconIndex = index + 1
+        
+        do {
+            let icons = ["icon-76.png", "icon-120.png", "icon-152.png", "icon-180.png", "icon-192.png"]
+            
+            try icons.enumerated().forEach { (index, iconName) in
+                let iconFile = try File(path: folder.path + "framer/images/" + iconName)
+                try iconFile.delete()
+                
+                let newIcon = try File(path: "~/Documents/Git/FramerComponents/touchIcons/\(iconIndex)/" + iconName)
+                let iconFolder = try Folder(path: folder.path + "framer/images/")
+                try newIcon.copy(to: iconFolder)
+            }
+        }
+        catch { print("Failed to update icons for \(self.name.origin)") }
+    }
 }
 

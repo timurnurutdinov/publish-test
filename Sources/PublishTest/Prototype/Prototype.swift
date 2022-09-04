@@ -31,8 +31,6 @@ public class Prototype: Hashable, Identifiable  {
     
     var iconIndex = -1
     
-    
-    
     init(withFolder folder: Folder) {
         self.folder = folder
         self.name = Name(folder.name)
@@ -43,11 +41,9 @@ public class Prototype: Hashable, Identifiable  {
         
         self.getPermissionByTag()
         self.updateTags()
-        print(self.status)
         
         // TODO
         self.countLines()
-//        print(self.dynamicSeed)
         
     }
     
@@ -63,9 +59,9 @@ public class Prototype: Hashable, Identifiable  {
     }
     
 //    func setID(_ id: Int) { self.id = id }
-    func setStatus(_ status:Status) { self.status = status }
-    func setStaticURL(_ url:String) { self.staticSeed.url = url }
-    func setDynamicURL(_ url:String) { self.dynamicSeed.url = url }
+//    func setStatus(_ status:Status) { self.status = status }
+//    func setStaticURL(_ url:String) { self.staticSeed.url = url }
+//    func setDynamicURL(_ url:String) { self.dynamicSeed.url = url }
     func setIndex(_ index:Int) { self.iconIndex = index }
     
 }

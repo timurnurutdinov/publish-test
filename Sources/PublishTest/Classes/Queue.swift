@@ -60,18 +60,12 @@ public struct Queue {
 
 extension Queue {
     
-    mutating func addPrototype(for folder: Folder, shouldUpdateIndex:Bool = true) {
+    mutating func addPrototype(for folder: Folder) {
         let name = Name(folder.name)
         
         if (name.isValid()) {
             let prototype = Prototype(withFolder: folder)
-//            let url = self.getURLState(for: prototype.name)
-//            let url = "temp"
-//            prototype.setDynamicURL(url)
             self.prototypes.append(prototype)
-            if (shouldUpdateIndex) { prototype.setIndex(self.prototypes.count) }
-            
-//            prototype.getPermissionWithTag()
         }
         else {
             print("📭 Name skipped: pattern doesn't match for: \(name.origin)")

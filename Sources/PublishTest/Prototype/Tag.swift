@@ -9,9 +9,15 @@ import Foundation
 import Files
 
 
+extension Prototype {
+    func restrict(byReason reason: Status = .nda) { self.status = .nda }
+    func allow() { self.status = .opened }
+    func feature() { self.featured = .starred }
+}
+
+
 
 extension Prototype {
-    
     
     func getPermissionByTag() {
         
@@ -42,7 +48,7 @@ extension Prototype {
     
     
     func updateTags() {
-        var url = self.folder.url
+        let url = self.folder.url
         
         do {
             let resourceValues = try url.resourceValues(forKeys: [.tagNamesKey])
