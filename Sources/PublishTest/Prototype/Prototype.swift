@@ -26,7 +26,8 @@ public class Prototype: Hashable, Identifiable  {
 //    var dynamicURL = ""
 //    var staticURL = ""
     
-    var seed: Seed = Seed(nameStatic: "", nameDynamic: "")
+    public var dynamicSeed: Seed = Seed(url: "")
+    public var staticSeed: Seed = Seed(url: "")
     
     var iconIndex = -1
     
@@ -36,8 +37,15 @@ public class Prototype: Hashable, Identifiable  {
         self.folder = folder
         self.name = Name(folder.name)
         
+        self.readSeed()
+        self.readSeedStatic()
+        if (self.staticSeed.url != "") { print("Public ——> \(self.name.origin)") }
+        
+        self.updateTags()
+        
         // TODO
         self.countLines()
+//        print(self.dynamicSeed)
         
     }
     
@@ -54,8 +62,8 @@ public class Prototype: Hashable, Identifiable  {
     
 //    func setID(_ id: Int) { self.id = id }
     func setStatus(_ status:Status) { self.status = status }
-    func setStaticURL(_ url:String) { self.seed.nameStatic = url }
-    func setDynamicURL(_ url:String) { self.seed.nameDynamic = url }
+    func setStaticURL(_ url:String) { self.staticSeed.url = url }
+    func setDynamicURL(_ url:String) { self.dynamicSeed.url = url }
     func setIndex(_ index:Int) { self.iconIndex = index }
     
 }
@@ -79,20 +87,20 @@ enum Featured: Int, Codable {
 }
 
 
-struct PrototypeConfig: Codable, Hashable, Comparable {
+public struct PrototypeConfig: Codable, Hashable, Comparable {
     
-    var originName: String
-    var url: String
+    public var originName: String
+    public var url: String
     
-    static func == (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
+    public static func == (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
         return lhs.originName == rhs.originName
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(originName)
     }
     
-    static func < (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
+    public static func < (lhs: PrototypeConfig, rhs: PrototypeConfig) -> Bool {
         return lhs.originName < rhs.originName
     }
 }

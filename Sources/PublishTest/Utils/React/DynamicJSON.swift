@@ -42,7 +42,7 @@ extension Queue {
                                          y: prototype.name.getYear(),
                                          f: prototype.featured,
                                          s: prototype.status,
-                                         u: prototype.seed.nameDynamic)
+                                         u: prototype.dynamicSeed.url)
                 }
                 else {
                     return PrototypeJSON(i: (index + 1),

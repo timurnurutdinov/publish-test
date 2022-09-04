@@ -17,57 +17,63 @@ extension Prototype {
     func allow() {
         self.status = .opened
     }
+    
+    func feature() {
+        self.featured = .starred
+    }
 }
 
-extension Queue {
-    
-    mutating func restrict(byName name: String, tillEnd: Bool = false, byReason reason: Status = .nda) {
-        let names = self.prototypes.map { $0.name.origin }
-        
-        if let firstIndex = names.firstIndex(of: name) {
-            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.restrict(byReason: reason) } }
-            else { self.prototypes[firstIndex].restrict(byReason: reason) }
-        }
-        
-        else { print("Failed to restrict \(name)") }
-    }
-    
-    mutating func allow(byName name: String, tillName secondName: String = "") {
-        let names = self.prototypes.map { $0.name.origin }
-        
-        if let firstIndex = names.firstIndex(of: name) {
-            
-            if (secondName == "") { self.prototypes[firstIndex].allow() }
-            else if let secondIndex = names.firstIndex(of: secondName) {
-                self.prototypes[firstIndex...secondIndex].enumerated().forEach { $1.allow() }
-            }
-            else {
-//                self.prototypes[firstIndex].status = .opened
-                print("Gap rules failed for s: \(name), f: \(name)")
-            }
-        }
-        else { print("Failed to allow with name \(name)") }
-    }
-    
-    
-    
-    func allow(byName name: String, withURL url: String) {
-        let names = self.prototypes.map { $0.name.origin }
-        if let firstIndex = names.firstIndex(of: name) {
-            self.prototypes[firstIndex].setStaticURL(url)
-        }
-        else { print("Failed to allow with URL \(name)") }
-    }
-    
-    func feature(byName name: String) {
-        let names = self.prototypes.map { $0.name.origin }
-        if let firstIndex = names.firstIndex(of: name) {
-            self.prototypes[firstIndex].featured = .starred
-        }
-        else { print("Failed to feature \(name)") }
-    }
 
-}
+
+//extension Queue {
+//
+//    mutating func restrict(byName name: String, tillEnd: Bool = false, byReason reason: Status = .nda) {
+//        let names = self.prototypes.map { $0.name.origin }
+//
+//        if let firstIndex = names.firstIndex(of: name) {
+//            if tillEnd { self.prototypes[firstIndex...].enumerated().forEach { $1.restrict(byReason: reason) } }
+//            else { self.prototypes[firstIndex].restrict(byReason: reason) }
+//        }
+//
+//        else { print("Failed to restrict \(name)") }
+//    }
+//
+//    mutating func allow(byName name: String, tillName secondName: String = "") {
+//        let names = self.prototypes.map { $0.name.origin }
+//
+//        if let firstIndex = names.firstIndex(of: name) {
+//
+//            if (secondName == "") { self.prototypes[firstIndex].allow() }
+//            else if let secondIndex = names.firstIndex(of: secondName) {
+//                self.prototypes[firstIndex...secondIndex].enumerated().forEach { $1.allow() }
+//            }
+//            else {
+////                self.prototypes[firstIndex].status = .opened
+//                print("Gap rules failed for s: \(name), f: \(name)")
+//            }
+//        }
+//        else { print("Failed to allow with name \(name)") }
+//    }
+//
+//
+//
+//    func allow(byName name: String, withURL url: String) {
+//        let names = self.prototypes.map { $0.name.origin }
+//        if let firstIndex = names.firstIndex(of: name) {
+//            self.prototypes[firstIndex].setStaticURL(url)
+//        }
+//        else { print("Failed to allow with URL \(name)") }
+//    }
+//
+//    func feature(byName name: String) {
+//        let names = self.prototypes.map { $0.name.origin }
+//        if let firstIndex = names.firstIndex(of: name) {
+//            self.prototypes[firstIndex].featured = .starred
+//        }
+//        else { print("Failed to feature \(name)") }
+//    }
+//
+//}
 
 
 

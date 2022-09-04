@@ -93,6 +93,7 @@ extension Queue {
     
     
     public mutating func read() {
+        self.prototypes = [Prototype]()
         do {
             try Folder(path: self.scope.input).subfolders.reversed().enumerated().forEach { (index, folder) in
                 self.addPrototype(for: folder)
@@ -104,6 +105,7 @@ extension Queue {
     
     
     public mutating func readLast(_ count: Int = 1) {
+        self.prototypes = [Prototype]()
         do {
             let projects = try Folder(path: self.scope.input).subfolders.reversed().map { $0 }
             var selectedProjects = ArraySlice<Folder>()

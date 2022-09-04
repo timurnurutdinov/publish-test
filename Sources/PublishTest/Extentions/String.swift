@@ -61,7 +61,7 @@ extension String {
       return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
-    static func randomStringForURL() -> String {
+    static func randomURL() -> String {
         return self.randomString(length: 8)
     }
 }

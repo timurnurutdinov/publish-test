@@ -35,7 +35,7 @@ extension Queue {
     func copyDynamicPrototypes() {
         let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: self.scope.outputDynamic, renameTo: prototype.seed.nameDynamic)
+            prototype.copy(toFolder: self.scope.outputDynamic, renameTo: prototype.dynamicSeed.url)
         }
         print("Published \(dynamicPrototypes.count)/\(self.prototypes.count)")
     }
@@ -70,9 +70,9 @@ extension Queue {
     }
     
     func copyStaticPrototypes() {
-        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.seed.nameStatic != "" }
+        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.staticSeed.url != "" }
         staticPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: self.scope.outputStatic, renameTo: prototype.seed.nameStatic)
+            prototype.copy(toFolder: self.scope.outputStatic, renameTo: prototype.staticSeed.url)
         }
         
     }
