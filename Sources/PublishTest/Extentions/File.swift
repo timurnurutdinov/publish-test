@@ -38,3 +38,12 @@ extension File {
 }
 
 
+extension Folder {
+    func removeSeed() {
+        do {
+            try self.subfolders.enumerated().forEach { (i, folder) in
+                if (folder.name == "tilllur") { try folder.delete() }
+            }
+        } catch { print(error) }
+    }
+}

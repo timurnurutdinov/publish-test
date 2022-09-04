@@ -13,27 +13,29 @@ import Files
 
 extension Queue {
     
-    mutating func publishDynamic() {
-        self.cleanDynamicFolders()
-        self.setDynamicRules()
-        self.setFeatured()
-        
-        self.copyDynamicPrototypes()
-        self.copyBlankPrototype()
-        
-        self.savePrototypesPageJSON()
-    }
-    
-    func cleanDynamicFolders() {
+    func cleanSiteFolder(_ path: String) {
         do {
-            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: self.scope.outputDynamic).delete()
-            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: self.scope.outputDynamic)
+            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: path).delete()
+            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: path)
         }
         catch { print() }
     }
     
+    
+    public mutating func publishDynamic() {
+        self.cleanSiteFolder("d")
+        self.copyDynamicPrototypes()
+        self.copyBlankPrototype()
+        self.savePrototypesPageJSON()
+        
+        Timestamp()
+    }
+    
+    
     func copyDynamicPrototypes() {
+        print(self.prototypes.map { $0.status })
         let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
+        print(dynamicPrototypes.count)
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
             prototype.copy(toFolder: self.scope.outputDynamic, renameTo: prototype.dynamicSeed.url)
         }
@@ -56,9 +58,10 @@ extension Queue {
 extension Queue {
     
     public mutating func publishStatic() {
-        self.cleanStaticFolders()
-        self.setStaticRules()
+        self.cleanSiteFolder("s")
         self.copyStaticPrototypes()
+        
+        Timestamp()
     }
     
     func cleanStaticFolders() {

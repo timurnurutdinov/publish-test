@@ -54,7 +54,7 @@ extension Prototype {
         }
         catch { print(error) }
     }
-
+    
 
     public func saveSeed(configFile:String = "seed.json", dynamic: Bool = true) {
         do {

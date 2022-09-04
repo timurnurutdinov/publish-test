@@ -13,7 +13,7 @@ import Files
 extension Prototype {
     
     
-    func getPermissionWithTag() {
+    func getPermissionByTag() {
         
         do {
             let resourceValues = try self.folder.url.resourceValues(forKeys: [.tagNamesKey])
@@ -25,11 +25,13 @@ extension Prototype {
                 else if (tags.contains("Public")) {
                     self.allow()
                 }
-                if (tags.contains("Favourite")) {
-                    self.featured
-                }
                 else {
                     self.restrict()
+                }
+                
+                
+                if (tags.contains("Favourite")) {
+                    self.feature()
                 }
             }
 

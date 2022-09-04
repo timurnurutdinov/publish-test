@@ -41,7 +41,9 @@ public class Prototype: Hashable, Identifiable  {
         self.readSeedStatic()
         if (self.staticSeed.url != "") { print("Public ——> \(self.name.origin)") }
         
+        self.getPermissionByTag()
         self.updateTags()
+        print(self.status)
         
         // TODO
         self.countLines()

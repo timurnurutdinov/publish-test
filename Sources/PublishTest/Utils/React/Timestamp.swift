@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Timestamp {
+public class Timestamp {
     
     init() {        
         let dateFormatter = DateFormatter()
