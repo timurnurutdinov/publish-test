@@ -6,7 +6,9 @@ import Foundation
 import Files
 
 public class Prototype: Hashable, Identifiable  {
+    public static var nextID: Int = 0
     
+    public var id: Int
     public var folder: Folder
     public var name: Name
     
@@ -32,6 +34,10 @@ public class Prototype: Hashable, Identifiable  {
     var iconIndex = -1
     
     init(withFolder folder: Folder) {
+        self.id = Prototype.nextID
+        Prototype.nextID = Prototype.nextID + 1
+        
+        
         self.folder = folder
         self.name = Name(folder.name)
         
