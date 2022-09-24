@@ -4,18 +4,19 @@
 ////
 ////  Created by Timur Nurutdinov on 3/19/22.
 ////
-//
-//import Foundation
-//import Files
-//
-//
+
+import Foundation
+import Files
+
+
 //class PresentationComponent {
-//    var code: String = ""
-//    var modules: [File] = []
+//    
 //
-//    func update() {
-//    return
-//
+//    public func updatePresentation() {
+//        
+//        var code: String = ""
+//        var modules: [File] = []
+//        
 //        do {
 //            self.code = changeAppFile()
 //

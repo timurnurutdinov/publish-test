@@ -8,32 +8,27 @@
 import Foundation
 import Files
 
-class PreviewComponent {
+extension Queue {
     
-    var modules: [File] = []
-    var folders: [Folder] = []
-    var shellString = ""
-    
-    let templateModuleFolder = "/Applications/Framer.app/Contents/Resources/FramerTemplateExtras"
-    
-    func update(for scope: Queue) {
+    public func updatePreview() {
+        
+        var modules: [File] = []
+        var folders: [Folder] = []
+        var shellString = ""
+        
         do {
             
             try Folder(path: PreviewComponent.moduleFolder).files.enumerated().forEach { (index, file) in
-                if (file.name.fileExtension() == "coffee") { self.modules.append(file) }
+                if (file.name.fileExtension() == "coffee") { modules.append(file) }
             }
             
             try Folder(path: PreviewComponent.moduleFolder).subfolders.enumerated().forEach { (index, folder) in
-                if (folder.name == PreviewComponent.assetsFolderName) { self.folders.append(folder) }
+                if (folder.name == PreviewComponent.assetsFolderName) { folders.append(folder) }
             }
             
             
-            var updatePrototypes = scope.prototypes
-            let templatePrototype = Prototype(withFolder: try Folder(path: self.templateModuleFolder))
-            updatePrototypes.append(templatePrototype)
-            
-            
-            try updatePrototypes.forEach { prototype in
+            try self.prototypes.forEach { prototype in
+                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "YY"
                 
@@ -42,7 +37,7 @@ class PreviewComponent {
                 
                 try Folder(path: currentModuleFolder.path).files.enumerated().forEach { (i, file) in
                     if (file.name == PreviewComponent.nameFile) { try file.delete() }
-                    if self.modules.first(where: {$0.name == file.name}) != nil { try file.delete() }
+                    if modules.first(where: {$0.name == file.name}) != nil { try file.delete() }
                 }
                 
                 try Folder(path: currentModuleFolder.path).subfolders.enumerated().forEach { (i, folder) in
@@ -50,17 +45,20 @@ class PreviewComponent {
                 }
                 
                 code.writeFile(PreviewComponent.nameFile, toFolder: currentModuleFolder.path)
-                try self.modules.map { try $0.copy(to: currentModuleFolder) }
-                try self.folders.map { try $0.copy(to: currentModuleFolder) }
+//                modules.enumerated().forEach { module in
+//                    try module.copy(to: currentModuleFolder)
+//                }
+                try modules.map { try $0.copy(to: currentModuleFolder) }
+                try folders.map { try $0.copy(to: currentModuleFolder) }
                 
-                self.shellString.append(prototype.getShellCommand())
+                shellString.append(prototype.getShellCommand())
             }
             
 //            try
             
         }
         catch { print("Failed to read PreviewComponent folder") }
-        self.shellString.writeTempFile("shell.txt")
+        shellString.writeTempFile("shell.txt")
     }
     
     
@@ -117,7 +115,7 @@ extension Name {
 }
 
 
-extension PreviewComponent {
+struct PreviewComponent {
     static let nameFile = "PreviewComponent.coffee"
     static let assetsFolderName = "PreviewComponentAssets"
 

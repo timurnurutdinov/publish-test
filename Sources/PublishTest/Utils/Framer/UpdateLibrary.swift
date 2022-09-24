@@ -8,41 +8,44 @@
 import Foundation
 import Files
 
-public class UpdateLibrary {
-    static var refIndexHTML = "index.html"
-    static var refFramerFolder = "framer"
+
+extension Queue {
     
     
-    static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
-    
-    var refFile: File? = nil
-    var refFramerFiles: [File] = []
-    
-    public init() {}
-    
-    
-    public func update(forPrototypes prototypes: [Prototype]) {
+    public func updateLibrary() {
+        
+        var refIndexHTML = "index.html"
+        var refFramerFolder = "framer"
+        
+        var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
+        
+        var refFile: File? = nil
+        var refFramerFiles: [File] = []
+        
+        
         do {
+            
             let refFolder = try Folder(path: PreviewComponent.componentFolder)
             
             try refFolder.files.enumerated().forEach { (index, file) in
-                if (file.name == "index.html") { self.refFile = file }
+                if (file.name == "index.html") { refFile = file }
             }
             
             try refFolder.subfolders.enumerated().forEach { (index, folder) in
                 if (folder.name == "framer") {
                     
                     try folder.files.enumerated().forEach { (indexFile, file) in
-                        if (UpdateLibrary.framerLibraryFiles.contains(file.name)) {
+                        if (framerLibraryFiles.contains(file.name)) {
                             refFramerFiles.append(file)
-                            print("Added as ref file \(file.name)")
+//                            print("Added as ref file \(file.name)")
                         }
                     }
                 }
             }
             
             
-            try prototypes.forEach { prototype in
+            
+            try self.prototypes.forEach { prototype in
                 if (prototype.name.origin != refFolder.name) {
                     
                     // Index.html
@@ -50,17 +53,17 @@ public class UpdateLibrary {
                         if (file.name == "index.html") { try file.delete() }
                     }
                     
-                    try self.refFile!.copy(to: prototype.folder)
+                    try refFile!.copy(to: prototype.folder)
                     
                     // Framer folder
                     let currentFramerFolderPath = prototype.folder.path + "/framer"
                     let currentFramerFolder = try Folder(path: currentFramerFolderPath)
 
                     try currentFramerFolder.files.enumerated().forEach { (i, file) in
-                        if (UpdateLibrary.framerLibraryFiles.contains(file.name)) { try file.delete() }
+                        if (framerLibraryFiles.contains(file.name)) { try file.delete() }
                     }
 
-                    try self.refFramerFiles.map {
+                    try refFramerFiles.map {
                         try $0.copy(to: currentFramerFolder)
                     }
                     
@@ -94,6 +97,3 @@ public class UpdateLibrary {
 }
 
 
-extension UpdateLibrary {
-
-}
