@@ -15,8 +15,8 @@ extension Queue {
     
     public mutating func publishDynamic() {
         
-//        self.cleanSiteFolder(self.scope.outputDynamic)
-        self.cleanSiteFolder("d")
+        Site.cleanFolder(self.scope.dynamicShort)
+//        self.cleanSiteFolder("d")
         
         self.copyDynamicPrototypes()
         self.copyBlankPrototype()
@@ -27,8 +27,8 @@ extension Queue {
     
     public mutating func publishStatic() {
         
-//        self.cleanSiteFolder(self.scope.outputStatic)
-        self.cleanSiteFolder("s")
+        Site.cleanFolder(self.scope.staticShort)
+//        self.cleanSiteFolder("s")
         
         self.copyStaticPrototypes()
         
@@ -47,7 +47,7 @@ extension Queue {
     func copyDynamicPrototypes() {
         let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: self.scope.outputDynamic, renameTo: prototype.dynamicSeed.url)
+            prototype.copy(toFolder: self.scope.dynamicLong, renameTo: prototype.dynamicSeed.url)
         }
         print("Published \(dynamicPrototypes.count)/\(self.prototypes.count)")
     }
@@ -56,7 +56,7 @@ extension Queue {
     func copyStaticPrototypes() {
         let staticPrototypes:[Prototype] = self.prototypes.filter { $0.staticSeed.url != "" }
         staticPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: self.scope.outputStatic, renameTo: prototype.staticSeed.url)
+            prototype.copy(toFolder: self.scope.staticLong, renameTo: prototype.staticSeed.url)
         }
         
     }
@@ -67,7 +67,7 @@ extension Queue {
         do {
             let folder = try Folder(path: "~/Documents/Git/FramerComponents/Blank.framer")
             let blankPrototype = Prototype(withFolder: folder)
-            blankPrototype.copy(toFolder: self.scope.outputDynamic, renameTo: Prototype.blankURL)
+            blankPrototype.copy(toFolder: self.scope.dynamicLong, renameTo: Prototype.blankURL)
         }
         catch { print("Failed to copy Blank.framer") }
     }
@@ -77,13 +77,13 @@ extension Queue {
 
 
 
-extension Queue {
-    
-    func cleanSiteFolder(_ path: String) {
-        do {
-            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: path).delete()
-            try Folder(path: SiteFolder.path).createSubfolderIfNeeded(withName: path)
-        }
-        catch { print() }
-    }
-}
+//extension Queue {
+//    
+//    func cleanSiteFolder(_ path: String) {
+//        do {
+//            try Folder(path: Site.host).createSubfolderIfNeeded(withName: path).delete()
+//            try Folder(path: Site.host).createSubfolderIfNeeded(withName: path)
+//        }
+//        catch { print() }
+//    }
+//}

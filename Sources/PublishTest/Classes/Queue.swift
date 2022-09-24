@@ -9,31 +9,59 @@ import Foundation
 import Files
 
 
+public struct Site {
+    public static var host = "~/Documents/Git/tilllur.ru/"
+    
+    public static func with(_ shortPath: String) -> String { return Site.host + shortPath }
+    
+    
+    public static func cleanFolder(_ shortPath: String) {
+        do {
+            try Folder(path: Site.host).createSubfolderIfNeeded(withName: shortPath).delete()
+            try Folder(path: Site.host).createSubfolderIfNeeded(withName: shortPath)
+        }
+        catch { print() }
+    }
+}
+
+
+
 public struct ScopeEnum {
     public static var production    = Scope("~/Documents/Git/Prototyping-Queue/",
-                                            static: "~/Documents/Git/tilllur.ru/s",
-                                            dynamic: "~/Documents/Git/tilllur.ru/d")
+                                            static: "s",
+                                            dynamic: "d")
     
     public static var presentations = Scope("~/Documents/Git/FramerComponents/Presentation-Queue",
-                                            static: "~/Documents/Git/tilllur.ru/p",
-                                            dynamic: "~/Documents/Git/tilllur.ru/remove")
+                                            static: "p",
+                                            dynamic: "remove")
     
     public static var other         = Scope("~/Documents/Git/FramerComponents/Experiment-Queue",
-                                            static: "~/Documents/Git/tilllur.ru/utils",
-                                            dynamic: "~/Documents/Git/tilllur.ru/remove")
+                                            static: "utils",
+                                            dynamic: "remove")
 }
 
 
 
 public struct Scope: Equatable {
     public var input: String
-    public var outputStatic: String
-    public var outputDynamic: String
+    
+    public var staticShort: String
+    public var staticLong: String
+    
+    
+    public var dynamicShort: String
+    public var dynamicLong: String
+    
 
     init(_ input:String, static outputStatic: String, dynamic outputDynamic: String) {
         self.input = input
-        self.outputStatic = outputStatic
-        self.outputDynamic = outputDynamic
+        
+        staticShort = outputStatic
+        dynamicShort = outputDynamic
+        
+        staticLong = Site.with(staticShort)
+        dynamicLong = Site.with(dynamicShort)
+        
     }
     
     public static func == (lhs: Scope, rhs: Scope) -> Bool {
@@ -119,10 +147,10 @@ extension Queue {
 
 
 
-struct SiteFolder {
-    static let path = "~/Documents/Git/tilllur.ru/"
-    static let prototypesJSON = "d.json"
-}
+//struct SiteFolder {
+//    static let path = "~/Documents/Git/tilllur.ru/"
+//    static let prototypesJSON = "d.json"
+//}
 
 
 

@@ -13,6 +13,6 @@ public class Timestamp {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YY, MMM d, HH:mm:ss"
         let timestamp = dateFormatter.string(from: Date())
-        timestamp.writeFile("time.txt", toFolder: SiteFolder.path)
+        timestamp.writeFile("time.txt", toFolder: Site.host)
     }
 }

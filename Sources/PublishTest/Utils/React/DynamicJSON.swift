@@ -29,7 +29,7 @@ extension Prototype {
 
 
 extension Queue {
-    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = SiteFolder.path) {
+    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = Site.host) {
         do {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY"
