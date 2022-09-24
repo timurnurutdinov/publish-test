@@ -14,7 +14,10 @@ import Files
 extension Queue {
     
     public mutating func publishDynamic() {
+        
+//        self.cleanSiteFolder(self.scope.outputDynamic)
         self.cleanSiteFolder("d")
+        
         self.copyDynamicPrototypes()
         self.copyBlankPrototype()
         self.savePrototypesPageJSON()
@@ -23,7 +26,10 @@ extension Queue {
     }
     
     public mutating func publishStatic() {
+        
+//        self.cleanSiteFolder(self.scope.outputStatic)
         self.cleanSiteFolder("s")
+        
         self.copyStaticPrototypes()
         
         Timestamp.put()

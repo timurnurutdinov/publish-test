@@ -38,8 +38,16 @@ extension URL {
         do {
             let file = try File(path: self.path)
             let folder = try Folder(path: "\(path)images/")
+            let fullName = self.path.fileName() + "." + self.path.fileExtension()
+            if (folder.containsFile(named: fullName)) {
+                try folder.files.enumerated().forEach { (index, file) in
+                    if (file.name == fullName) {
+                        try file.delete()
+                    }
+                }
+            }
             try file.copy(to: folder)
-            print("?")
+            
         } catch { print() }
         
         return self
@@ -47,26 +55,23 @@ extension URL {
     
     
     // TODO: Change location
-    public func createFramerCode() {
-        
+    public func createFramerCodeFromImage() -> String {
         
         if let img = NSImage(contentsOf: self) {
+            let cleanLastPathComponent = "\(URL(string: self.lastPathComponent)!.deletingPathExtension())".camelized
             
-            if (URL(string: self.lastPathComponent) == nil) { return }
+            if (URL(string: cleanLastPathComponent) == nil) { return "" }
             
-            let code1 = "\(URL(string: self.lastPathComponent)!.deletingPathExtension()) = new Layer\n"
+            let code1 = "\(URL(string: cleanLastPathComponent)!.deletingPathExtension()) = new Layer\n"
             let code2 = "\twidth: \(img.size.width)\n"
             let code3 = "\theight: \(img.size.height)\n"
             let code4 = "\timage: \"images/\(self.lastPathComponent)\"\n"
             
             let code = code1 + code2 + code3 + code4
             
-            print(img.size.width)
-            
-            let pasteBoard = NSPasteboard.general
-            pasteBoard.clearContents()
-            pasteBoard.setString(code, forType: .string)
+            return code
         }
+        return ""
     }
     
     // file:///Users/tilllur/Desktop/Screenshot%202022-07-17%20at%2015.22.33.png
