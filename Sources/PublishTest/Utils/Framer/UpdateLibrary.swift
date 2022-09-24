@@ -25,7 +25,7 @@ public class UpdateLibrary {
     
     public func update(forPrototypes prototypes: [Prototype]) {
         do {
-            let refFolder = try Folder(path: "~/Documents/Git/FramerComponents/Preview.framer")
+            let refFolder = try Folder(path: PreviewComponent.componentFolder)
             
             try refFolder.files.enumerated().forEach { (index, file) in
                 if (file.name == "index.html") { self.refFile = file }

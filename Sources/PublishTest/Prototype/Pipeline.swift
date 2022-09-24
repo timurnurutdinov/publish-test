@@ -65,7 +65,7 @@ extension Queue {
     // Blank
     func copyBlankPrototype() {
         do {
-            let folder = try Folder(path: "~/Documents/Git/FramerComponents/Blank.framer")
+            let folder = try Folder(path: "~/Documents/Git/FramerComponents/Component-Queue/Blank.framer")
             let blankPrototype = Prototype(withFolder: folder)
             blankPrototype.copy(toFolder: self.scope.dynamicLong, renameTo: Prototype.blankURL)
         }

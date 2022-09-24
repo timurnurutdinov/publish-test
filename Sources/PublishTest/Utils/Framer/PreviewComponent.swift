@@ -121,9 +121,9 @@ extension PreviewComponent {
     static let nameFile = "PreviewComponent.coffee"
     static let assetsFolderName = "PreviewComponentAssets"
 
-    static let componentFolder = "~/Documents/Git/FramerComponents/Preview.framer"
-    static let moduleFolder = "~/Documents/Git/FramerComponents/Preview.framer/modules"
-    static let assetsFolder = "~/Documents/Git/FramerComponents/Preview.framer/modules/PreviewComponentAssets"
-    static let appFile = "~/Documents/Git/FramerComponents/Preview.framer/app.coffee"
+    static let componentFolder = "~/Documents/Git/FramerComponents/Component-Queue/Preview.framer"
+    static let moduleFolder = "~/Documents/Git/FramerComponents/Component-Queue/Preview.framer/modules"
+    static let assetsFolder = "~/Documents/Git/FramerComponents/Component-Queue/Preview.framer/modules/PreviewComponentAssets"
+    static let appFile = "~/Documents/Git/FramerComponents/Component-Queue/Preview.framer/app.coffee"
 
 }
