@@ -35,6 +35,10 @@ public struct ScopeEnum {
                                             static: "p",
                                             dynamic: "remove")
     
+    public static var components = Scope("~/Documents/Git/FramerComponents/Component-Queue",
+                                            static: "remove",
+                                            dynamic: "remove")
+    
     public static var other         = Scope("~/Documents/Git/FramerComponents/Experiment-Queue",
                                             static: "utils",
                                             dynamic: "remove")
@@ -92,10 +96,10 @@ extension Queue {
         let name = Name(folder.name)
         
         if (name.isValid()) {
-            let prototype = Prototype(withFolder: folder)
-            self.prototypes.append(prototype)
+            self.prototypes.append(Prototype(withFolder: folder))
         }
         else {
+            if (self.scope == ScopeEnum.components) { self.prototypes.append(Prototype(withFolder: folder)) }
             print("📭 Name skipped: pattern doesn't match for: \(name.origin)")
         }
     }

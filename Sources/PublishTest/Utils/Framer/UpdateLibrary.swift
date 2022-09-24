@@ -14,8 +14,6 @@ public class UpdateLibrary {
     
     
     static var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
-//    static var framerLibraryFiles = ["framer.js", "style.css"]
-//    static var framerLibraryFiles = ["framer2.js"]
     
     var refFile: File? = nil
     var refFramerFiles: [File] = []
