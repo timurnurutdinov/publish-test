@@ -7,6 +7,7 @@
 
 import Foundation
 import Files
+import WebKit
 
 
 public struct Site {
@@ -136,8 +137,10 @@ extension Queue {
             let projects = try Folder(path: self.scope.input).subfolders.reversed().map { $0 }
             var selectedProjects = ArraySlice<Folder>()
             
+            let mCount = min(count, projects.count)
+            
             if (count == 0) { selectedProjects = projects[...] }
-            else { selectedProjects = projects[..<count] }
+            else { selectedProjects = projects[..<mCount] }
             
             selectedProjects.enumerated().forEach { (index, folder) in
                 self.addPrototype(for: folder)

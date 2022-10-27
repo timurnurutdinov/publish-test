@@ -23,7 +23,7 @@ extension Prototype {
     
     func closedDescription() -> String {
         if (self.status == .api) { return "Internal API Restriction" }
-        return "Temporarily Unavailable"
+        return "Soon"
     }
 }
 

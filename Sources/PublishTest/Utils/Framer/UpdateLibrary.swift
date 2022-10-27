@@ -12,7 +12,7 @@ import Files
 extension Queue {
     
     
-    public func updateLibrary() {
+    public func updateLibrary(component: FramerComponent = FramerComponentEnum.PreviewComponent) {
         
         var refIndexHTML = "index.html"
         var refFramerFolder = "framer"
@@ -25,7 +25,7 @@ extension Queue {
         
         do {
             
-            let refFolder = try Folder(path: PreviewComponent.componentFolder)
+            let refFolder = try Folder(path: component.componentFolder)
             
             try refFolder.files.enumerated().forEach { (index, file) in
                 if (file.name == "index.html") { refFile = file }
