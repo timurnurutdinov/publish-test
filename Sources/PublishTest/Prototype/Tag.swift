@@ -15,6 +15,41 @@ extension Prototype {
     func feature() { self.featured = .starred }
 }
 
+enum TagName: String {
+    case green = "Public"
+    case red = "Private"
+    case yellow = "Favourite"
+    case violet = "Link"
+    case unknown = "Dev"
+}
+
+
+extension Prototype {
+    
+    public func setPrivateTag() {
+        self.setTag(to: TagName.red)
+        self.removeTag(TagName.green)
+        self.getPermissionByTag()
+    }
+    
+    public func setPublicTag() {
+        self.setTag(to: TagName.green)
+        self.removeTag(TagName.red)
+        self.getPermissionByTag()
+    }
+    
+    public func clearTags() {
+        self.removeTag(TagName.green)
+        self.removeTag(TagName.red)
+        self.getPermissionByTag()
+    }
+    
+    public func setFavouriteTag() {
+        self.setTag(to: TagName.yellow)
+        self.getPermissionByTag()
+    }
+}
+
 
 
 extension Prototype {
@@ -73,9 +108,60 @@ extension Prototype {
         }
     }
     
+    
 }
 
 
+
+
+extension Prototype {
+    
+    func removeTag(_ tagName: TagName = TagName.green) {
+        let url = self.folder.url
+        
+        do {
+            let resourceValues = try url.resourceValues(forKeys: [.tagNamesKey])
+            
+            var tags : [String]
+            if let tagNames = resourceValues.tagNames { tags = tagNames }
+            else { tags = [String]() }
+            
+            if tags.contains(tagName.rawValue) {
+                tags = tags.filter { $0 != tagName.rawValue }
+                try (url as NSURL).setResourceValue(tags, forKey: .tagNamesKey)
+            }
+            
+
+        } catch {
+            print(error)
+        }
+    }
+    
+    
+    
+    func setTag(to tagName: TagName = TagName.red) {
+        let url = self.folder.url
+        
+        do {
+            let resourceValues = try url.resourceValues(forKeys: [.tagNamesKey])
+            var tags : [String]
+            if let tagNames = resourceValues.tagNames {
+                tags = tagNames
+            } else {
+                tags = [String]()
+            }
+            
+            if !tags.contains(tagName.rawValue) {
+                tags += [tagName.rawValue]
+                try (url as NSURL).setResourceValue(tags, forKey: .tagNamesKey)
+            }
+            
+
+        } catch {
+            print(error)
+        }
+    }
+}
 
 
 

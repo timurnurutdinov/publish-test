@@ -105,6 +105,14 @@ extension Queue {
         }
     }
     
+//    public mutating func updatePrototype(_ prototype: Prototype) {
+//        let name = prototype.name
+//        
+//        if let index = self.prototypes.firstIndex(of: prototype) {
+//            self.prototypes[index] = Prototype(withFolder: prototype.folder)
+//        }
+//    }
+    
     
 //    mutating func getURLState(for name: Name) -> String {
 //        let newConf = PrototypeConfig(originName: name.origin, url: String.randomStringForURL())
