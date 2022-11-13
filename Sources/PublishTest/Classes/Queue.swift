@@ -32,16 +32,27 @@ public struct ScopeEnum {
                                             static: "s",
                                             dynamic: "d")
     
-    public static var presentations = Scope("~/Documents/Git/FramerComponents/Presentation-Queue",
+    public static var presentations = Scope("~/Documents/Git/Presentation-Queue",
                                             static: "p",
                                             dynamic: "remove")
     
-    public static var components = Scope("~/Documents/Git/FramerComponents/Component-Queue",
+//    public static var components = Scope("~/Documents/Git/FramerComponents/Component-Queue",
+//                                            static: "remove",
+//                                            dynamic: "remove")
+    
+    public static var utils         = Scope("~/Documents/Git/FramerComponents/Experiment-Queue",
+                                            static: "utils",
+                                            dynamic: "remove")
+    
+    
+    
+    
+    public static var previewComponent = Scope("~/Documents/Git/PreviewComponent",
                                             static: "remove",
                                             dynamic: "remove")
     
-    public static var other         = Scope("~/Documents/Git/FramerComponents/Experiment-Queue",
-                                            static: "utils",
+    public static var presentationComponent = Scope("~/Documents/Git/PresentationComponent",
+                                            static: "remove",
                                             dynamic: "remove")
 }
 
@@ -81,6 +92,7 @@ public struct Scope: Equatable {
 public struct Queue {
     public var scope: Scope
     public var prototypes: [Prototype] = []
+    public var completeScope = false
     
     public init(_ scope: Scope) {
         self.scope = scope
@@ -100,18 +112,18 @@ extension Queue {
             self.prototypes.append(Prototype(withFolder: folder))
         }
         else {
-            if (self.scope == ScopeEnum.components) { self.prototypes.append(Prototype(withFolder: folder)) }
+            if (self.scope == ScopeEnum.previewComponent || self.scope == ScopeEnum.presentationComponent) {
+                self.prototypes.append(Prototype(withFolder: folder))
+            }
             print("📭 Name skipped: pattern doesn't match for: \(name.origin)")
         }
     }
     
-//    public mutating func updatePrototype(_ prototype: Prototype) {
-//        let name = prototype.name
-//        
-//        if let index = self.prototypes.firstIndex(of: prototype) {
-//            self.prototypes[index] = Prototype(withFolder: prototype.folder)
-//        }
-//    }
+    public mutating func updatePrototype(_ prototype: Prototype) {
+        if let index = self.prototypes.firstIndex(of: prototype) {
+            self.prototypes[index] = Prototype(withFolder: prototype.folder)
+        }
+    }
     
     
 //    mutating func getURLState(for name: Name) -> String {
@@ -135,6 +147,7 @@ extension Queue {
             }
         } catch { print("Failed to read Queue")}
         
+        self.completeScope = true
 //        self.saveURLState()
     }
     

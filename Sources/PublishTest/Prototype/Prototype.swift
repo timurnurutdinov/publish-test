@@ -23,7 +23,7 @@ public class Prototype: Hashable, Identifiable  {
     var lines: Int = 0
     
     public var status: Status = .nda
-    var featured: Featured = .none
+    public var featured: Featured = .none
     
 //    var dynamicURL = ""
 //    var staticURL = ""
@@ -43,7 +43,7 @@ public class Prototype: Hashable, Identifiable  {
         
         self.readSeed()
         self.readSeedStatic()
-        if (self.staticSeed.url != "") { print("Public ——> \(self.name.origin)") }
+//        if (self.staticSeed.url != "") { print("Public ——> \(self.name.origin)") }
         
         self.getPermissionByTag()
         self.updateTags()
@@ -85,7 +85,7 @@ public enum Status: Int, Codable {
     case api = 2
 }
 
-enum Featured: Int, Codable {
+public enum Featured: Int, Codable {
     case none = 0
     case starred = 1
 }

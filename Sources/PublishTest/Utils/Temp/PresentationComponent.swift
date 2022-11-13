@@ -59,13 +59,5 @@ import Files
 //    }
 //
 //}
-//
-//
-//extension PresentationComponent {
-//    static let nameFile = "PresentationComponent.coffee"
-//
-//    static let componentFolder = "~/Documents/Git/FramerComponents/Presentation.framer"
-//    static let moduleFolder = "~/Documents/Git/FramerComponents/Presentation.framer/modules"
-//    static let appFile = "~/Documents/Git/FramerComponents/Presentation.framer/app.coffee"
-//
-//}
+
+

@@ -17,7 +17,7 @@ extension Queue {
         var refIndexHTML = "index.html"
         var refFramerFolder = "framer"
         
-        var framerLibraryFiles = ["coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
+        var framerLibraryFiles = ["framer.generated.js", "coffee-script.js", "framer.init.js", "framer.js", "framer.js.map", "manifest.txt", "style.css", "version"]
         
         var refFile: File? = nil
         var refFramerFiles: [File] = []
@@ -46,6 +46,7 @@ extension Queue {
             
             
             try self.prototypes.forEach { prototype in
+                print(prototype.name.origin)
                 if (prototype.name.origin != refFolder.name) {
                     
                     // Index.html

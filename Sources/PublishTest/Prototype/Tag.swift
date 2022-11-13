@@ -11,7 +11,7 @@ import Files
 
 extension Prototype {
     func restrict(byReason reason: Status = .nda) { self.status = .nda }
-    func allow() { self.status = .opened }
+    public func allow() { self.status = .opened }
     func feature() { self.featured = .starred }
 }
 
@@ -44,10 +44,18 @@ extension Prototype {
         self.getPermissionByTag()
     }
     
-    public func setFavouriteTag() {
-        self.setTag(to: TagName.yellow)
+    
+    public func toggleFeaturedTag() {
+        if (self.featured == Featured.starred) { self.removeTag(TagName.yellow) }
+        else { self.setTag(to: TagName.yellow) }
+        
         self.getPermissionByTag()
     }
+    
+//    public func setFavouriteTag() {
+//        self.setTag(to: TagName.yellow)
+//        self.getPermissionByTag()
+//    }
 }
 
 
