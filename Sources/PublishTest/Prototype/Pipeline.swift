@@ -73,17 +73,3 @@ extension Queue {
     }
 }
 
-
-
-
-
-//extension Queue {
-//    
-//    func cleanSiteFolder(_ path: String) {
-//        do {
-//            try Folder(path: Site.host).createSubfolderIfNeeded(withName: path).delete()
-//            try Folder(path: Site.host).createSubfolderIfNeeded(withName: path)
-//        }
-//        catch { print() }
-//    }
-//}

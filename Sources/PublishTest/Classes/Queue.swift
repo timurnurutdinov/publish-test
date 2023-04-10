@@ -11,15 +11,32 @@ import WebKit
 
 
 public struct Site {
-    public static var host = "~/Documents/Git/tilllur.ru/"
+//    public static var host = "~/Documents/Git/tilllur.ru/"
+    public static var host = "~/Documents/Git/tilllur-prototypes/"
     
     public static func with(_ shortPath: String) -> String { return Site.host + shortPath }
-    
+
     
     public static func cleanFolder(_ shortPath: String) {
         do {
             try Folder(path: Site.host).createSubfolderIfNeeded(withName: shortPath).delete()
             try Folder(path: Site.host).createSubfolderIfNeeded(withName: shortPath)
+        }
+        catch { print() }
+    }
+}
+
+public struct StaticSite {
+//    public static var host = "~/Documents/Git/tilllur.ru/"
+    public static var host = "~/Documents/Git/tilllur-prototypes-static/"
+    
+    public static func with(_ shortPath: String) -> String { return StaticSite.host + shortPath }
+
+    
+    public static func cleanFolder(_ shortPath: String) {
+        do {
+            try Folder(path: StaticSite.host).createSubfolderIfNeeded(withName: shortPath).delete()
+            try Folder(path: StaticSite.host).createSubfolderIfNeeded(withName: shortPath)
         }
         catch { print() }
     }
@@ -54,6 +71,10 @@ public struct ScopeEnum {
     public static var presentationComponent = Scope("~/Documents/Git/PresentationComponent",
                                             static: "remove",
                                             dynamic: "remove")
+    
+    public static var showcaseComponent = Scope("~/Documents/Git/ShowcaseComponent",
+                                            static: "remove",
+                                            dynamic: "remove")
 }
 
 
@@ -75,11 +96,21 @@ public struct Scope: Equatable {
         staticShort = outputStatic
         dynamicShort = outputDynamic
         
-        staticLong = Site.with(staticShort)
+        staticLong = StaticSite.with(staticShort)
         dynamicLong = Site.with(dynamicShort)
         
     }
     
+//    init(_ input:String, static outputStatic: String, dynamic outputDynamic: String, hostOverride newHost: String) {
+//        self.input = input
+//
+//        staticShort = outputStatic
+//        dynamicShort = outputDynamic
+//
+//        staticLong = Site.overridePath(staticShort, withHost: "~/Documents/Git/p/")
+//        dynamicLong = Site.with(dynamicShort)
+//    }
+//
     public static func == (lhs: Scope, rhs: Scope) -> Bool {
         return (lhs.input == rhs.input)
     }
@@ -112,7 +143,7 @@ extension Queue {
             self.prototypes.append(Prototype(withFolder: folder))
         }
         else {
-            if (self.scope == ScopeEnum.previewComponent || self.scope == ScopeEnum.presentationComponent) {
+            if (self.scope == ScopeEnum.previewComponent || self.scope == ScopeEnum.presentationComponent || self.scope == ScopeEnum.showcaseComponent) {
                 self.prototypes.append(Prototype(withFolder: folder))
             }
             print("📭 Name skipped: pattern doesn't match for: \(name.origin)")
