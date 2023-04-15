@@ -185,8 +185,8 @@ public struct FramerComponent {
             let newline2 = "class exports.Presentation extends FixPresentationExport"
             tempCode = tempCode.replacingOccurrences(of: oldline2, with: newline2)
             
-            let oldline3 = "prototypeCreationYear: \"20:20\""
-            let newline3 = "prototypeCreationYear: \"\(prototypeName.getStatusBarTime())\""
+            let oldline3 = "overrideTimeValue: \"20:21\""
+            let newline3 = "overrideTimeValue: \"\(prototypeName.getStatusBarTime())\""
             tempCode = tempCode.replacingOccurrences(of: oldline3, with: newline3)
 
             let separator = "# Code for development"
