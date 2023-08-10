@@ -15,6 +15,8 @@ extension Queue {
     
     public mutating func publishDynamic() {
         
+        
+        // TODO HERE
         Site.cleanFolder(self.scope.dynamicShort)
 //        self.cleanSiteFolder("d")
         
@@ -27,7 +29,8 @@ extension Queue {
     
     public mutating func publishStatic() {
         
-        Site.cleanFolder(self.scope.staticShort)
+        // TODO HERE
+        StaticSite.cleanFolder(self.scope.staticShort)
 //        self.cleanSiteFolder("s")
         
         self.copyStaticPrototypes()

@@ -101,16 +101,6 @@ public struct Scope: Equatable {
         
     }
     
-//    init(_ input:String, static outputStatic: String, dynamic outputDynamic: String, hostOverride newHost: String) {
-//        self.input = input
-//
-//        staticShort = outputStatic
-//        dynamicShort = outputDynamic
-//
-//        staticLong = Site.overridePath(staticShort, withHost: "~/Documents/Git/p/")
-//        dynamicLong = Site.with(dynamicShort)
-//    }
-//
     public static func == (lhs: Scope, rhs: Scope) -> Bool {
         return (lhs.input == rhs.input)
     }
@@ -156,18 +146,6 @@ extension Queue {
         }
     }
     
-    
-//    mutating func getURLState(for name: Name) -> String {
-//        let newConf = PrototypeConfig(originName: name.origin, url: String.randomStringForURL())
-//        let elem = self.urlState.first { $0.originName == newConf.originName }
-//
-//        if elem != nil { return elem!.url }
-//        else {
-//            self.urlState.insert(newConf)
-//            return newConf.url
-//        }
-//
-//    }
     
     
     public mutating func read() {
