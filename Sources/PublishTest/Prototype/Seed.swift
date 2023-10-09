@@ -100,7 +100,7 @@ extension Prototype {
                 let iconFile = try File(path: folder.path + "framer/images/" + iconName)
                 try iconFile.delete()
                 
-                let newIcon = try File(path: "~/Documents/Git/FramerComponents/touchIcons/\(iconIndex)/" + iconName)
+                let newIcon = try File(path: "~/Documents/Git/FramerPreviewer/touchIcons/\(iconIndex)/" + iconName)
                 let iconFolder = try Folder(path: folder.path + "framer/images/")
                 try newIcon.copy(to: iconFolder)
             }

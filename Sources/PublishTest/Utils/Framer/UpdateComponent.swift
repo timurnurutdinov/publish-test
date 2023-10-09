@@ -115,7 +115,10 @@ extension Prototype {
     public func buildModules() {
         let cdExecutableURL = URL(fileURLWithPath: "bin/zsh")
 
-        let command = "export PATH=\"$PATH:\"/opt/homebrew/opt/node/bin; node -v; cd ~/Documents/Git/FramerComponents/backup/FramerModuleBuilder/; ls; export PATH=\"$PATH:\"/usr/local/bin/; ~/.pyenv/versions/2.7.18/bin/python make.pyc \"\(self.folder.path)modules/\" \"\(self.folder.path)framer/framer.modules.js\""
+//        let command = "export PATH=\"$PATH:\"/opt/homebrew/opt/node/bin; node -v; cd ~/Documents/Git/FramerComponents/backup/FramerModuleBuilder/; ls; export PATH=\"$PATH:\"/usr/local/bin/; ~/.pyenv/versions/2.7.18/bin/python make.pyc \"\(self.folder.path)modules/\" \"\(self.folder.path)framer/framer.modules.js\""
+        
+        let command = "export PATH=\"$PATH:\"/opt/homebrew/opt/node/bin; node -v; cd /Users/tilllur/Documents/Git/FramerComponents/backup/framer-bundler-master/; ls; export PATH=\"$PATH:\"/usr/local/bin/; node /Users/tilllur/Documents/Git/FramerComponents/backup/framer-bundler-master/index.js \"\(self.folder.path)\""
+//        let command = "node /Users/tilllur/Documents/Git/FramerComponents/backup/framer-bundler-master/index.js \"\(self.folder.path)modules/\""
         
         try! Process.run(cdExecutableURL,
             arguments: ["-c", command],

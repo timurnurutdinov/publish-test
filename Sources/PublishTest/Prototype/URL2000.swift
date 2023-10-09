@@ -43,7 +43,7 @@ extension Queue {
     
     public func readSeedURLS() -> String {
         do {
-            return try File(path: "/Users/tilllur/Documents/Git/FramerComponents/protototyping-queue.txt").string()
+            return try File(path: "/Users/tilllur/Documents/Git/FramerPreviewer/protototyping-queue.txt").string()
         } catch { print(error) }
         return ""
     }
