@@ -1,0 +1,20 @@
+{
+  "name": "framer-bundler",
+  "version": "1.0.0",
+  "description": "Build framer.modules.js without Framer Studio",
+  "main": "index.js",
+  "bin": {
+    "framer-bundler": "./cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Keishi Tsuchiya",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^13.0.1",
+    "coffeeify": "^2.0.1",
+    "colors": "^1.1.2"
+  },
+  "private": true
+}

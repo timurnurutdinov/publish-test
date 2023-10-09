@@ -94,7 +94,7 @@ extension Prototype {
     public func buildModules() {
         let cdExecutableURL = URL(fileURLWithPath: "bin/zsh")
         
-        let command = "export PATH=\"$PATH:\"/opt/homebrew/opt/node/bin; node -v; cd /Users/tilllur/Documents/Git/FramerPreviewer/framer-bundler-master/; ls; export PATH=\"$PATH:\"/usr/local/bin/; node /Users/tilllur/Documents/Git/FramerPreviewer/framer-bundler-master/index.js \"\(self.folder.path)\""
+        let command = "export PATH=\"$PATH:\"/opt/homebrew/opt/node/bin; node -v; cd /Users/tilllur/Documents/Git/publish-test/framer-bundler-master/; ls; export PATH=\"$PATH:\"/usr/local/bin/; node /Users/tilllur/Documents/Git/publish-test/framer-bundler-master/index.js \"\(self.folder.path)\""
 
         try! Process.run(cdExecutableURL,
             arguments: ["-c", command],
