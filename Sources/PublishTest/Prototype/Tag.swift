@@ -15,7 +15,7 @@ extension Prototype {
     func feature() { self.featured = .starred }
 }
 
-enum TagName: String {
+enum TagEnum: String {
     case green = "Public"
     case red = "Private"
     case yellow = "Favourite"
@@ -24,30 +24,41 @@ enum TagName: String {
 }
 
 
+
+public struct Tags: Codable, Hashable {
+    public var list = Set<String>()
+    
+    public static func == (lhs: Tags, rhs: Tags) -> Bool { return (lhs.list == rhs.list) }
+    public func hash(into hasher: inout Hasher) { hasher.combine(list) }
+    
+}
+
+
+
 extension Prototype {
     
     public func setPrivateTag() {
-        self.setTag(to: TagName.red)
-        self.removeTag(TagName.green)
+        self.setTag(to: TagEnum.red)
+        self.removeTag(TagEnum.green)
         self.getPermissionByTag()
     }
     
     public func setPublicTag() {
-        self.setTag(to: TagName.green)
-        self.removeTag(TagName.red)
+        self.setTag(to: TagEnum.green)
+        self.removeTag(TagEnum.red)
         self.getPermissionByTag()
     }
     
     public func clearTags() {
-        self.removeTag(TagName.green)
-        self.removeTag(TagName.red)
+        self.removeTag(TagEnum.green)
+        self.removeTag(TagEnum.red)
         self.getPermissionByTag()
     }
     
     
     public func toggleFeaturedTag() {
-        if (self.featured == Featured.starred) { self.removeTag(TagName.yellow) }
-        else { self.setTag(to: TagName.yellow) }
+        if (self.featured == Featured.starred) { self.removeTag(TagEnum.yellow) }
+        else { self.setTag(to: TagEnum.yellow) }
         
         self.getPermissionByTag()
     }
@@ -124,7 +135,7 @@ extension Prototype {
 
 extension Prototype {
     
-    func removeTag(_ tagName: TagName = TagName.green) {
+    func removeTag(_ tagName: TagEnum = TagEnum.green) {
         let url = self.folder.url
         
         do {
@@ -147,7 +158,7 @@ extension Prototype {
     
     
     
-    func setTag(to tagName: TagName = TagName.red) {
+    func setTag(to tagName: TagEnum = TagEnum.red) {
         let url = self.folder.url
         
         do {

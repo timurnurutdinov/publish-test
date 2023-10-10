@@ -55,7 +55,7 @@ extension Queue {
         self.prototypes.reversed().enumerated().forEach { (index, prototype) in
             if (index == 0) { print(prototype.name.origin) }
             prototype.dynamicSeed = Seed(url: String(urls[index]))
-            prototype.saveSeed()
+            prototype.saveURLDynamic()
         }
     }
     

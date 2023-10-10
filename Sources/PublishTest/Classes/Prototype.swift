@@ -41,12 +41,14 @@ public class Prototype: Hashable, Identifiable  {
         self.folder = folder
         self.name = Name(folder.name)
         
-        self.readSeed()
-        self.readSeedStatic()
+        self.readURLDynamic()
+        self.readURLStatic()
+        
+//        self.readTag()
 //        if (self.staticSeed.url != "") { print("Public ——> \(self.name.origin)") }
         
-        self.getPermissionByTag()
-        self.updateTags()
+//        self.getPermissionByTag() // TODO
+//        self.updateTags()  // TODO
         
         // TODO
         self.countLines()
@@ -74,21 +76,18 @@ public class Prototype: Hashable, Identifiable  {
 
 
 
-//enum RestrictionReason: Int, Codable {
-//    case nda = 0
-//    case api = 1
-//}
-
-public enum Status: Int, Codable {
-    case nda = 0
-    case opened = 1
-    case api = 2
+public enum Status: String, Codable {
+    case nda = "closed"
+    case opened = "open"
+    case api = "api"
 }
 
-public enum Featured: Int, Codable {
-    case none = 0
-    case starred = 1
+public enum Featured: String, Codable, Hashable {
+    case none = "false"
+    case starred = "true"
 }
+
+
 
 
 public struct PrototypeConfig: Codable, Hashable, Comparable {
