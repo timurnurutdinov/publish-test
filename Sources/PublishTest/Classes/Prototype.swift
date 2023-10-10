@@ -22,14 +22,12 @@ public class Prototype: Hashable, Identifiable  {
     var moduleLines: Int = 0
     var lines: Int = 0
     
-    public var status: Status = .nda
-    public var featured: Featured = .none
+//    public var status: Status = .nda
+//    public var featured: Featured = .none
+//    public var dynamicSeed: Seed = Seed(url: "")
+//    public var staticSeed: Seed = Seed(url: "")
     
-//    var dynamicURL = ""
-//    var staticURL = ""
-    
-    public var dynamicSeed: Seed = Seed(url: "")
-    public var staticSeed: Seed = Seed(url: "")
+    public var json: PrototypeJSON = PrototypeJSON(seed: "", url: "", open: false, star: false)
     
     var iconIndex = -1
     
@@ -37,18 +35,10 @@ public class Prototype: Hashable, Identifiable  {
         self.id = Prototype.nextID
         Prototype.nextID = Prototype.nextID + 1
         
-        
         self.folder = folder
         self.name = Name(folder.name)
         
-        self.readURLDynamic()
-        self.readURLStatic()
-        
-//        self.readTag()
-//        if (self.staticSeed.url != "") { print("Public ——> \(self.name.origin)") }
-        
-//        self.getPermissionByTag() // TODO
-//        self.updateTags()  // TODO
+        self.readJSON()
         
         // TODO
         self.countLines()

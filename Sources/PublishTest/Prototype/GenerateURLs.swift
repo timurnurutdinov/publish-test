@@ -27,36 +27,39 @@ public struct URL2000: Codable, Hashable {
 
 
 // for Seed
+// GENERATE SEEDS?
+
 
 extension Queue {
-    
+
 //    public static var seedURLJSONPath = "/Users/tilllur/Documents/Git/FramerComponents/dynamic-urls.json"
-    
+
     public func createSeedURLS() {
         var file: [String] = []
         for _ in 1...2000 { file.append(String.randomURL()) }
-        
+
         let uniqueUrls = Array(Set(file))
         uniqueUrls.writeFile(withName: "protototyping-queue.txt", separatedBy: "\n")
     }
-    
-    
+
+
     public func readSeedURLS() -> String {
         do {
             return try File(path: "/Users/tilllur/Documents/Git/FramerPreviewer/protototyping-queue.txt").string()
         } catch { print(error) }
         return ""
     }
-    
+
     public mutating func updateSeeds() {
         self.read()
         let urls = readSeedURLS().split(separator: "\n")
-        
+
         self.prototypes.reversed().enumerated().forEach { (index, prototype) in
             if (index == 0) { print(prototype.name.origin) }
-            prototype.dynamicSeed = Seed(url: String(urls[index]))
-            prototype.saveURLDynamic()
+            
+            prototype.json.seed = String(urls[index])
+            prototype.saveJSON()
         }
     }
-    
+
 }

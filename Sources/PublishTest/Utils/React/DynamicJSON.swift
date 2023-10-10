@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct PrototypeJSON: Codable {
+struct ExportPrototypeJSON: Codable {
     var i: Int // index
     var t: String // title
     var p: String // project title
     var y: String // year
-    var f: Featured // fav
-    var s: Status // status
+    var f: Bool // fav
+    var s: Bool // status
     var u: String // url
 }
 
@@ -21,10 +21,7 @@ struct PrototypeJSON: Codable {
 extension Prototype {
     static var blankURL = "blank"
     
-    func closedDescription() -> String {
-        if (self.status == .api) { return "Internal API Restriction" }
-        return "Soon"
-    }
+    func closedDescription() -> String { return "Soon" }
 }
 
 
@@ -35,23 +32,23 @@ extension Queue {
             dateFormatter.dateFormat = "YYYY"
             
             
-            let minimalState = self.prototypes.reversed().enumerated().map { (index, prototype) -> PrototypeJSON in
-                if (prototype.status == .opened) {
-                    return PrototypeJSON(i: (index + 1),
+            let minimalState = self.prototypes.reversed().enumerated().map { (index, prototype) -> ExportPrototypeJSON in
+                if (prototype.json.open) {
+                    return ExportPrototypeJSON(i: (index + 1),
                                          t: prototype.name.title,
                                          p: prototype.name.project,
                                          y: prototype.name.getYear(),
-                                         f: prototype.featured,
-                                         s: prototype.status,
-                                         u: prototype.dynamicSeed.url)
+                                        f: prototype.json.star,
+                                               s: prototype.json.open,
+                                         u: prototype.json.url)
                 }
                 else {
-                    return PrototypeJSON(i: (index + 1),
+                    return ExportPrototypeJSON(i: (index + 1),
                                          t: "NDA",
                                          p: prototype.closedDescription(),
                                          y: prototype.name.getYear(),
-                                         f: prototype.featured,
-                                         s: prototype.status,
+                                               f: prototype.json.star,
+                                               s: prototype.json.open,
                                          u: Prototype.blankURL)
                 }
                 

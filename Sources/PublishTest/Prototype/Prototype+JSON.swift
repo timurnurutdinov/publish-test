@@ -1,0 +1,100 @@
+//
+//  File.swift
+//  
+//
+//  Created by tilllur on 04.09.2022.
+//
+
+import Foundation
+import Files
+
+
+
+public struct PrototypeJSON: Codable, Hashable {
+    public var seed: String
+    public var url: String
+    public var open: Bool
+    public var star: Bool
+}
+
+
+extension Prototype {
+    
+    
+    public func readJSON() {
+        
+        do {
+
+            let seedFolder = try Folder(path: folder.path)
+            try seedFolder.createSubfolderIfNeeded(withName: "tilllur")
+            
+            let file = try Folder(path: folder.path + "tilllur/").file(at: "tilllur.json")
+            let decoder = JSONDecoder()
+
+            do {
+                self.json = try decoder.decode(PrototypeJSON.self, from: file.testData())
+ 
+            } catch { print("Failed to decode JSON State") }
+
+        }
+        catch { print(error) }
+    }
+    
+    public func saveJSON() {
+        do {
+            
+            let seedFolder = try Folder(path: folder.path)
+            try seedFolder.createSubfolderIfNeeded(withName: "tilllur")
+            
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            
+            let data = try encoder.encode(self.json)
+            if let jsonString = String(data: data, encoding: .utf8) { jsonString.writeFile("tilllur.json", toFolder: folder.path + "tilllur/") }
+
+        } catch { print(error) }
+    }
+}
+
+
+
+
+
+public struct tempJSONItem: Codable, Hashable {
+    public var url: String
+}
+
+extension Queue {
+    
+    public mutating func tempReadOldJSON() {
+        self.read()
+
+        self.prototypes.reversed().enumerated().forEach { (index, prototype) in
+            prototype.readOldJSON()
+        }
+    }
+}
+
+extension Prototype {
+    public func readOldJSON() {
+        
+        do {
+
+            let seedFolder = try Folder(path: folder.path)
+            try seedFolder.createSubfolderIfNeeded(withName: "tilllur")
+            
+            let file = try Folder(path: folder.path + "tilllur/").file(at: "static.json")
+            let decoder = JSONDecoder()
+
+            do {
+                let temp = try decoder.decode(tempJSONItem.self, from: file.testData())
+                if (temp.url != "") { self.json.url = temp.url }
+ 
+            } catch { print("Failed to decode JSON State") }
+            
+            self.saveJSON()
+
+        }
+        catch { print(error) }
+    }
+}

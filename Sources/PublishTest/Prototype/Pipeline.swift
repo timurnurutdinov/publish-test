@@ -48,18 +48,18 @@ extension Queue {
 extension Queue {
     
     func copyDynamicPrototypes() {
-        let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.status == .opened }
+        let dynamicPrototypes: [Prototype] = self.prototypes.filter { $0.json.open }
         dynamicPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: self.scope.dynamicLong, renameTo: prototype.dynamicSeed.url)
+            prototype.copy(toFolder: self.scope.dynamicLong, renameTo: prototype.json.seed)
         }
         print("Published \(dynamicPrototypes.count)/\(self.prototypes.count)")
     }
     
     
     func copyStaticPrototypes() {
-        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.staticSeed.url != "" }
+        let staticPrototypes:[Prototype] = self.prototypes.filter { $0.json.url != "" }
         staticPrototypes.enumerated().forEach { (_, prototype) in
-            prototype.copy(toFolder: self.scope.staticLong, renameTo: prototype.staticSeed.url)
+            prototype.copy(toFolder: self.scope.staticLong, renameTo: prototype.json.url)
         }
         
     }
