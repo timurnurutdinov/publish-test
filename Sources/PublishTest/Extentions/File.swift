@@ -28,7 +28,7 @@ extension File {
         return ""
     }
     
-    func testData() -> Data {
+    func readData() -> Data {
         do {
             return try Data(contentsOf: self.url)
         }

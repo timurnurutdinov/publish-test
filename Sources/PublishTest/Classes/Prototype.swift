@@ -6,12 +6,13 @@ import Foundation
 import Files
 
 public class Prototype: Hashable, Identifiable  {
+    public typealias DataType = Prototype?
+    
     public static var nextID: Int = 0
     
     public var id: Int
     public var folder: Folder
     public var name: Name
-    
     
     // +Complexity
     var zScore: Double = 0.0
@@ -21,11 +22,6 @@ public class Prototype: Hashable, Identifiable  {
     var appLines: Int = 0
     var moduleLines: Int = 0
     var lines: Int = 0
-    
-//    public var status: Status = .nda
-//    public var featured: Featured = .none
-//    public var dynamicSeed: Seed = Seed(url: "")
-//    public var staticSeed: Seed = Seed(url: "")
     
     public var json: PrototypeJSON = PrototypeJSON(seed: "", url: "", open: false, star: false)
     
@@ -38,28 +34,15 @@ public class Prototype: Hashable, Identifiable  {
         self.folder = folder
         self.name = Name(folder.name)
         
-        self.readJSON()
+        self.json = self.json.read(file: self.jsonFile())
         
         // TODO
         self.countLines()
         
     }
     
-    
-    
-    
-    public static func == (lhs: Prototype, rhs: Prototype) -> Bool {
-        return lhs.name.origin == rhs.name.origin
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(name.origin)
-    }
-    
-//    func setID(_ id: Int) { self.id = id }
-//    func setStatus(_ status:Status) { self.status = status }
-//    func setStaticURL(_ url:String) { self.staticSeed.url = url }
-//    func setDynamicURL(_ url:String) { self.dynamicSeed.url = url }
+    public static func == (lhs: Prototype, rhs: Prototype) -> Bool { return lhs.name.origin == rhs.name.origin }
+    public func hash(into hasher: inout Hasher) { hasher.combine(name.origin) }
     func setIndex(_ index:Int) { self.iconIndex = index }
     
 }

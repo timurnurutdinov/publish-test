@@ -28,7 +28,8 @@ extension Queue {
             if (openArray.array.contains(prototype.json.seed)) {
                 prototype.json.star = true
             }
-            prototype.saveJSON()
+//            prototype.json.save(prototype)
+            prototype.json.save(json: prototype.json, withName: "tilllur.json", toFolder: prototype.jsonFolder())
         }
         
         
@@ -66,12 +67,13 @@ extension Prototype {
             let decoder = JSONDecoder()
 
             do {
-                let temp = try decoder.decode(tempJSONItem.self, from: file.testData())
+                let temp = try decoder.decode(tempJSONItem.self, from: file.readData())
                 if (temp.url != "") { self.json.url = temp.url }
  
             } catch { print("Failed to decode JSON State") }
             
-            self.saveJSON()
+            self.json.save(json: self.json, withName: "tilllur.json", toFolder: self.jsonFolder())
+//            self.json.save(self)
 
         }
         catch { print(error) }
