@@ -14,6 +14,10 @@ extension Prototype {
     public func saveJSON() {
         self.json.save(json: self.json, withName: "tilllur.json", toFolder: self.jsonFolder())
     }
+    
+    public func readJSON() -> PrototypeJSON {
+        return PrototypeJSON.read(file: self.jsonFile())
+    }
 }
 
 public struct PrototypeJSON: Codable, Hashable, ItemJSON {
@@ -24,27 +28,9 @@ public struct PrototypeJSON: Codable, Hashable, ItemJSON {
     public var open: Bool
     public var star: Bool
     
+    init(seed: String, url: String, open: Bool, star: Bool) { self.seed = seed; self.url = url; self.open = open; self.star = star }
+    init(jsonFile: File) { self = PrototypeJSON.read(file: jsonFile) }
 }
-
-
-//public struct PrototypeJSONConfig {
-//    public var json: any ItemJSON
-//    public var fileName: String = "tilllur.json"
-//    public var jsonFolder: Folder
-//    
-////    public func save() {
-////        json.save(json: self.json, withName: fileName, toFolder: self.jsonFolder)
-////    }
-//    
-////    public func read() {
-////        self.json =
-////    }
-//}
-//
-
-
-
-
 
 
 
@@ -64,14 +50,14 @@ public struct PrototypeJSON: Codable, Hashable, ItemJSON {
 public protocol ItemJSON {
     associatedtype DataType: Codable
 
-    mutating func read(file: File?) -> DataType
+    static func read(file: File?) -> DataType
     func save(json: DataType, withName jsonName: String, toFolder folder: Folder)
 }
 
 extension ItemJSON {
     
     
-    public mutating func read(file: File?) -> DataType {
+    public static func read(file: File?) -> DataType {
         do {
             
             if let file = file { return try JSONDecoder().decode(DataType.self, from: file.readData())}
@@ -103,61 +89,12 @@ extension Prototype {
         catch { fatalError("jsonFolder read failed") }
     }
     
-    public func jsonFile(_ fileName: String = "tilllur.json") -> File? {
+    public func jsonFile(_ fileName: String = "tilllur.json") -> File {
         do {
             try Folder(path: folder.path).createSubfolderIfNeeded(withName: "tilllur")
             return try Folder(path: folder.path + "tilllur/").file(at: fileName)
         }
-        catch { print("jsonFolder read failed") }
-        return nil
+        catch { fatalError("jsonFolder read failed") }
     }
 }
-
-
-
-//extension Prototype {
-//
-//    public func readJSON() {
-//
-//        do {
-//
-//            let seedFolder = try Folder(path: folder.path)
-//            try seedFolder.createSubfolderIfNeeded(withName: "tilllur")
-//
-//            let file = try Folder(path: folder.path + "tilllur/").file(at: "tilllur.json")
-//            let decoder = JSONDecoder()
-//
-//            do {
-//                self.json = try decoder.decode(PrototypeJSON.self, from: file.readData())
-//
-//            } catch { print("Failed to decode JSON State") }
-//
-//        }
-//        catch { print(error) }
-//    }
-//
-//    public func saveJSON() {
-//        do {
-//
-//            let seedFolder = try Folder(path: folder.path)
-//            try seedFolder.createSubfolderIfNeeded(withName: "tilllur")
-//
-//            let encoder = JSONEncoder()
-//            encoder.outputFormatting = .prettyPrinted
-//
-//            let data = try encoder.encode(self.json)
-//            if let jsonString = String(data: data, encoding: .utf8) { jsonString.writeFile("tilllur.json", toFolder: folder.path + "tilllur/") }
-//
-//        } catch { print(error) }
-//    }
-//}
-
-
-
-
-
-
-
-
-
 

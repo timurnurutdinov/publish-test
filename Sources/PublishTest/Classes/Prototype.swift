@@ -34,7 +34,9 @@ public class Prototype: Hashable, Identifiable  {
         self.folder = folder
         self.name = Name(folder.name)
         
-        self.json = self.json.read(file: self.jsonFile())
+        self.json = PrototypeJSON(jsonFile: self.jsonFile())
+//        self.json = self.readJSON()
+        self.jsonFile()
         
         // TODO
         self.countLines()
