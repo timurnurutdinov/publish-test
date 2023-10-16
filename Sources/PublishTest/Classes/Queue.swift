@@ -11,7 +11,6 @@ import WebKit
 
 
 public struct Site {
-//    public static var host = "~/Documents/Git/tilllur.ru/"
     public static var host = "~/Documents/Git/tilllur-prototypes/"
     
     public static func with(_ shortPath: String) -> String { return Site.host + shortPath }
@@ -27,7 +26,6 @@ public struct Site {
 }
 
 public struct StaticSite {
-//    public static var host = "~/Documents/Git/tilllur.ru/"
     public static var host = "~/Documents/Git/tilllur-prototypes-static/"
     
     public static func with(_ shortPath: String) -> String { return StaticSite.host + shortPath }
@@ -197,7 +195,7 @@ extension Queue {
     
     func createOutputFolders() {
         do {
-            let folder = try Folder(path: "~/Documents/PublishTest")
+            let folder = try Folder(path: "~/Desktop/")
             try folder.createSubfolderIfNeeded(withName: Queue.dirtyOutputName)
         }
         catch { print("Failed to created OUTPUT temp") }

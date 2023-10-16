@@ -36,7 +36,7 @@ public class Prototype: Hashable, Identifiable  {
         
         self.json = PrototypeJSON(jsonFile: self.jsonFile())
 //        self.json = self.readJSON()
-        self.jsonFile()
+//        self.jsonFile()
         
         // TODO
         self.countLines()
@@ -89,4 +89,9 @@ public struct PrototypeConfig: Codable, Hashable, Comparable {
 extension Prototype {
     static let app = "app.coffee"
     static let moduleFolder = "modules/"
+}
+
+
+extension Prototype {
+    public func updateURL(to url: String) { self.json.url = url }
 }

@@ -11,13 +11,8 @@ import Files
 
 
 extension Prototype {
-    public func saveJSON() {
-        self.json.save(json: self.json, withName: "tilllur.json", toFolder: self.jsonFolder())
-    }
-    
-    public func readJSON() -> PrototypeJSON {
-        return PrototypeJSON.read(file: self.jsonFile())
-    }
+    public func saveJSON() { self.json.save(json: self.json, withName: "tilllur.json", toFolder: self.jsonFolder()) }
+    public func readJSON() -> PrototypeJSON { return PrototypeJSON.read(file: self.jsonFile()) }
 }
 
 public struct PrototypeJSON: Codable, Hashable, ItemJSON {
@@ -36,15 +31,8 @@ public struct PrototypeJSON: Codable, Hashable, ItemJSON {
 
 
 
-// Generic JSON
 
 
-// structure
-
-// tilllur.json
-// read folder
-
-// write folder
 
 
 public protocol ItemJSON {
@@ -55,7 +43,6 @@ public protocol ItemJSON {
 }
 
 extension ItemJSON {
-    
     
     public static func read(file: File?) -> DataType {
         do {
@@ -86,7 +73,9 @@ extension Prototype {
     
     public func jsonFolder() -> Folder {
         do { return try Folder(path: folder.path).createSubfolderIfNeeded(withName: "tilllur") }
-        catch { fatalError("jsonFolder read failed") }
+        catch {
+            fatalError("jsonFolder read failed")
+        }
     }
     
     public func jsonFile(_ fileName: String = "tilllur.json") -> File {
@@ -94,7 +83,9 @@ extension Prototype {
             try Folder(path: folder.path).createSubfolderIfNeeded(withName: "tilllur")
             return try Folder(path: folder.path + "tilllur/").file(at: fileName)
         }
-        catch { fatalError("jsonFolder read failed") }
+        catch {
+            fatalError("jsonFolder read failed")
+        }
     }
 }
 
