@@ -138,6 +138,18 @@ extension Queue {
         }
     }
     
+    mutating func addPrototypeReversed(for folder: Folder) -> Prototype? {
+        let name = Name(folder.name)
+        
+        if (name.isValid()) {
+            let prototype = Prototype(withFolder: folder)
+            self.prototypes.insert(prototype, at: 0)
+            return prototype
+        }
+        else { print("addPrototypeReversed doesn't match for: \(name.origin)") }
+        return nil
+    }
+    
     public mutating func updatePrototype(_ prototype: Prototype) {
         if let index = self.prototypes.firstIndex(of: prototype) {
             self.prototypes[index] = Prototype(withFolder: prototype.folder)
@@ -176,16 +188,8 @@ extension Queue {
             
         } catch { print("Failed to read Queue")}
         
-//        self.saveURLState()
     }
 }
-
-
-
-//struct SiteFolder {
-//    static let path = "~/Documents/Git/tilllur.ru/"
-//    static let prototypesJSON = "d.json"
-//}
 
 
 
@@ -201,6 +205,7 @@ extension Queue {
         catch { print("Failed to created OUTPUT temp") }
     }
 }
+
 
 
 //struct PrototypeComplexity {

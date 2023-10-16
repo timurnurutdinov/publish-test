@@ -58,8 +58,37 @@ extension Queue {
             if (index == 0) { print(prototype.name.origin) }
             
             prototype.json.seed = String(urls[index])
-//            prototype.saveJSON()
         }
+    }
+    
+    public mutating func updateSeed(forNewPrototype prototype: Prototype) {
+        let urls = readSeedURLS().split(separator: "\n")
+        
+        if self.prototypes.count > 1 {
+            let prevPrototype = self.prototypes[1]
+            let prevJSONSeed = prevPrototype.json.seed
+            
+            if let prevIndex = urls.firstIndex(of: String.SubSequence(prevJSONSeed)) {
+                print("Index of \(prevJSONSeed) is: \(prevIndex)")
+                let newIndex = prevIndex + 1
+                prototype.json.seed = String(urls[newIndex])
+                prototype.saveJSON()
+                
+                var defaultName = prototype.name.origin
+                var newName = prototype.name.origin
+                
+                if defaultName.hasSuffix(".framer") {
+                    newName = defaultName.replacingOccurrences(of: ".framer", with: String(newIndex) + ".framer", options: .backwards, range: nil)
+                }
+                
+                do {
+                    try prototype.folder.rename(to: newName)
+                    prototype.name = Name(prototype.folder.name)
+                } catch { print("Failed to rename new Prototype")}
+            }
+        }
+        else { print("Zero queue error. Cant get URL for seed") }
+        
     }
 
 }

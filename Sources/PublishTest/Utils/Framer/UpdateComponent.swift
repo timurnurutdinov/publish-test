@@ -10,11 +10,7 @@ import Files
 
 extension Queue {
     
-//    public func updatePresentationComponent() {
-//        self.update(module: ComponentUpdateEnum.PresentationComponent)
-//    }
-    
-    public func update(component: FramerComponent) {
+    public func updatePreviewComponent(component: FramerComponent = FramerComponentEnum.PreviewComponent) {
         
         var modules: [File] = []
         var folders: [Folder] = []
@@ -121,23 +117,6 @@ extension Name {
 }
 
 
-
-public enum FramerComponentEnum {
-    
-    public static var PreviewComponent = FramerComponent(nameFile:          "PreviewComponent.coffee",
-                                                         assetsFolderName:  "PreviewComponentAssets",
-                                                         componentFolder:   "~/Documents/Git/PreviewComponent/Preview.framer",
-                                                         moduleFolder:      "~/Documents/Git/PreviewComponent/Preview.framer/modules",
-                                                         assetsFolder:      "~/Documents/Git/PreviewComponent/Preview.framer/modules/PreviewComponentAssets",
-                                                         appFile:           "~/Documents/Git/PreviewComponent/Preview.framer/app.coffee")
-    
-    public static var PresentationComponent = FramerComponent(nameFile:     "PresentationComponent.coffee",
-                                                         assetsFolderName:  "PresentationComponentAssets",
-                                                         componentFolder:   "~/Documents/Git/PresentationComponent/Presentation.framer",
-                                                         moduleFolder:      "~/Documents/Git/PresentationComponent/Presentation.framer/modules",
-                                                         assetsFolder:      "~/Documents/Git/PresentationComponent/Presentation.framer/modules/PresentationComponentAssets",
-                                                         appFile:           "~/Documents/Git/PresentationComponent/Presentation.framer/app.coffee")
-}
 
 
 
