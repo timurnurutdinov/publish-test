@@ -10,7 +10,7 @@ import Files
 
 
 extension Queue {
-    mutating public func createNewPrototype(component: FramerComponent = FramerComponentEnum.PreviewComponent) {
+    mutating public func createNewPrototype(component: FramerComponent = FramerComponentEnum.TemplateComponent) {
         
         var files = [File]()
         var folders = [Folder]()
