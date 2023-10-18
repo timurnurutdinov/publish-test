@@ -60,7 +60,7 @@ public class Name {
 //        }
     }
     
-    func isValid() -> Bool {
+    public func isValid() -> Bool {
         return successParse
     }
     
