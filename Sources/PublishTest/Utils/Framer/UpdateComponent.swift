@@ -59,29 +59,6 @@ extension Queue {
         
     }
     
-    
-//    func changeAppFile(for prototypeName:Name, with dateFormatter:DateFormatter) -> String {
-//        if let appCoffeeURL = URL(string: PreviewComponent.appFile) {
-//            let originCode = appCoffeeURL.string()
-//
-//            let className = "class Preview extends Layer"
-//            let newClassName = "class exports.Preview extends Layer"
-//            let tempCode = originCode.replacingOccurrences(of: className, with: newClassName)
-//
-//            let oldLine = "prototypeCreationYear: \"20:20\""
-//            let newLine = "prototypeCreationYear: \"\(prototypeName.getStatusBarTime())\""
-//            let tempCode2 = tempCode.replacingOccurrences(of: oldLine, with: newLine)
-//
-//            let separator = "# Code for development"
-//            return tempCode2.components(separatedBy: separator)[0]
-//        }
-//
-//        print("Failed to copy PreviewComponent")
-//        return ""
-//    }
-    
-    
-    
 }
 
 

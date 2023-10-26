@@ -63,9 +63,9 @@ extension URL {
             if (URL(string: cleanLastPathComponent) == nil) { return "" }
             
             let code1 = "\(URL(string: cleanLastPathComponent)!.deletingPathExtension()) = new Layer\n"
-            let code2 = "\twidth: \(img.size.width)\n"
-            let code3 = "\theight: \(img.size.height)\n"
-            let code4 = "\timage: \"images/\(self.lastPathComponent)\"\n"
+            let code2 = "\twidth: \(img.size.width),"
+            let code3 = " height: \(img.size.height),"
+            let code4 = " image: \"images/\(self.lastPathComponent)\"\n"
             
             let code = code1 + code2 + code3 + code4
             
