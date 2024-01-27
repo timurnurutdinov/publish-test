@@ -61,7 +61,7 @@ public struct Queue {
 
 extension Queue {
     
-    mutating func addPrototype(for folder: Folder) {
+    public mutating func addPrototype(for folder: Folder) {
         let name = Name(folder.name)
         
         if (name.isValid()) {

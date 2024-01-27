@@ -8,6 +8,55 @@
 import Foundation
 import Files
 
+
+//extension Prototype {
+//    public func updatePreviewComponent(component: FramerComponent = FramerComponentEnum.PreviewComponent) {
+//        
+//        var modules: [File] = []
+//        var folders: [Folder] = []
+//        
+//        do {
+//            
+//            try Folder(path: component.moduleFolder).files.enumerated().forEach { (index, file) in
+//                if (file.name.fileExtension() == "coffee") { modules.append(file) }
+//                else if (file.name.fileExtension() == "css") { modules.append(file) }
+//                else if (file.name.fileExtension() == "ttf") { modules.append(file) }
+//            }
+//            
+//            try Folder(path: component.moduleFolder).subfolders.enumerated().forEach { (index, folder) in
+//                if (folder.name == component.assetsFolderName) { folders.append(folder) }
+//            }
+//            
+//            
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "YY"
+//            
+//            let code = component.changeAppFile(for: self.name, with: dateFormatter)
+//            let currentModuleFolder = try self.folder.createSubfolderIfNeeded(withName: "modules")
+//            
+//            try Folder(path: currentModuleFolder.path).files.enumerated().forEach { (i, file) in
+//                if (file.name == component.nameFile) { try file.delete() }
+//                if modules.first(where: {$0.name == file.name}) != nil { try file.delete() }
+//            }
+//            
+//            try Folder(path: currentModuleFolder.path).subfolders.enumerated().forEach { (i, folder) in
+//                if (folder.name == component.assetsFolderName) { try folder.delete() }
+//            }
+//            
+//            code.writeFile(component.nameFile, toFolder: currentModuleFolder.path)
+//            try modules.map { try $0.copy(to: currentModuleFolder) }
+//            try folders.map { try $0.copy(to: currentModuleFolder) }
+//            
+////                shellString.append(prototype.getShellCommand())
+//            self.buildModules()
+//            
+//        }
+//        
+//        catch { print("Failed to read PreviewComponent folder") }
+//        
+//    }
+//}
+
 extension Queue {
     
     public func updatePreviewComponent(component: FramerComponent = FramerComponentEnum.PreviewComponent) {
