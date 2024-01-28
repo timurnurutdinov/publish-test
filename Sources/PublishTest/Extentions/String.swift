@@ -51,6 +51,16 @@ extension String {
         }
     }
     
+    
+    func cleanSubfolders() {
+        do {
+            try Folder(path: self).subfolders.reversed().enumerated().forEach { (index, folder) in
+                try folder.delete()
+            }
+        }
+        catch { print() }
+    }
+    
 }
 
 

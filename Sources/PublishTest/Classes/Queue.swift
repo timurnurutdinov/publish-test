@@ -10,39 +10,6 @@ import Files
 import WebKit
 
 
-public struct Site {
-    public static var host = "~/Documents/Git/tilllur-prototypes/"
-    
-    public static func with(_ shortPath: String) -> String { return Site.host + shortPath }
-
-    
-    public static func cleanFolder(_ shortPath: String) {
-        do {
-            try Folder(path: Site.host).createSubfolderIfNeeded(withName: shortPath).delete()
-            try Folder(path: Site.host).createSubfolderIfNeeded(withName: shortPath)
-        }
-        catch { print() }
-    }
-}
-
-public struct StaticSite {
-    public static var host = "~/Documents/Git/tilllur-prototypes-static/"
-    
-    public static func with(_ shortPath: String) -> String { return StaticSite.host + shortPath }
-
-    
-    public static func cleanFolder(_ shortPath: String) {
-        do {
-            try Folder(path: StaticSite.host).createSubfolderIfNeeded(withName: shortPath).delete()
-            try Folder(path: StaticSite.host).createSubfolderIfNeeded(withName: shortPath)
-        }
-        catch { print() }
-    }
-}
-
-
-
-
 
 
 public struct Queue {

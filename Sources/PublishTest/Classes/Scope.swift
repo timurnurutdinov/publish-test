@@ -9,35 +9,16 @@ import Foundation
 
 public struct ScopeEnum {
     public static var production    = Scope("~/Documents/Git/Prototyping-Queue/",
-                                            static: "s",
-                                            dynamic: "d")
-    
-//    public static var presentations = Scope("~/Documents/Git/Presentation-Queue",
-//                                            static: "p",
-//                                            dynamic: "remove")
-    
-//    public static var components = Scope("~/Documents/Git/FramerComponents/Component-Queue",
-//                                            static: "remove",
-//                                            dynamic: "remove")
+                                            static: "~/Documents/Git/tilllur-prototypes-static/",
+                                            dynamic: "~/Documents/Git/tilllur-prototypes/")
     
     public static var utils         = Scope("~/Documents/Git/FramerComponents/Experiment-Queue",
-                                            static: "utils",
+                                            static: "remove",
                                             dynamic: "remove")
-    
-    
-    
     
     public static var previewComponent = Scope("~/Documents/Git/PreviewComponent",
                                             static: "remove",
                                             dynamic: "remove")
-    
-//    public static var presentationComponent = Scope("~/Documents/Git/PresentationComponent",
-//                                            static: "remove",
-//                                            dynamic: "remove")
-    
-//    public static var showcaseComponent = Scope("~/Documents/Git/ShowcaseComponent",
-//                                            static: "remove",
-//                                            dynamic: "remove")
 
     public static var templateComponent = Scope("~/Documents/Git/publish-test/template",
                                             static: "remove",
@@ -47,23 +28,18 @@ public struct ScopeEnum {
 
 public struct Scope: Equatable {
     public var input: String
+    public var staticPath: String
+    public var dynamicPath: String
     
-    public var staticShort: String
-    public var staticLong: String
-    
-    
-    public var dynamicShort: String
-    public var dynamicLong: String
+    public func cleanStaticFolder() { self.staticPath.cleanSubfolders() }
+    public func cleanDynamicFolder() { self.dynamicPath.cleanSubfolders() }
     
 
-    init(_ input:String, static outputStatic: String, dynamic outputDynamic: String) {
+    init(_ input:String, static sPath: String, dynamic dPath: String) {
         self.input = input
         
-        staticShort = outputStatic
-        dynamicShort = outputDynamic
-        
-        staticLong = StaticSite.with(staticShort)
-        dynamicLong = Site.with(dynamicShort)
+        self.staticPath = sPath
+        self.dynamicPath = dPath
         
     }
     
@@ -71,3 +47,4 @@ public struct Scope: Equatable {
         return (lhs.input == rhs.input)
     }
 }
+

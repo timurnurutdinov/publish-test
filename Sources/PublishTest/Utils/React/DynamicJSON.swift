@@ -27,7 +27,7 @@ extension Prototype {
 
 
 extension Queue {
-    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = Site.host) {
+    mutating func savePrototypesPageJSON(configFile:String = "m.json", toFolder: String = ScopeEnum.production.dynamicPath) {
         do {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "YYYY"
@@ -36,21 +36,21 @@ extension Queue {
             let minimalState = self.prototypes.reversed().enumerated().map { (index, prototype) -> ExportPrototypeJSON in
                 if (prototype.json.open) {
                     return ExportPrototypeJSON(i: (index + 1),
-                                         t: prototype.name.title,
-                                         p: prototype.name.project,
-                                         y: prototype.name.getYear(),
-                                        f: prototype.json.star,
+                                               t: prototype.name.title,
+                                               p: prototype.name.project,
+                                               y: prototype.name.getYear(),
+                                               f: prototype.json.star,
                                                s: prototype.json.open,
-                                         u: prototype.json.url)
+                                               u: prototype.json.seed)
                 }
                 else {
                     return ExportPrototypeJSON(i: (index + 1),
-                                         t: "NDA",
-                                         p: prototype.closedDescription(),
-                                         y: prototype.name.getYear(),
+                                               t: "NDA",
+                                               p: prototype.closedDescription(),
+                                               y: prototype.name.getYear(),
                                                f: prototype.json.star,
                                                s: prototype.json.open,
-                                         u: Prototype.blankURL)
+                                               u: Prototype.blankURL)
                 }
                 
             }
